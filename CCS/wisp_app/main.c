@@ -1,45 +1,86 @@
-#include <msp430.h> 
-#include <stdio.h>
-#include <stdint.h>
-#include "pin-assign.h"
+#include "wisp-base.h"
 
-#define BITSET(port,pin)    port |= (pin)
-#define BITCLR(port,pin)    port &= ~(pin)
+WISP_dataStructInterface_t wispData;
+
+/**
+ * This function is called by WISP FW after a successful ACK reply
+ *
+ */
+void my_ackCallback (void) {
+	asm(" NOP");
+}
+
+/**
+ * This function is called by WISP FW after a successful read command
+ *  reception
+ *
+ */
+void my_readCallback (void) {
+	asm(" NOP");
+}
+
+/**
+ * This function is called by WISP FW after a successful write command
+ *  reception
+ *
+ */
+void my_writeCallback (void) {
+	wispData.epcBuf[11] = wispData.writeBufPtr[0];
+}
+
+/**
+ * This function is called by WISP FW after a successful BlockWrite
+ *  command decode
+
+ */
+void my_blockWriteCallback  (void) {
+	asm(" NOP");
+}
 
 int main(void) {
 
-	/// Start WISP init.
-	WDTCTL = WDTPW | WDTHOLD;	// Stop watchdog timer
+	WISP_init();
 
-	setupDflt_IO();
+		// Register callback functions with WISP comm routines
+		WISP_registerCallback_ACK(&my_ackCallback);
+		WISP_registerCallback_READ(&my_readCallback);
+		WISP_registerCallback_WRITE(&my_writeCallback);
+		WISP_registerCallback_BLOCKWRITE(&my_blockWriteCallback);
 
-	// Disable the GPIO power-on default high-impedance mode to activate previously configured port settings.
-	PM5CTL0 &= ~LOCKLPM5;
-	PRXEOUT |= PIN_RX_EN;
+		// Get access to EPC, READ, and WRITE data buffers
+		WISP_getDataBuffers(&wispData);
 
-	// Clock init.
-	CSCTL0_H = 0xA5;
-	CSCTL1 = DCOFSEL0 + DCOFSEL1; //4MHz
-	CSCTL2 = SELA_0 + SELS_3 + SELM_3;
-	CSCTL3 = DIVA_0 + DIVS_0 + DIVM_0;
+		// Set up operating parameters for WISP comm routines
+		WISP_setMode( MODE_READ | MODE_WRITE | MODE_USES_SEL);
+		WISP_setAbortConditions(CMD_ID_READ | CMD_ID_WRITE /*| CMD_ID_ACK*/);
 
-	/// End WISP init.
+		// Initialize FRAM.
+		FRAM_init();
 
-	int j = 1;
+		// Set up EPC
+		wispData.epcBuf[0] = 0x05; // WISP version
+		wispData.epcBuf[1] = 0x85; // WISP UUID
+		wispData.epcBuf[2] = 0x02; // WISP UUID
+		wispData.epcBuf[3] = 0x30; // WISP UUID
+		wispData.epcBuf[4] = 0x53; // WISP UUID
+		wispData.epcBuf[5] = 0x74; // WISP UUID
+		wispData.epcBuf[6] = 0x00; // RFID Status/Control
+		wispData.epcBuf[7] = 0x00; // RFID Status/Control
+		wispData.epcBuf[8] = 0x00; // RFID Status/Control
+		wispData.epcBuf[9] = 0x00; // RFID Status/Control
+		wispData.epcBuf[10]= 0x00; // RFID Status/Control
+		wispData.epcBuf[11]= 0xFF; // RFID Status/Control
 
-	// Turn on LED!
-	BITSET(PLED2OUT,PIN_LED2);
+		BITSET(PLED2OUT, PIN_LED2);
 
-	__delay_cycles(3000000);
-	BITCLR(PLED2OUT,PIN_LED2);
+		// Talk to the RFID reader.
+		while (FOREVER) {
 
+			// If application is valid, jump to application.
+			if (wispData.epcBuf[11] == 0xBB) {
+				((void (*)()) 0x905a) ();
+			}
 
-
-	while(1) {
-		if (j > 10) {
-			((void (*)()) 0x905a) ();
+			WISP_doRFID();
 		}
-		j++;
-	}
-
 }
