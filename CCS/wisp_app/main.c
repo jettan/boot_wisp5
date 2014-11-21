@@ -78,7 +78,7 @@ int main(void) {
 
 			// If application is valid, jump to application.
 			if (wispData.epcBuf[11] == 0xBB) {
-				((void (*)()) 0x905a) ();
+				((void (*)()) 0x9086) ();
 			}
 
 			WISP_doRFID();

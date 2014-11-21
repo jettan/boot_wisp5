@@ -1,6 +1,6 @@
 
-
 #include "wisp-base.h"
+#define APP_ENTRY 0x583a
 
 WISP_dataStructInterface_t wispData;
 
@@ -27,7 +27,19 @@ void my_readCallback (void) {
  *
  */
 void my_writeCallback (void) {
-	wispData.epcBuf[11] = wispData.writeBufPtr[0];
+	// Upper byte of written data.
+	wispData.epcBuf[9] = (wispData.writeBufPtr[0] >> 8)  & 0xFF;
+
+	// Lower byte of written data.
+	wispData.epcBuf[10] = (wispData.writeBufPtr[0])  & 0xFF;
+
+	if (wispData.writeBufPtr[0] == 0x8100) {
+		// Fix the corrupted sector.
+		*(uint8_t *) (APP_ENTRY) = 0x81;
+
+		// Ask for jump_to_app()
+		wispData.epcBuf[11] = 0x00;
+	}
 }
 
 /** 
@@ -38,7 +50,6 @@ void my_writeCallback (void) {
 void my_blockWriteCallback  (void) {
 	asm(" NOP");
 }
-
 
 /**
  * This implements the user application and should never return
@@ -65,6 +76,10 @@ void main_boot(void) {
 
 	// Initialize FRAM.
 	FRAM_init();
+
+	// Corrupt a sector in the application memory on purpose for the demo. (0x583a: 81 -> FF)
+
+	*(uint8_t *) (APP_ENTRY) = 0xFF;
 
 	// Set up EPC
 	wispData.epcBuf[0] = 0x05; // WISP version

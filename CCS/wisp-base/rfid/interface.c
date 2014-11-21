@@ -9,7 +9,7 @@
 #include "../globals.h"
 #include "rfid.h"
 
-uint8_t usrBank[USRBANK_SIZE];
+uint16_t usrBank[USRBANK_SIZE];
 
 // Client access to RFID data buffers.
 void WISP_getDataBuffers(WISP_dataStructInterface_t* clientStruct) {

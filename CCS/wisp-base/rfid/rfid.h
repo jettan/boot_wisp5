@@ -27,9 +27,9 @@
 typedef struct {
 	uint8_t* epcBuf;
 	uint16_t* writeBufPtr;
-	uint8_t* blockWriteBufPtr;
+	uint16_t* blockWriteBufPtr;
 	uint16_t* blockWriteSizePtr;
-	uint8_t* readBufPtr;
+	uint16_t* readBufPtr;
 } WISP_dataStructInterface_t;
 
 extern void WISP_doRFID(void);
