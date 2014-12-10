@@ -25,7 +25,7 @@ class Getter:
 		print line
 		
 		if index < len(lines):
-			#d.callback(index)
+			d.callback(index)
 		else:
 			print "Finished!\n"
 	
