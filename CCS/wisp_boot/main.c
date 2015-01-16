@@ -1,6 +1,5 @@
 
 #include "wisp-base.h"
-#define APP_ENTRY 0x583a
 
 WISP_dataStructInterface_t wispData;
 
@@ -35,7 +34,7 @@ void my_writeCallback (void) {
 
 	if (wispData.writeBufPtr[0] == 0x8100) {
 		// Fix the corrupted sector.
-		*(uint8_t *) (APP_ENTRY) = 0x81;
+		//*(uint8_t *) (APP_ENTRY) = 0x81;
 
 		// Ask for jump_to_app()
 		wispData.epcBuf[11] = 0x00;
@@ -77,9 +76,6 @@ void main_boot(void) {
 	// Initialize FRAM.
 	FRAM_init();
 
-	// Corrupt a sector in the application memory on purpose for the demo. (0x583a: 81 -> FF)
-
-	*(uint8_t *) (APP_ENTRY) = 0xFF;
 
 	// Set up EPC
 	wispData.epcBuf[0] = 0x05; // WISP version
@@ -102,7 +98,7 @@ void main_boot(void) {
 
 		// If application is valid, jump to application.
 		if (wispData.epcBuf[11] == 0x00) {
-			((void (*)()) 0x583a) ();
+			(*((void (*)(void))(*(unsigned int *)0xFEFE)))();
 		}
 
 		WISP_doRFID();

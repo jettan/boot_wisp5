@@ -76,10 +76,9 @@ int main(void) {
 		// Talk to the RFID reader.
 		while (FOREVER) {
 
-			// If application is valid, jump to application.
+			// Jump to boot.
 			if (wispData.epcBuf[11] == 0xBB) {
-				((void (*)()) 0x9086) ();
-			}
+				(*((void (*)(void))(*(unsigned int *)0xFFFE)))();			}
 
 			WISP_doRFID();
 		}
