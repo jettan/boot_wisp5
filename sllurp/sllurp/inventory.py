@@ -13,6 +13,7 @@ numTags = 0
 logger = logging.getLogger('sllurp')
 
 args = None
+fac = None
 
 def finish (_):
     logger.info('total # of tags seen: {}'.format(numTags))
@@ -28,11 +29,14 @@ def tagReportCallback (llrpMsg):
     tags = llrpMsg.msgdict['RO_ACCESS_REPORT']['TagReportData']
     if len(tags):
         logger.info('saw tag(s): {}'.format(pprint.pformat(tags)))
+        fac.stopInventory()
     else:
         logger.info('no tags seen')
         return
     for tag in tags:
         numTags += tag['TagSeenCount'][0]
+
+    
 
 def parse_args ():
     global args
@@ -102,9 +106,12 @@ def main ():
     d = defer.Deferred()
     d.addCallback(finish)
 
+
+    global fac
     fac = llrp.LLRPClientFactory(onFinish=d,
             duration=args.time,
-            report_every_n_tags=args.every_n,
+            #report_every_n_tags=args.every_n,
+            report_every_n_tags=3,
             antennas=enabled_antennas,
             tx_power=args.tx_power,
             modulation=args.modulation,
@@ -125,6 +132,8 @@ def main ():
                 'EnableAccessSpecID': False
             })
 
+    logger.info('Adding tagreport callback to factory...')
+    
     # tagReportCallback will be called every time the reader sends a TagReport
     # message (i.e., when it has "seen" tags).
     fac.addTagReportCallback(tagReportCallback)
@@ -135,6 +144,7 @@ def main ():
     # catch ctrl-C and stop inventory before disconnecting
     reactor.addSystemEventTrigger('before', 'shutdown', politeShutdown, fac)
 
+    logger.info('Running reactor.')
     reactor.run()
 
 if __name__ == '__main__':

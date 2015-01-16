@@ -15,6 +15,7 @@ words_to_write = None
 content_to_write = None
 words_to_read = None
 
+fac = None
 tags_seen = 0
 
 def finish (_):
@@ -22,7 +23,9 @@ def finish (_):
     reactor.stop()
 
 def access (proto):
-    return proto.startAccess(readWords=args.read_words, writeWords=args.write_words, writeContent=args.write_content)
+    proto.startAccess(readWords=args.read_words, writeWords=args.write_words, writeContent=args.write_content)
+    fac.stopInventory()
+    return
 
 def politeShutdown (factory):
     return factory.politeShutdown()
@@ -107,6 +110,7 @@ def main ():
     onFinish = defer.Deferred()
     onFinish.addCallback(finish)
 
+    global fac
     fac = llrp.LLRPClientFactory(onFinish=onFinish,
             disconnect_when_done=True,
             modulation=args.modulation,

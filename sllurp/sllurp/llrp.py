@@ -232,6 +232,7 @@ class LLRPClient (LineReceiver):
         self.factory.protocols.remove(self)
 
     def parseCapabilities (self, capdict):
+        logger.info('Parsing capabilities')
         def find_p (p, arr):
             m = p(arr)
             for idx, val in enumerate(arr):
@@ -302,7 +303,7 @@ class LLRPClient (LineReceiver):
 
     def handleMessage (self, lmsg):
         """Implements the LLRP client state machine."""
-        logger.debug('LLRPMessage received in state {}: {}'.format(self.state, lmsg))
+        logger.info('LLRPMessage received in state {}'.format(self.state))
         msgName = lmsg.getName()
         lmsg.peername = self.peername
 
@@ -786,6 +787,7 @@ class LLRPClientFactory (ClientFactory):
         self._message_callbacks = defaultdict(list)
 
         self.protocols = set()
+        logger.info('End constructor of factory.')
 
     def startedConnecting(self, connector):
         logger.info('connecting...')
@@ -798,7 +800,10 @@ class LLRPClientFactory (ClientFactory):
         self._message_callbacks['RO_ACCESS_REPORT'].append(cb)
 
     def buildProtocol(self, _):
+        logger.info('Constructing LLRPClient...')
         proto = LLRPClient(factory=self, **self.client_args)
+
+        logger.info('Done constructing.')
 
         # register state-change callbacks with new client
         for state, cbs in self._state_callbacks.items():
@@ -839,6 +844,14 @@ class LLRPClientFactory (ClientFactory):
     def pauseInventory (self, seconds=0):
         for proto in self.protocols:
             proto.pause(seconds)
+
+
+    def stopInventory(self):
+        logger.info('Hello!?')
+        protoDeferreds = []
+        for proto in self.protocols:
+            protoDeferreds.append(proto.stopPolitely(disconnect=False))
+            reactor.callLater(3,proto.startInventory)
 
     def politeShutdown (self):
         """Stop inventory on all connected readers."""
