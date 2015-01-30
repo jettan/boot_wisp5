@@ -32,12 +32,20 @@ void my_writeCallback (void) {
 	// Lower byte of written data.
 	wispData.epcBuf[10] = (wispData.writeBufPtr[0])  & 0xFF;
 
-	if (wispData.writeBufPtr[0] == 0x8100) {
-		// Fix the corrupted sector.
-		//*(uint8_t *) (APP_ENTRY) = 0x81;
 
+
+	// If password is entered, go to application.
+	if (wispData.writeBufPtr[0] == 0x8100) {
 		// Ask for jump_to_app()
 		wispData.epcBuf[11] = 0x00;
+
+	// Else, write the content to the supposedly corrupted sector.
+	} else {
+		// Content should be: FEFE = 58, FEFF = 3A
+		//(* (uint16_t *) (0xFEFE)) = 0x583A;
+		(* (uint16_t *) (0xFEFE)) = wispData.writeBufPtr[0];
+
+
 	}
 }
 

@@ -69,7 +69,7 @@ MEMORY {
     INT52                   : origin = 0xFEF8, length = 0x0002
     INT53                   : origin = 0xFEFA, length = 0x0002
     INT54                   : origin = 0xFEFC, length = 0x0002
-    RESET                   : origin = 0xFEFE, length = 0x0002
+    RESET                   : origin = 0xFF00, length = 0x0002
 }
 
 /****************************************************************************/
