@@ -1,7 +1,11 @@
-
 #include "wisp-base.h"
 
+#define SIZE_ADDR     0x1900
+#define ADDRESS_ADDR_HI  0x1902
+#define ADDRESS_ADDR_LO  0x1904
+
 WISP_dataStructInterface_t wispData;
+
 
 /** 
  * This function is called by WISP FW after a successful ACK reply
@@ -26,27 +30,32 @@ void my_readCallback (void) {
  *
  */
 void my_writeCallback (void) {
+
+
 	// Upper byte of written data.
-	wispData.epcBuf[9] = (wispData.writeBufPtr[0] >> 8)  & 0xFF;
+	uint8_t hi = (wispData.writeBufPtr[0] >> 8)  & 0xFF;
+
+	// Size of data received.
+	if (hi == 0xFD) {
+		(* (uint8_t *) (SIZE_ADDR)) = (wispData.writeBufPtr[0])  & 0xFF;
+	} else if (hi == 0xFE) {
+		(* (uint8_t *) (ADDRESS_ADDR_HI)) = (wispData.writeBufPtr[0])  & 0xFF;
+	} else if (hi == 0xFF) {
+		(* (uint8_t *) (ADDRESS_ADDR_LO)) = (wispData.writeBufPtr[0])  & 0xFF;
+	// End of line reached.
+	} else if (hi == 0xCC) {
+		// Do nothing.
+		asm("NOP");
+	// Data with packet number.
+	} else if (hi < 0x43) {
+		uint16_t address = (* (uint16_t *) (ADDRESS_ADDR_HI));
+		(* (uint8_t *) (address + hi)) = (wispData.writeBufPtr[0])  & 0xFF;
+	}
+
 
 	// Lower byte of written data.
+	wispData.epcBuf[9]  = (wispData.writeBufPtr[0] >> 8)  & 0xFF;
 	wispData.epcBuf[10] = (wispData.writeBufPtr[0])  & 0xFF;
-
-
-
-	// If password is entered, go to application.
-	if (wispData.writeBufPtr[0] == 0x8100) {
-		// Ask for jump_to_app()
-		wispData.epcBuf[11] = 0x00;
-
-	// Else, write the content to the supposedly corrupted sector.
-	} else {
-		// Content should be: FEFE = 58, FEFF = 3A
-		//(* (uint16_t *) (0xFEFE)) = 0x583A;
-		(* (uint16_t *) (0xFEFE)) = wispData.writeBufPtr[0];
-
-
-	}
 }
 
 /** 
@@ -68,6 +77,21 @@ void main_boot(void) {
 
 	WISP_init();
 
+
+	/*
+	// Configure MPU.
+	MPUCTL0  = MPUPW;				// Write PWD to access MPU registers.
+	MPUSEGB1 = 0x0FF8;
+	MPUSEGB2 = 0x1000;				// Borders are assigned to segments.
+
+	// Segment 1 - R/W/X
+	// Segment 2 - R/X
+	// Segment 3 - R/W/X
+	MPUSAM = (MPUSEG1RE | MPUSEG1WE | MPUSEG1XE | MPUSEG2RE | MPUSEG2XE | MPUSEG3RE | MPUSEG3WE | MPUSEG3XE);
+	MPUCTL0 = MPUPW | MPUENA | MPUSEGIE;         // Enable MPU
+
+	 */
+
 	// Register callback functions with WISP comm routines
 	WISP_registerCallback_ACK(&my_ackCallback);
 	WISP_registerCallback_READ(&my_readCallback);
@@ -86,28 +110,33 @@ void main_boot(void) {
 
 
 	// Set up EPC
-	wispData.epcBuf[0] = 0x05; // WISP version
-	wispData.epcBuf[1] = 0x85; // WISP UUID
-	wispData.epcBuf[2] = 0x02; // WISP UUID
-	wispData.epcBuf[3] = 0x30; // WISP UUID
-	wispData.epcBuf[4] = 0x53; // WISP UUID
-	wispData.epcBuf[5] = 0x74; // WISP UUID
-	wispData.epcBuf[6] = 0xDE; // RFID Status/Control
-	wispData.epcBuf[7] = 0xAD; // RFID Status/Control
-	wispData.epcBuf[8] = 0xBE; // RFID Status/Control
-	wispData.epcBuf[9] = 0xEF; // RFID Status/Control
-	wispData.epcBuf[10]= 0x00; // RFID Status/Control
-	wispData.epcBuf[11]= 0xAA; // RFID Status/Control
+	wispData.epcBuf[0] = 0x00; // WISP version
+	wispData.epcBuf[1] = 0x00; // WISP UUID
+	wispData.epcBuf[2] = 0x00; // WISP UUID
+	wispData.epcBuf[3] = 0x00; // WISP UUID
+	wispData.epcBuf[4] = 0x00; // WISP UUID
+	wispData.epcBuf[5] = 0x00; // WISP UUID
+	wispData.epcBuf[6] = 0x00; // RFID Status/Control
+	wispData.epcBuf[7] = 0x00; // RFID Status/Control
+	wispData.epcBuf[8] = 0x00; // RFID Status/Control
+	wispData.epcBuf[9] = 0xde; // RFID Status/Control
+	wispData.epcBuf[10]= 0xad; // RFID Status/Control
+	wispData.epcBuf[11]= 0x00; // RFID Status/Control
 
 	BITSET(PLED1OUT, PIN_LED1);
 
 	// Talk to the RFID reader.
 	while (FOREVER) {
 
-		// If application is valid, jump to application.
-		if (wispData.epcBuf[11] == 0x00) {
+
+		// If application is flashed, jump to application.
+		if (wispData.epcBuf[9] == 0xBE && wispData.epcBuf[10] == 0xEF) {
 			(*((void (*)(void))(*(unsigned int *)0xFEFE)))();
 		}
+
+		wispData.epcBuf[6] = (* (uint8_t *) (SIZE_ADDR));
+		wispData.epcBuf[7] = (* (uint8_t *) (ADDRESS_ADDR_HI));
+		wispData.epcBuf[8] = (* (uint8_t *) (ADDRESS_ADDR_LO));
 
 		WISP_doRFID();
 	}
