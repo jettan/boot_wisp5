@@ -1,0 +1,658 @@
+filename =
+
+dataset/TEK0001.CSV
+
+
+lengths =
+
+    0.0050
+    0.0170
+    0.0170
+    0.0150
+    0.0190
+    0.0180
+    0.0570
+    0.0160
+    0.0180
+    0.0260
+    0.0180
+    0.0160
+
+
+filename =
+
+dataset/TEK0002.CSV
+
+
+lengths =
+
+    0.0600
+    0.0160
+    0.0190
+    0.0160
+    0.0150
+    0.0150
+    0.0170
+    0.0170
+    0.0160
+    0.0180
+    0.0190
+    0.0070
+
+
+filename =
+
+dataset/TEK0003.CSV
+
+
+lengths =
+
+    0.0210
+    0.0170
+    0.0170
+    0.0230
+    0.0160
+    0.0170
+    0.0150
+    0.0150
+    0.0050
+    0.0010
+
+
+filename =
+
+dataset/TEK0004.CSV
+
+
+lengths =
+
+    0.0150
+    0.0140
+    0.0160
+    0.0160
+    0.0180
+    0.0170
+    0.0010
+    0.0150
+    0.0170
+    0.0190
+    0.0170
+    0.0150
+
+
+filename =
+
+dataset/TEK0005.CSV
+
+
+lengths =
+
+    0.0180
+    0.0180
+    0.0160
+    0.0170
+    0.0210
+    0.0170
+    0.1000
+    0.0140
+    0.0170
+    0.0160
+
+
+filename =
+
+dataset/TEK0006.CSV
+
+
+lengths =
+
+    0.0630
+    0.0200
+    0.0150
+    0.0160
+    0.0230
+
+
+filename =
+
+dataset/TEK0007.CSV
+
+
+lengths =
+
+    0.0020
+    0.0150
+    0.0170
+    0.0190
+    0.0170
+    0.0010
+    0.2450
+
+
+filename =
+
+dataset/TEK0008.CSV
+
+
+lengths =
+
+    0.0370
+    0.0150
+    0.0190
+    0.0010
+    0.0260
+
+
+filename =
+
+dataset/TEK0009.CSV
+
+
+lengths =
+
+    0.1250
+    0.0190
+    0.0230
+    0.0170
+    0.0180
+
+
+filename =
+
+dataset/TEK0010.CSV
+
+
+lengths =
+
+    0.0010
+    0.0150
+    0.0440
+    0.0160
+    0.0160
+    0.0160
+
+
+filename =
+
+dataset/TEK0011.CSV
+
+
+lengths =
+
+    0.2680
+    0.0260
+    0.0010
+
+
+filename =
+
+dataset/TEK0012.CSV
+
+
+lengths =
+
+    0.1520
+    0.0240
+    0.0170
+
+
+filename =
+
+dataset/TEK0013.CSV
+
+
+lengths =
+
+    0.1140
+    0.0200
+    0.0210
+
+
+filename =
+
+dataset/TEK0014.CSV
+
+
+lengths =
+
+    0.0590
+    0.0450
+    0.2140
+
+
+filename =
+
+dataset/TEK0015.CSV
+
+
+lengths =
+
+    0.1600
+    0.0170
+    0.0010
+
+
+filename =
+
+dataset/TEK0016.CSV
+
+
+lengths =
+
+    0.0120
+    0.0200
+    0.0150
+
+
+filename =
+
+dataset/TEK0017.CSV
+
+
+lengths =
+
+    0.6940
+    0.0280
+
+
+filename =
+
+dataset/TEK0018.CSV
+
+
+lengths =
+
+    0.6060
+    0.0180
+    0.0010
+
+
+filename =
+
+dataset/TEK0019.CSV
+
+
+lengths =
+
+    0.0010
+    0.0200
+    0.0010
+    0.0190
+
+
+filename =
+
+dataset/TEK0020.CSV
+
+
+lengths =
+
+    0.2240
+    0.0180
+    0.0200
+
+
+filename =
+
+dataset/TEK0021.CSV
+
+
+lengths =
+
+    0.0060
+    0.0020
+    0.0400
+    0.0180
+
+
+filename =
+
+dataset/TEK0022.CSV
+
+
+lengths =
+
+    0.5200
+    0.0180
+    0.0160
+    0.0160
+
+
+filename =
+
+dataset/TEK0023.CSV
+
+
+lengths =
+
+    0.4400
+    0.0320
+    0.0140
+    0.0260
+
+
+filename =
+
+dataset/TEK0024.CSV
+
+
+lengths =
+
+    0.0240
+    0.0180
+    0.0020
+    0.1100
+
+
+filename =
+
+dataset/TEK0025.CSV
+
+
+lengths =
+
+    0.4620
+    0.0060
+    0.0340
+
+
+filename =
+
+dataset/TEK0026.CSV
+
+
+lengths =
+
+    0.0240
+    0.0140
+    0.0180
+    0.0160
+    0.0020
+    0.2080
+
+
+filename =
+
+dataset/TEK0027.CSV
+
+
+lengths =
+
+    0.2980
+    0.0160
+    0.0180
+    0.0240
+    0.0120
+    0.0840
+    0.1760
+    0.0020
+
+
+filename =
+
+dataset/TEK0028.CSV
+
+
+lengths =
+
+    0.3300
+    0.2440
+    0.0160
+    0.0140
+    0.0180
+
+
+filename =
+
+dataset/TEK0029.CSV
+
+
+lengths =
+
+    0.0180
+    0.0160
+    0.0160
+    0.0060
+    0.0160
+
+
+filename =
+
+dataset/TEK0030.CSV
+
+
+lengths =
+
+    0.0020
+    0.0200
+    0.1240
+    0.0160
+    0.0180
+    0.0260
+
+
+filename =
+
+dataset/TEK0031.CSV
+
+
+lengths =
+
+    0.0620
+    0.0020
+    0.0240
+    0.0200
+    0.0180
+    0.0200
+
+
+filename =
+
+dataset/TEK0032.CSV
+
+
+lengths =
+
+    0.1380
+    0.0160
+    0.0320
+    0.0260
+    0.0160
+    0.0200
+
+
+filename =
+
+dataset/TEK0033.CSV
+
+
+lengths =
+
+    0.0240
+    0.0160
+    0.0180
+    0.0180
+    0.0060
+    0.0140
+
+
+filename =
+
+dataset/TEK0034.CSV
+
+
+lengths =
+
+    0.3240
+    0.0040
+    0.0180
+    0.0400
+    0.0220
+    0.0180
+
+
+filename =
+
+dataset/TEK0035.CSV
+
+
+lengths =
+
+    0.2540
+    0.0180
+    0.0180
+    0.0160
+    0.0020
+    0.0160
+
+
+filename =
+
+dataset/TEK0036.CSV
+
+
+lengths =
+
+    0.7640
+    0.0480
+    0.0520
+
+
+filename =
+
+dataset/TEK0037.CSV
+
+
+lengths =
+
+    0.0040
+    0.0040
+    0.0120
+    0.0200
+
+
+filename =
+
+dataset/TEK0038.CSV
+
+
+lengths =
+
+    0.0040
+    0.0320
+    0.0160
+    0.0320
+
+
+filename =
+
+dataset/TEK0039.CSV
+
+
+lengths =
+
+    3.4000
+    0.0040
+
+
+filename =
+
+dataset/TEK0040.CSV
+
+
+lengths =
+
+    0.0240
+    0.4800
+
+
+filename =
+
+dataset/TEK0041.CSV
+
+
+lengths =
+
+    0.0228
+    0.0260
+    0.0284
+    0.0292
+    0.0366
+    0.0366
+    0.0328
+    0.0332
+    0.0180
+
+
+filename =
+
+dataset/TEK0042.CSV
+
+
+lengths =
+
+    0.0296
+    0.0222
+    0.0192
+    0.0340
+    0.0330
+    0.0348
+    0.0524
+    0.0332
+    0.0150
+    0.0002
+
+
+filename =
+
+dataset/TEK0043.CSV
+
+
+lengths =
+
+    0.0002
+    0.0302
+    0.0356
+    0.0262
+    0.0294
+    0.0280
+    0.0228
+    0.0398
+    0.0564
+    0.0312
+
+
+filename =
+
+dataset/TEK0044.CSV
+
+
+lengths =
+
+    0.0136
+    0.0232
+    0.0284
+    0.0214
+    0.0220
+    0.0214
+    0.0380
+    0.0354
+    0.0352
+
+
+filename =
+
+dataset/TEK0045.CSV
+
+
+lengths =
+
+    0.0322
+    0.0290
+    0.0278
+    0.0440
+    0.0280
+    0.0272
+    0.0272
+    0.0284
+
