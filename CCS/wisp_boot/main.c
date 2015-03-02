@@ -6,7 +6,6 @@
 
 WISP_dataStructInterface_t wispData;
 
-
 /** 
  * This function is called by WISP FW after a successful ACK reply
  *
@@ -16,18 +15,14 @@ void my_ackCallback (void) {
 }
 
 /**
- * This function is called by WISP FW after a successful read command
- *  reception
- *
+ * This function is called by WISP FW after a successful read command reception.
  */
 void my_readCallback (void) {
 	asm(" NOP");
 }
 
 /**
- * This function is called by WISP FW after a successful write command
- *  reception
- *
+ * This function is called by WISP FW after a successful write command reception.
  */
 void my_writeCallback (void) {
 	wispData.epcBuf[5]++;
@@ -71,29 +66,11 @@ void my_blockWriteCallback  (void) {
 }
 
 /**
- * This implements the user application and should never return
- *
- * Must call WISP_init() in the first line of main()
- * Must call WISP_doRFID() at some point to start interacting with a reader
+ * This implements the user application and should never return.
  */
 void main_boot(void) {
 
 	WISP_init();
-
-
-	/*
-	// Configure MPU.
-	MPUCTL0  = MPUPW;				// Write PWD to access MPU registers.
-	MPUSEGB1 = 0x0FF8;
-	MPUSEGB2 = 0x1000;				// Borders are assigned to segments.
-
-	// Segment 1 - R/W/X
-	// Segment 2 - R/X
-	// Segment 3 - R/W/X
-	MPUSAM = (MPUSEG1RE | MPUSEG1WE | MPUSEG1XE | MPUSEG2RE | MPUSEG2XE | MPUSEG3RE | MPUSEG3WE | MPUSEG3XE);
-	MPUCTL0 = MPUPW | MPUENA | MPUSEGIE;         // Enable MPU
-
-	 */
 
 	// Register callback functions with WISP comm routines
 	WISP_registerCallback_ACK(&my_ackCallback);
@@ -111,7 +88,6 @@ void main_boot(void) {
 	// Initialize FRAM.
 	FRAM_init();
 
-
 	// Set up EPC
 	wispData.epcBuf[0] = 0x00; // WISP version
 	wispData.epcBuf[1] = 0x00; // WISP UUID
@@ -125,8 +101,6 @@ void main_boot(void) {
 	wispData.epcBuf[9] = 0xde; // RFID Status/Control
 	wispData.epcBuf[10]= 0xad; // RFID Status/Control
 	wispData.epcBuf[11]= 0x00; // RFID Status/Control
-
-	//BITSET(PLED1OUT, PIN_LED1);
 
 	// Talk to the RFID reader.
 	while (FOREVER) {
