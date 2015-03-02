@@ -1,8 +1,8 @@
 #include "wisp-base.h"
 
-#define SIZE_ADDR     0x1900
-#define ADDRESS_ADDR_HI  0x1902
-#define ADDRESS_ADDR_LO  0x1904
+#define SIZE_ADDR        0x1900
+#define ADDRESS_ADDR_HI  0x1903
+#define ADDRESS_ADDR_LO  0x1902
 
 WISP_dataStructInterface_t wispData;
 
@@ -30,6 +30,9 @@ void my_readCallback (void) {
  *
  */
 void my_writeCallback (void) {
+	wispData.epcBuf[5]++;
+
+	BITSET(PLED1OUT, PIN_LED1);
 
 
 	// Upper byte of written data.
@@ -47,7 +50,7 @@ void my_writeCallback (void) {
 		// Do nothing.
 		asm("NOP");
 	// Data with packet number.
-	} else if (hi < 0x43) {
+	} else if (hi < 0x20) {
 		uint16_t address = (* (uint16_t *) (ADDRESS_ADDR_HI));
 		(* (uint8_t *) (address + hi)) = (wispData.writeBufPtr[0])  & 0xFF;
 	}
@@ -123,7 +126,7 @@ void main_boot(void) {
 	wispData.epcBuf[10]= 0xad; // RFID Status/Control
 	wispData.epcBuf[11]= 0x00; // RFID Status/Control
 
-	BITSET(PLED1OUT, PIN_LED1);
+	//BITSET(PLED1OUT, PIN_LED1);
 
 	// Talk to the RFID reader.
 	while (FOREVER) {
