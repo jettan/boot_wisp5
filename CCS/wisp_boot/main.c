@@ -3,6 +3,7 @@
 #define SIZE_ADDR        0x1900
 #define ADDRESS_ADDR_HI  0x1903
 #define ADDRESS_ADDR_LO  0x1902
+#define BSL_PASSWD       0x1910
 
 WISP_dataStructInterface_t wispData;
 
@@ -24,22 +25,43 @@ void my_writeCallback (void) {
 
 	// Get data descriptor.
 	uint8_t hi = (wispData.writeBufPtr[0] >> 8)  & 0xFF;
+	uint8_t lo = (wispData.writeBufPtr[0])  & 0xFF;
 
-	// Size of data.
-	if (hi == 0xFD) {
-		(* (uint8_t *) (SIZE_ADDR)) = (wispData.writeBufPtr[0])  & 0xFF;
-	} else if (hi == 0xFE) {
-		(* (uint8_t *) (ADDRESS_ADDR_HI)) = (wispData.writeBufPtr[0])  & 0xFF;
-	} else if (hi == 0xFF) {
-		(* (uint8_t *) (ADDRESS_ADDR_LO)) = (wispData.writeBufPtr[0])  & 0xFF;
-	// End of line reached.
-	} else if (hi < 0x20) {
-		uint16_t address = (* (uint16_t *) (ADDRESS_ADDR_HI));
-		(* (uint8_t *) (address + hi)) = (wispData.writeBufPtr[0])  & 0xFF;
+	// If the BSL password in memory is correct, we can enter FRAM write mode.
+	if ((* (uint16_t *) (BSL_PASSWD)) == 0xB105) {
+		// Size of data.
+		if (hi == 0xFD) {
+			(* (uint8_t *) (SIZE_ADDR)) = lo;
+		} else if (hi == 0xFE) {
+			(* (uint8_t *) (ADDRESS_ADDR_HI)) = lo;
+		} else if (hi == 0xFF) {
+			(* (uint8_t *) (ADDRESS_ADDR_LO)) = lo;
+		// End of line reached.
+		} else if (hi < 0x20) {
+			uint16_t address = (* (uint16_t *) (ADDRESS_ADDR_HI));
+			(* (uint8_t *) (address + hi)) = lo;
+		}
+
+		// Acknowledge the message.
+		wispData.epcBuf[9]  = (wispData.writeBufPtr[0] >> 8)  & 0xFF;
+		wispData.epcBuf[10] = (wispData.writeBufPtr[0])  & 0xFF;
+
+	} else {
+		// Check whether we got a command to enter FRAM write mode.
+		if (hi == 0xB1 && lo == 0x05) {
+			// Write the BSL password.
+			(* (uint16_t *) (BSL_PASSWD)) = 0xB105;
+
+			// Acknowledge the message.
+			wispData.epcBuf[9]  = (wispData.writeBufPtr[0] >> 8)  & 0xFF;
+			wispData.epcBuf[10] = (wispData.writeBufPtr[0])  & 0xFF;
+
+		// Otherwise, enter application directly.
+		} else {
+			wispData.epcBuf[9]   = 0XBE;
+			wispData.epcBuf[10]  = 0XEF;
+		}
 	}
-
-	wispData.epcBuf[9]  = (wispData.writeBufPtr[0] >> 8)  & 0xFF;
-	wispData.epcBuf[10] = (wispData.writeBufPtr[0])  & 0xFF;
 }
 
 void main_boot(void) {
