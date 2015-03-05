@@ -1,0 +1,2268 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<java version="1.6.0_13" class="java.beans.XMLDecoder"> 
+ <object class="com.ti.dvt.msp430.power.core.StatModel"> 
+  <void property="name"> 
+   <string>MSP430_D_2015_03_05_153409</string> 
+  </void> 
+  <void property="properties"> 
+   <void method="put"> 
+    <string>RawDataPath</string> 
+    <string>/home/dutiir/workspace/boot_wisp5/CCS/wisp_boot/MSP430_D_2015_03_05_153409/ETData.xml</string> 
+   </void> 
+  </void> 
+  <void property="root"> 
+   <object id="Node0" class="com.ti.dvt.msp430.power.core.Node"> 
+    <void property="name"> 
+     <string>MSP430</string> 
+    </void> 
+    <void property="serChildren"> 
+     <array class="com.ti.dvt.msp430.power.core.Node" length="4"> 
+      <void index="0"> 
+       <object id="StatModel$PeripheralNode0" class="com.ti.dvt.msp430.power.core.StatModel$PeripheralNode"> 
+        <void property="level"> 
+         <int>1</int> 
+        </void> 
+        <void property="longName"> 
+         <string>Peripherals</string> 
+        </void> 
+        <void property="name"> 
+         <string>PERIF</string> 
+        </void> 
+        <void property="parent"> 
+         <object idref="Node0"/> 
+        </void> 
+        <void property="serChildren"> 
+         <array class="com.ti.dvt.msp430.power.core.Node" length="17"> 
+          <void index="0"> 
+           <object class="com.ti.dvt.msp430.power.core.StatModel$PeripheralNode"> 
+            <void property="level"> 
+             <int>2</int> 
+            </void> 
+            <void property="name"> 
+             <string>TA2</string> 
+            </void> 
+            <void property="parent"> 
+             <object idref="StatModel$PeripheralNode0"/> 
+            </void> 
+            <void id="NodeArray0" property="serChildren"/> 
+            <void property="serChildren"> 
+             <object idref="NodeArray0"/> 
+            </void> 
+            <void property="serMeasurements"> 
+             <array class="com.ti.dvt.msp430.power.core.Measurement" length="1"> 
+              <void index="0"> 
+               <object class="com.ti.dvt.msp430.power.core.Measurement"> 
+                <void property="name"> 
+                 <string>Cycle</string> 
+                </void> 
+               </object> 
+              </void> 
+             </array> 
+            </void> 
+           </object> 
+          </void> 
+          <void index="1"> 
+           <object class="com.ti.dvt.msp430.power.core.StatModel$PeripheralNode"> 
+            <void property="level"> 
+             <int>2</int> 
+            </void> 
+            <void property="name"> 
+             <string>TA1</string> 
+            </void> 
+            <void property="parent"> 
+             <object idref="StatModel$PeripheralNode0"/> 
+            </void> 
+            <void id="NodeArray1" property="serChildren"/> 
+            <void property="serChildren"> 
+             <object idref="NodeArray1"/> 
+            </void> 
+            <void property="serMeasurements"> 
+             <array class="com.ti.dvt.msp430.power.core.Measurement" length="1"> 
+              <void index="0"> 
+               <object class="com.ti.dvt.msp430.power.core.Measurement"> 
+                <void property="name"> 
+                 <string>Cycle</string> 
+                </void> 
+               </object> 
+              </void> 
+             </array> 
+            </void> 
+           </object> 
+          </void> 
+          <void index="2"> 
+           <object class="com.ti.dvt.msp430.power.core.StatModel$PeripheralNode"> 
+            <void property="level"> 
+             <int>2</int> 
+            </void> 
+            <void property="name"> 
+             <string>MPY</string> 
+            </void> 
+            <void property="parent"> 
+             <object idref="StatModel$PeripheralNode0"/> 
+            </void> 
+            <void id="NodeArray2" property="serChildren"/> 
+            <void property="serChildren"> 
+             <object idref="NodeArray2"/> 
+            </void> 
+            <void property="serMeasurements"> 
+             <array class="com.ti.dvt.msp430.power.core.Measurement" length="1"> 
+              <void index="0"> 
+               <object class="com.ti.dvt.msp430.power.core.Measurement"> 
+                <void property="name"> 
+                 <string>Cycle</string> 
+                </void> 
+               </object> 
+              </void> 
+             </array> 
+            </void> 
+           </object> 
+          </void> 
+          <void index="3"> 
+           <object class="com.ti.dvt.msp430.power.core.StatModel$PeripheralNode"> 
+            <void property="level"> 
+             <int>2</int> 
+            </void> 
+            <void property="name"> 
+             <string>TA3</string> 
+            </void> 
+            <void property="parent"> 
+             <object idref="StatModel$PeripheralNode0"/> 
+            </void> 
+            <void id="NodeArray3" property="serChildren"/> 
+            <void property="serChildren"> 
+             <object idref="NodeArray3"/> 
+            </void> 
+            <void property="serMeasurements"> 
+             <array class="com.ti.dvt.msp430.power.core.Measurement" length="1"> 
+              <void index="0"> 
+               <object class="com.ti.dvt.msp430.power.core.Measurement"> 
+                <void property="name"> 
+                 <string>Cycle</string> 
+                </void> 
+               </object> 
+              </void> 
+             </array> 
+            </void> 
+           </object> 
+          </void> 
+          <void index="4"> 
+           <object class="com.ti.dvt.msp430.power.core.StatModel$PeripheralNode"> 
+            <void property="level"> 
+             <int>2</int> 
+            </void> 
+            <void property="name"> 
+             <string>TA0</string> 
+            </void> 
+            <void property="parent"> 
+             <object idref="StatModel$PeripheralNode0"/> 
+            </void> 
+            <void id="NodeArray4" property="serChildren"/> 
+            <void property="serChildren"> 
+             <object idref="NodeArray4"/> 
+            </void> 
+            <void property="serMeasurements"> 
+             <array class="com.ti.dvt.msp430.power.core.Measurement" length="1"> 
+              <void index="0"> 
+               <object class="com.ti.dvt.msp430.power.core.Measurement"> 
+                <void property="accTotal"> 
+                 <double>2.083657503648E15</double> 
+                </void> 
+                <void property="count"> 
+                 <long>49033</long> 
+                </void> 
+                <void property="lastValue"> 
+                 <double>1437000.0</double> 
+                </void> 
+                <void property="name"> 
+                 <string>Cycle</string> 
+                </void> 
+                <void property="value"> 
+                 <double>8.7218316E10</double> 
+                </void> 
+                <void property="watermarks"> 
+                 <void property="hi"> 
+                  <double>8.7218316E10</double> 
+                 </void> 
+                 <void property="lo"> 
+                  <double>1340000.0</double> 
+                 </void> 
+                </void> 
+               </object> 
+              </void> 
+             </array> 
+            </void> 
+           </object> 
+          </void> 
+          <void index="5"> 
+           <object class="com.ti.dvt.msp430.power.core.StatModel$PeripheralNode"> 
+            <void property="level"> 
+             <int>2</int> 
+            </void> 
+            <void property="name"> 
+             <string>eUSCI_A0</string> 
+            </void> 
+            <void property="parent"> 
+             <object idref="StatModel$PeripheralNode0"/> 
+            </void> 
+            <void id="NodeArray5" property="serChildren"/> 
+            <void property="serChildren"> 
+             <object idref="NodeArray5"/> 
+            </void> 
+            <void property="serMeasurements"> 
+             <array class="com.ti.dvt.msp430.power.core.Measurement" length="1"> 
+              <void index="0"> 
+               <object class="com.ti.dvt.msp430.power.core.Measurement"> 
+                <void property="name"> 
+                 <string>Cycle</string> 
+                </void> 
+               </object> 
+              </void> 
+             </array> 
+            </void> 
+           </object> 
+          </void> 
+          <void index="6"> 
+           <object class="com.ti.dvt.msp430.power.core.StatModel$PeripheralNode"> 
+            <void property="level"> 
+             <int>2</int> 
+            </void> 
+            <void property="name"> 
+             <string>TB0</string> 
+            </void> 
+            <void property="parent"> 
+             <object idref="StatModel$PeripheralNode0"/> 
+            </void> 
+            <void id="NodeArray6" property="serChildren"/> 
+            <void property="serChildren"> 
+             <object idref="NodeArray6"/> 
+            </void> 
+            <void property="serMeasurements"> 
+             <array class="com.ti.dvt.msp430.power.core.Measurement" length="1"> 
+              <void index="0"> 
+               <object class="com.ti.dvt.msp430.power.core.Measurement"> 
+                <void property="name"> 
+                 <string>Cycle</string> 
+                </void> 
+               </object> 
+              </void> 
+             </array> 
+            </void> 
+           </object> 
+          </void> 
+          <void index="7"> 
+           <object class="com.ti.dvt.msp430.power.core.StatModel$PeripheralNode"> 
+            <void property="level"> 
+             <int>2</int> 
+            </void> 
+            <void property="name"> 
+             <string>eUSCI_A1</string> 
+            </void> 
+            <void property="parent"> 
+             <object idref="StatModel$PeripheralNode0"/> 
+            </void> 
+            <void id="NodeArray7" property="serChildren"/> 
+            <void property="serChildren"> 
+             <object idref="NodeArray7"/> 
+            </void> 
+            <void property="serMeasurements"> 
+             <array class="com.ti.dvt.msp430.power.core.Measurement" length="1"> 
+              <void index="0"> 
+               <object class="com.ti.dvt.msp430.power.core.Measurement"> 
+                <void property="name"> 
+                 <string>Cycle</string> 
+                </void> 
+               </object> 
+              </void> 
+             </array> 
+            </void> 
+           </object> 
+          </void> 
+          <void index="8"> 
+           <object class="com.ti.dvt.msp430.power.core.StatModel$PeripheralNode"> 
+            <void property="level"> 
+             <int>2</int> 
+            </void> 
+            <void property="name"> 
+             <string>FRAM</string> 
+            </void> 
+            <void property="parent"> 
+             <object idref="StatModel$PeripheralNode0"/> 
+            </void> 
+            <void id="NodeArray8" property="serChildren"/> 
+            <void property="serChildren"> 
+             <object idref="NodeArray8"/> 
+            </void> 
+            <void property="serMeasurements"> 
+             <array class="com.ti.dvt.msp430.power.core.Measurement" length="1"> 
+              <void index="0"> 
+               <object class="com.ti.dvt.msp430.power.core.Measurement"> 
+                <void property="accTotal"> 
+                 <double>4.73892022621E14</double> 
+                </void> 
+                <void property="count"> 
+                 <long>20522</long> 
+                </void> 
+                <void property="lastValue"> 
+                 <double>1268000.0</double> 
+                </void> 
+                <void property="name"> 
+                 <string>Cycle</string> 
+                </void> 
+                <void property="value"> 
+                 <double>4.4467765E10</double> 
+                </void> 
+                <void property="watermarks"> 
+                 <void property="hi"> 
+                  <double>4.4467765E10</double> 
+                 </void> 
+                 <void property="lo"> 
+                  <double>1222000.0</double> 
+                 </void> 
+                </void> 
+               </object> 
+              </void> 
+             </array> 
+            </void> 
+           </object> 
+          </void> 
+          <void index="9"> 
+           <object class="com.ti.dvt.msp430.power.core.StatModel$PeripheralNode"> 
+            <void property="level"> 
+             <int>2</int> 
+            </void> 
+            <void property="name"> 
+             <string>RTC</string> 
+            </void> 
+            <void property="parent"> 
+             <object idref="StatModel$PeripheralNode0"/> 
+            </void> 
+            <void id="NodeArray9" property="serChildren"/> 
+            <void property="serChildren"> 
+             <object idref="NodeArray9"/> 
+            </void> 
+            <void property="serMeasurements"> 
+             <array class="com.ti.dvt.msp430.power.core.Measurement" length="1"> 
+              <void index="0"> 
+               <object class="com.ti.dvt.msp430.power.core.Measurement"> 
+                <void property="name"> 
+                 <string>Cycle</string> 
+                </void> 
+               </object> 
+              </void> 
+             </array> 
+            </void> 
+           </object> 
+          </void> 
+          <void index="10"> 
+           <object class="com.ti.dvt.msp430.power.core.StatModel$PeripheralNode"> 
+            <void property="level"> 
+             <int>2</int> 
+            </void> 
+            <void property="name"> 
+             <string>eUSCI_B0</string> 
+            </void> 
+            <void property="parent"> 
+             <object idref="StatModel$PeripheralNode0"/> 
+            </void> 
+            <void id="NodeArray10" property="serChildren"/> 
+            <void property="serChildren"> 
+             <object idref="NodeArray10"/> 
+            </void> 
+            <void property="serMeasurements"> 
+             <array class="com.ti.dvt.msp430.power.core.Measurement" length="1"> 
+              <void index="0"> 
+               <object class="com.ti.dvt.msp430.power.core.Measurement"> 
+                <void property="name"> 
+                 <string>Cycle</string> 
+                </void> 
+               </object> 
+              </void> 
+             </array> 
+            </void> 
+           </object> 
+          </void> 
+          <void index="11"> 
+           <object class="com.ti.dvt.msp430.power.core.StatModel$PeripheralNode"> 
+            <void property="level"> 
+             <int>2</int> 
+            </void> 
+            <void property="name"> 
+             <string>AES</string> 
+            </void> 
+            <void property="parent"> 
+             <object idref="StatModel$PeripheralNode0"/> 
+            </void> 
+            <void id="NodeArray11" property="serChildren"/> 
+            <void property="serChildren"> 
+             <object idref="NodeArray11"/> 
+            </void> 
+            <void property="serMeasurements"> 
+             <array class="com.ti.dvt.msp430.power.core.Measurement" length="1"> 
+              <void index="0"> 
+               <object class="com.ti.dvt.msp430.power.core.Measurement"> 
+                <void property="name"> 
+                 <string>Cycle</string> 
+                </void> 
+               </object> 
+              </void> 
+             </array> 
+            </void> 
+           </object> 
+          </void> 
+          <void index="12"> 
+           <object class="com.ti.dvt.msp430.power.core.StatModel$PeripheralNode"> 
+            <void property="level"> 
+             <int>2</int> 
+            </void> 
+            <void property="name"> 
+             <string>DMA</string> 
+            </void> 
+            <void property="parent"> 
+             <object idref="StatModel$PeripheralNode0"/> 
+            </void> 
+            <void id="NodeArray12" property="serChildren"/> 
+            <void property="serChildren"> 
+             <object idref="NodeArray12"/> 
+            </void> 
+            <void property="serMeasurements"> 
+             <array class="com.ti.dvt.msp430.power.core.Measurement" length="1"> 
+              <void index="0"> 
+               <object class="com.ti.dvt.msp430.power.core.Measurement"> 
+                <void property="name"> 
+                 <string>Cycle</string> 
+                </void> 
+               </object> 
+              </void> 
+             </array> 
+            </void> 
+           </object> 
+          </void> 
+          <void index="13"> 
+           <object class="com.ti.dvt.msp430.power.core.StatModel$PeripheralNode"> 
+            <void property="level"> 
+             <int>2</int> 
+            </void> 
+            <void property="name"> 
+             <string>COMP</string> 
+            </void> 
+            <void property="parent"> 
+             <object idref="StatModel$PeripheralNode0"/> 
+            </void> 
+            <void id="NodeArray13" property="serChildren"/> 
+            <void property="serChildren"> 
+             <object idref="NodeArray13"/> 
+            </void> 
+            <void property="serMeasurements"> 
+             <array class="com.ti.dvt.msp430.power.core.Measurement" length="1"> 
+              <void index="0"> 
+               <object class="com.ti.dvt.msp430.power.core.Measurement"> 
+                <void property="name"> 
+                 <string>Cycle</string> 
+                </void> 
+               </object> 
+              </void> 
+             </array> 
+            </void> 
+           </object> 
+          </void> 
+          <void index="14"> 
+           <object class="com.ti.dvt.msp430.power.core.StatModel$PeripheralNode"> 
+            <void property="level"> 
+             <int>2</int> 
+            </void> 
+            <void property="name"> 
+             <string>WDT</string> 
+            </void> 
+            <void property="parent"> 
+             <object idref="StatModel$PeripheralNode0"/> 
+            </void> 
+            <void id="NodeArray14" property="serChildren"/> 
+            <void property="serChildren"> 
+             <object idref="NodeArray14"/> 
+            </void> 
+            <void property="serMeasurements"> 
+             <array class="com.ti.dvt.msp430.power.core.Measurement" length="1"> 
+              <void index="0"> 
+               <object class="com.ti.dvt.msp430.power.core.Measurement"> 
+                <void property="name"> 
+                 <string>Cycle</string> 
+                </void> 
+               </object> 
+              </void> 
+             </array> 
+            </void> 
+           </object> 
+          </void> 
+          <void index="15"> 
+           <object class="com.ti.dvt.msp430.power.core.StatModel$PeripheralNode"> 
+            <void property="level"> 
+             <int>2</int> 
+            </void> 
+            <void property="name"> 
+             <string>ADC</string> 
+            </void> 
+            <void property="parent"> 
+             <object idref="StatModel$PeripheralNode0"/> 
+            </void> 
+            <void id="NodeArray15" property="serChildren"/> 
+            <void property="serChildren"> 
+             <object idref="NodeArray15"/> 
+            </void> 
+            <void property="serMeasurements"> 
+             <array class="com.ti.dvt.msp430.power.core.Measurement" length="1"> 
+              <void index="0"> 
+               <object class="com.ti.dvt.msp430.power.core.Measurement"> 
+                <void property="name"> 
+                 <string>Cycle</string> 
+                </void> 
+               </object> 
+              </void> 
+             </array> 
+            </void> 
+           </object> 
+          </void> 
+          <void index="16"> 
+           <object class="com.ti.dvt.msp430.power.core.StatModel$PeripheralNode"> 
+            <void property="level"> 
+             <int>2</int> 
+            </void> 
+            <void property="name"> 
+             <string>REF</string> 
+            </void> 
+            <void property="parent"> 
+             <object idref="StatModel$PeripheralNode0"/> 
+            </void> 
+            <void id="NodeArray16" property="serChildren"/> 
+            <void property="serChildren"> 
+             <object idref="NodeArray16"/> 
+            </void> 
+            <void property="serMeasurements"> 
+             <array class="com.ti.dvt.msp430.power.core.Measurement" length="1"> 
+              <void index="0"> 
+               <object class="com.ti.dvt.msp430.power.core.Measurement"> 
+                <void property="name"> 
+                 <string>Cycle</string> 
+                </void> 
+               </object> 
+              </void> 
+             </array> 
+            </void> 
+           </object> 
+          </void> 
+         </array> 
+        </void> 
+        <void property="serMeasurements"> 
+         <array class="com.ti.dvt.msp430.power.core.Measurement" length="1"> 
+          <void index="0"> 
+           <object class="com.ti.dvt.msp430.power.core.Measurement"> 
+            <void property="lastValue"> 
+             <double>NaN</double> 
+            </void> 
+            <void property="name"> 
+             <string>Cycle</string> 
+            </void> 
+            <void property="value"> 
+             <double>NaN</double> 
+            </void> 
+           </object> 
+          </void> 
+         </array> 
+        </void> 
+       </object> 
+      </void> 
+      <void index="1"> 
+       <object id="StatModel$PeripheralNode1" class="com.ti.dvt.msp430.power.core.StatModel$PeripheralNode"> 
+        <void property="level"> 
+         <int>1</int> 
+        </void> 
+        <void property="longName"> 
+         <string>System Clocks</string> 
+        </void> 
+        <void property="name"> 
+         <string>CLK</string> 
+        </void> 
+        <void property="parent"> 
+         <object idref="Node0"/> 
+        </void> 
+        <void property="serChildren"> 
+         <array class="com.ti.dvt.msp430.power.core.Node" length="5"> 
+          <void index="0"> 
+           <object class="com.ti.dvt.msp430.power.core.StatModel$PeripheralNode"> 
+            <void property="level"> 
+             <int>2</int> 
+            </void> 
+            <void property="name"> 
+             <string>SMCLK</string> 
+            </void> 
+            <void property="parent"> 
+             <object idref="StatModel$PeripheralNode1"/> 
+            </void> 
+            <void id="NodeArray17" property="serChildren"/> 
+            <void property="serChildren"> 
+             <object idref="NodeArray17"/> 
+            </void> 
+            <void property="serMeasurements"> 
+             <array class="com.ti.dvt.msp430.power.core.Measurement" length="1"> 
+              <void index="0"> 
+               <object class="com.ti.dvt.msp430.power.core.Measurement"> 
+                <void property="accTotal"> 
+                 <double>3.078034630335E15</double> 
+                </void> 
+                <void property="count"> 
+                 <long>58307</long> 
+                </void> 
+                <void property="lastValue"> 
+                 <double>1268000.0</double> 
+                </void> 
+                <void property="name"> 
+                 <string>Cycle</string> 
+                </void> 
+                <void property="value"> 
+                 <double>1.07073787E11</double> 
+                </void> 
+                <void property="watermarks"> 
+                 <void property="hi"> 
+                  <double>1.07073787E11</double> 
+                 </void> 
+                 <void property="lo"> 
+                  <double>1340000.0</double> 
+                 </void> 
+                </void> 
+               </object> 
+              </void> 
+             </array> 
+            </void> 
+           </object> 
+          </void> 
+          <void index="1"> 
+           <object class="com.ti.dvt.msp430.power.core.StatModel$PeripheralNode"> 
+            <void property="level"> 
+             <int>2</int> 
+            </void> 
+            <void property="name"> 
+             <string>VLO</string> 
+            </void> 
+            <void property="parent"> 
+             <object idref="StatModel$PeripheralNode1"/> 
+            </void> 
+            <void id="NodeArray18" property="serChildren"/> 
+            <void property="serChildren"> 
+             <object idref="NodeArray18"/> 
+            </void> 
+            <void property="serMeasurements"> 
+             <array class="com.ti.dvt.msp430.power.core.Measurement" length="1"> 
+              <void index="0"> 
+               <object class="com.ti.dvt.msp430.power.core.Measurement"> 
+                <void property="name"> 
+                 <string>Cycle</string> 
+                </void> 
+               </object> 
+              </void> 
+             </array> 
+            </void> 
+           </object> 
+          </void> 
+          <void index="2"> 
+           <object class="com.ti.dvt.msp430.power.core.StatModel$PeripheralNode"> 
+            <void property="level"> 
+             <int>2</int> 
+            </void> 
+            <void property="name"> 
+             <string>ACLK</string> 
+            </void> 
+            <void property="parent"> 
+             <object idref="StatModel$PeripheralNode1"/> 
+            </void> 
+            <void id="NodeArray19" property="serChildren"/> 
+            <void property="serChildren"> 
+             <object idref="NodeArray19"/> 
+            </void> 
+            <void property="serMeasurements"> 
+             <array class="com.ti.dvt.msp430.power.core.Measurement" length="1"> 
+              <void index="0"> 
+               <object class="com.ti.dvt.msp430.power.core.Measurement"> 
+                <void property="accTotal"> 
+                 <double>3.081980665992E15</double> 
+                </void> 
+                <void property="count"> 
+                 <long>58343</long> 
+                </void> 
+                <void property="lastValue"> 
+                 <double>1268000.0</double> 
+                </void> 
+                <void property="name"> 
+                 <string>Cycle</string> 
+                </void> 
+                <void property="value"> 
+                 <double>1.071465E11</double> 
+                </void> 
+                <void property="watermarks"> 
+                 <void property="hi"> 
+                  <double>1.071465E11</double> 
+                 </void> 
+                 <void property="lo"> 
+                  <double>1340000.0</double> 
+                 </void> 
+                </void> 
+               </object> 
+              </void> 
+             </array> 
+            </void> 
+           </object> 
+          </void> 
+          <void index="3"> 
+           <object class="com.ti.dvt.msp430.power.core.StatModel$PeripheralNode"> 
+            <void property="level"> 
+             <int>2</int> 
+            </void> 
+            <void property="name"> 
+             <string>MCLK</string> 
+            </void> 
+            <void property="parent"> 
+             <object idref="StatModel$PeripheralNode1"/> 
+            </void> 
+            <void id="NodeArray20" property="serChildren"/> 
+            <void property="serChildren"> 
+             <object idref="NodeArray20"/> 
+            </void> 
+            <void property="serMeasurements"> 
+             <array class="com.ti.dvt.msp430.power.core.Measurement" length="1"> 
+              <void index="0"> 
+               <object class="com.ti.dvt.msp430.power.core.Measurement"> 
+                <void property="accTotal"> 
+                 <double>2.79347688462E14</double> 
+                </void> 
+                <void property="count"> 
+                 <long>15717</long> 
+                </void> 
+                <void property="lastValue"> 
+                 <double>1268000.0</double> 
+                </void> 
+                <void property="name"> 
+                 <string>Cycle</string> 
+                </void> 
+                <void property="value"> 
+                 <double>3.3926772E10</double> 
+                </void> 
+                <void property="watermarks"> 
+                 <void property="hi"> 
+                  <double>3.3926772E10</double> 
+                 </void> 
+                 <void property="lo"> 
+                  <double>3418000.0</double> 
+                 </void> 
+                </void> 
+               </object> 
+              </void> 
+             </array> 
+            </void> 
+           </object> 
+          </void> 
+          <void index="4"> 
+           <object class="com.ti.dvt.msp430.power.core.StatModel$PeripheralNode"> 
+            <void property="level"> 
+             <int>2</int> 
+            </void> 
+            <void property="name"> 
+             <string>MODOSC</string> 
+            </void> 
+            <void property="parent"> 
+             <object idref="StatModel$PeripheralNode1"/> 
+            </void> 
+            <void id="NodeArray21" property="serChildren"/> 
+            <void property="serChildren"> 
+             <object idref="NodeArray21"/> 
+            </void> 
+            <void property="serMeasurements"> 
+             <array class="com.ti.dvt.msp430.power.core.Measurement" length="1"> 
+              <void index="0"> 
+               <object class="com.ti.dvt.msp430.power.core.Measurement"> 
+                <void property="accTotal"> 
+                 <double>3.081980665992E15</double> 
+                </void> 
+                <void property="count"> 
+                 <long>58343</long> 
+                </void> 
+                <void property="lastValue"> 
+                 <double>1268000.0</double> 
+                </void> 
+                <void property="name"> 
+                 <string>Cycle</string> 
+                </void> 
+                <void property="value"> 
+                 <double>1.071465E11</double> 
+                </void> 
+                <void property="watermarks"> 
+                 <void property="hi"> 
+                  <double>1.071465E11</double> 
+                 </void> 
+                 <void property="lo"> 
+                  <double>1340000.0</double> 
+                 </void> 
+                </void> 
+               </object> 
+              </void> 
+             </array> 
+            </void> 
+           </object> 
+          </void> 
+         </array> 
+        </void> 
+        <void property="serMeasurements"> 
+         <array class="com.ti.dvt.msp430.power.core.Measurement" length="1"> 
+          <void index="0"> 
+           <object class="com.ti.dvt.msp430.power.core.Measurement"> 
+            <void property="lastValue"> 
+             <double>NaN</double> 
+            </void> 
+            <void property="name"> 
+             <string>Cycle</string> 
+            </void> 
+            <void property="value"> 
+             <double>NaN</double> 
+            </void> 
+           </object> 
+          </void> 
+         </array> 
+        </void> 
+       </object> 
+      </void> 
+      <void index="2"> 
+       <object id="StatModel$StateNode0" class="com.ti.dvt.msp430.power.core.StatModel$StateNode"> 
+        <void property="level"> 
+         <int>1</int> 
+        </void> 
+        <void property="name"> 
+         <string>CPU</string> 
+        </void> 
+        <void property="parent"> 
+         <object idref="Node0"/> 
+        </void> 
+        <void property="serChildren"> 
+         <array class="com.ti.dvt.msp430.power.core.Node" length="2"> 
+          <void index="0"> 
+           <object id="StatModel$StateNode1" class="com.ti.dvt.msp430.power.core.StatModel$StateNode"> 
+            <void property="level"> 
+             <int>2</int> 
+            </void> 
+            <void property="longName"> 
+             <string>Low Power Mode</string> 
+            </void> 
+            <void property="name"> 
+             <string>LPM</string> 
+            </void> 
+            <void property="parent"> 
+             <object idref="StatModel$StateNode0"/> 
+            </void> 
+            <void property="serChildren"> 
+             <array class="com.ti.dvt.msp430.power.core.Node" length="3"> 
+              <void index="0"> 
+               <object class="com.ti.dvt.msp430.power.core.StatModel$StateNode"> 
+                <void property="level"> 
+                 <int>3</int> 
+                </void> 
+                <void property="name"> 
+                 <string>&lt;Undetermined&gt;</string> 
+                </void> 
+                <void property="parent"> 
+                 <object idref="StatModel$StateNode1"/> 
+                </void> 
+                <void id="NodeArray22" property="serChildren"/> 
+                <void property="serChildren"> 
+                 <object idref="NodeArray22"/> 
+                </void> 
+                <void property="serMeasurements"> 
+                 <array class="com.ti.dvt.msp430.power.core.Measurement" length="2"> 
+                  <void index="0"> 
+                   <object class="com.ti.dvt.msp430.power.core.Measurement"> 
+                    <void property="accTotal"> 
+                     <double>4.84251049E13</double> 
+                    </void> 
+                    <void property="count"> 
+                     <long>5269</long> 
+                    </void> 
+                    <void property="lastValue"> 
+                     <double>7099999.999976717</double> 
+                    </void> 
+                    <void property="name"> 
+                     <string>Energy</string> 
+                    </void> 
+                    <void property="value"> 
+                     <double>1.8847399999999996E10</double> 
+                    </void> 
+                    <void property="watermarks"> 
+                     <void property="hi"> 
+                      <double>1.8847399999999996E10</double> 
+                     </void> 
+                     <void property="lo"> 
+                      <double>199999.9999998181</double> 
+                     </void> 
+                    </void> 
+                   </object> 
+                  </void> 
+                  <void index="1"> 
+                   <object class="com.ti.dvt.msp430.power.core.Measurement"> 
+                    <void property="accTotal"> 
+                     <double>2.8053684835E13</double> 
+                    </void> 
+                    <void property="count"> 
+                     <long>5269</long> 
+                    </void> 
+                    <void property="lastValue"> 
+                     <double>2214000.0</double> 
+                    </void> 
+                    <void property="name"> 
+                     <string>Cycle</string> 
+                    </void> 
+                    <void property="value"> 
+                     <double>1.0624931E10</double> 
+                    </void> 
+                    <void property="watermarks"> 
+                     <void property="hi"> 
+                      <double>1.0624931E10</double> 
+                     </void> 
+                     <void property="lo"> 
+                      <double>2214000.0</double> 
+                     </void> 
+                    </void> 
+                   </object> 
+                  </void> 
+                 </array> 
+                </void> 
+               </object> 
+              </void> 
+              <void index="1"> 
+               <object class="com.ti.dvt.msp430.power.core.StatModel$StateNode"> 
+                <void property="level"> 
+                 <int>3</int> 
+                </void> 
+                <void property="name"> 
+                 <string>LPM1</string> 
+                </void> 
+                <void property="parent"> 
+                 <object idref="StatModel$StateNode1"/> 
+                </void> 
+                <void id="NodeArray23" property="serChildren"/> 
+                <void property="serChildren"> 
+                 <object idref="NodeArray23"/> 
+                </void> 
+                <void property="serMeasurements"> 
+                 <array class="com.ti.dvt.msp430.power.core.Measurement" length="2"> 
+                  <void index="0"> 
+                   <object class="com.ti.dvt.msp430.power.core.Measurement"> 
+                    <void property="accTotal"> 
+                     <double>1.0605094691E15</double> 
+                    </void> 
+                    <void property="count"> 
+                     <long>32554</long> 
+                    </void> 
+                    <void property="lastValue"> 
+                     <double>4199999.999982538</double> 
+                    </void> 
+                    <void property="name"> 
+                     <string>Energy</string> 
+                    </void> 
+                    <void property="value"> 
+                     <double>7.185060000000691E10</double> 
+                    </void> 
+                    <void property="watermarks"> 
+                     <void property="hi"> 
+                      <double>7.185060000000691E10</double> 
+                     </void> 
+                     <void property="lo"> 
+                      <double>1000000.0</double> 
+                     </void> 
+                    </void> 
+                   </object> 
+                  </void> 
+                  <void index="1"> 
+                   <object class="com.ti.dvt.msp430.power.core.Measurement"> 
+                    <void property="accTotal"> 
+                     <double>8.20614580839E14</double> 
+                    </void> 
+                    <void property="count"> 
+                     <long>32554</long> 
+                    </void> 
+                    <void property="lastValue"> 
+                     <double>1437000.0</double> 
+                    </void> 
+                    <void property="name"> 
+                     <string>Cycle</string> 
+                    </void> 
+                    <void property="value"> 
+                     <double>5.2057646E10</double> 
+                    </void> 
+                    <void property="watermarks"> 
+                     <void property="hi"> 
+                      <double>5.2057646E10</double> 
+                     </void> 
+                     <void property="lo"> 
+                      <double>1340000.0</double> 
+                     </void> 
+                    </void> 
+                   </object> 
+                  </void> 
+                 </array> 
+                </void> 
+               </object> 
+              </void> 
+              <void index="2"> 
+               <object class="com.ti.dvt.msp430.power.core.StatModel$StateNode"> 
+                <void property="level"> 
+                 <int>3</int> 
+                </void> 
+                <void property="name"> 
+                 <string>LPM0</string> 
+                </void> 
+                <void property="parent"> 
+                 <object idref="StatModel$StateNode1"/> 
+                </void> 
+                <void id="NodeArray24" property="serChildren"/> 
+                <void property="serChildren"> 
+                 <object idref="NodeArray24"/> 
+                </void> 
+                <void property="serMeasurements"> 
+                 <array class="com.ti.dvt.msp430.power.core.Measurement" length="2"> 
+                  <void index="0"> 
+                   <object class="com.ti.dvt.msp430.power.core.Measurement"> 
+                    <void property="accTotal"> 
+                     <double>4.41395308E13</double> 
+                    </void> 
+                    <void property="count"> 
+                     <long>4803</long> 
+                    </void> 
+                    <void property="lastValue"> 
+                     <double>2699999.9999825377</double> 
+                    </void> 
+                    <void property="name"> 
+                     <string>Energy</string> 
+                    </void> 
+                    <void property="value"> 
+                     <double>1.8418099999999752E10</double> 
+                    </void> 
+                    <void property="watermarks"> 
+                     <void property="hi"> 
+                      <double>1.8418099999999752E10</double> 
+                     </void> 
+                     <void property="lo"> 
+                      <double>0.0</double> 
+                     </void> 
+                    </void> 
+                   </object> 
+                  </void> 
+                  <void index="1"> 
+                   <object class="com.ti.dvt.msp430.power.core.Measurement"> 
+                    <void property="accTotal"> 
+                     <double>2.5504869548E13</double> 
+                    </void> 
+                    <void property="count"> 
+                     <long>4803</long> 
+                    </void> 
+                    <void property="lastValue"> 
+                     <double>1223000.0</double> 
+                    </void> 
+                    <void property="name"> 
+                     <string>Cycle</string> 
+                    </void> 
+                    <void property="value"> 
+                     <double>1.0537151E10</double> 
+                    </void> 
+                    <void property="watermarks"> 
+                     <void property="hi"> 
+                      <double>1.0537151E10</double> 
+                     </void> 
+                     <void property="lo"> 
+                      <double>1222000.0</double> 
+                     </void> 
+                    </void> 
+                   </object> 
+                  </void> 
+                 </array> 
+                </void> 
+               </object> 
+              </void> 
+             </array> 
+            </void> 
+            <void property="serMeasurements"> 
+             <array class="com.ti.dvt.msp430.power.core.Measurement" length="2"> 
+              <void index="0"> 
+               <object class="com.ti.dvt.msp430.power.core.Measurement"> 
+                <void property="name"> 
+                 <string>Energy</string> 
+                </void> 
+                <void property="value"> 
+                 <double>1.0911610000000667E11</double> 
+                </void> 
+               </object> 
+              </void> 
+              <void index="1"> 
+               <object class="com.ti.dvt.msp430.power.core.Measurement"> 
+                <void property="name"> 
+                 <string>Cycle</string> 
+                </void> 
+                <void property="value"> 
+                 <double>7.3219728E10</double> 
+                </void> 
+               </object> 
+              </void> 
+             </array> 
+            </void> 
+           </object> 
+          </void> 
+          <void index="1"> 
+           <object id="StatModel$StateNode2" class="com.ti.dvt.msp430.power.core.StatModel$StateNode"> 
+            <void property="level"> 
+             <int>2</int> 
+            </void> 
+            <void property="longName"> 
+             <string>Active Mode</string> 
+            </void> 
+            <void property="name"> 
+             <string>AM</string> 
+            </void> 
+            <void property="parent"> 
+             <object idref="StatModel$StateNode0"/> 
+            </void> 
+            <void property="serChildren"> 
+             <array class="com.ti.dvt.msp430.power.core.Node" length="12"> 
+              <void index="0"> 
+               <object class="com.ti.dvt.msp430.power.core.StatModel$FuncNode"> 
+                <void property="level"> 
+                 <int>3</int> 
+                </void> 
+                <void property="name"> 
+                 <string>@4494()</string> 
+                </void> 
+                <void property="parent"> 
+                 <object idref="StatModel$StateNode2"/> 
+                </void> 
+                <void id="NodeArray25" property="serChildren"/> 
+                <void property="serChildren"> 
+                 <object idref="NodeArray25"/> 
+                </void> 
+                <void property="serMeasurements"> 
+                 <array class="com.ti.dvt.msp430.power.core.Measurement" length="2"> 
+                  <void index="0"> 
+                   <object class="com.ti.dvt.msp430.power.core.Measurement"> 
+                    <void property="accTotal"> 
+                     <double>1.3184001600000002E13</double> 
+                    </void> 
+                    <void property="count"> 
+                     <long>1895</long> 
+                    </void> 
+                    <void property="lastValue"> 
+                     <double>4899999.999994179</double> 
+                    </void> 
+                    <void property="name"> 
+                     <string>Energy</string> 
+                    </void> 
+                    <void property="value"> 
+                     <double>1.3671899999999989E10</double> 
+                    </void> 
+                    <void property="watermarks"> 
+                     <void property="hi"> 
+                      <double>1.3671899999999989E10</double> 
+                     </void> 
+                     <void property="lo"> 
+                      <double>5899999.999994179</double> 
+                     </void> 
+                    </void> 
+                   </object> 
+                  </void> 
+                  <void index="1"> 
+                   <object class="com.ti.dvt.msp430.power.core.Measurement"> 
+                    <void property="accTotal"> 
+                     <double>2.410026018E12</double> 
+                    </void> 
+                    <void property="count"> 
+                     <long>1895</long> 
+                    </void> 
+                    <void property="lastValue"> 
+                     <double>1268000.0</double> 
+                    </void> 
+                    <void property="name"> 
+                     <string>Cycle</string> 
+                    </void> 
+                    <void property="value"> 
+                     <double>2.541036E9</double> 
+                    </void> 
+                    <void property="watermarks"> 
+                     <void property="hi"> 
+                      <double>2.541036E9</double> 
+                     </void> 
+                     <void property="lo"> 
+                      <double>1258000.0</double> 
+                     </void> 
+                    </void> 
+                   </object> 
+                  </void> 
+                 </array> 
+                </void> 
+               </object> 
+              </void> 
+              <void index="1"> 
+               <object class="com.ti.dvt.msp430.power.core.StatModel$FuncNode"> 
+                <void property="level"> 
+                 <int>3</int> 
+                </void> 
+                <void property="name"> 
+                 <string>decodeCmd_lvl1</string> 
+                </void> 
+                <void property="parent"> 
+                 <object idref="StatModel$StateNode2"/> 
+                </void> 
+                <void id="NodeArray26" property="serChildren"/> 
+                <void property="serChildren"> 
+                 <object idref="NodeArray26"/> 
+                </void> 
+                <void property="serMeasurements"> 
+                 <array class="com.ti.dvt.msp430.power.core.Measurement" length="2"> 
+                  <void index="0"> 
+                   <object class="com.ti.dvt.msp430.power.core.Measurement"> 
+                    <void property="accTotal"> 
+                     <double>1.4351711899999941E13</double> 
+                    </void> 
+                    <void property="count"> 
+                     <long>2588</long> 
+                    </void> 
+                    <void property="lastValue"> 
+                     <double>3500000.0</double> 
+                    </void> 
+                    <void property="name"> 
+                     <string>Energy</string> 
+                    </void> 
+                    <void property="value"> 
+                     <double>1.10374000000001E10</double> 
+                    </void> 
+                    <void property="watermarks"> 
+                     <void property="hi"> 
+                      <double>1.10374000000001E10</double> 
+                     </void> 
+                     <void property="lo"> 
+                      <double>0.0</double> 
+                     </void> 
+                    </void> 
+                   </object> 
+                  </void> 
+                  <void index="1"> 
+                   <object class="com.ti.dvt.msp430.power.core.Measurement"> 
+                    <void property="accTotal"> 
+                     <double>7.792506755E12</double> 
+                    </void> 
+                    <void property="count"> 
+                     <long>2588</long> 
+                    </void> 
+                    <void property="lastValue"> 
+                     <double>1257000.0</double> 
+                    </void> 
+                    <void property="name"> 
+                     <string>Cycle</string> 
+                    </void> 
+                    <void property="value"> 
+                     <double>5.966045E9</double> 
+                    </void> 
+                    <void property="watermarks"> 
+                     <void property="hi"> 
+                      <double>5.966045E9</double> 
+                     </void> 
+                     <void property="lo"> 
+                      <double>1546000.0</double> 
+                     </void> 
+                    </void> 
+                   </object> 
+                  </void> 
+                 </array> 
+                </void> 
+               </object> 
+              </void> 
+              <void index="2"> 
+               <object class="com.ti.dvt.msp430.power.core.StatModel$FuncNode"> 
+                <void property="level"> 
+                 <int>3</int> 
+                </void> 
+                <void property="name"> 
+                 <string>handleAck</string> 
+                </void> 
+                <void property="parent"> 
+                 <object idref="StatModel$StateNode2"/> 
+                </void> 
+                <void id="NodeArray27" property="serChildren"/> 
+                <void property="serChildren"> 
+                 <object idref="NodeArray27"/> 
+                </void> 
+                <void property="serMeasurements"> 
+                 <array class="com.ti.dvt.msp430.power.core.Measurement" length="2"> 
+                  <void index="0"> 
+                   <object class="com.ti.dvt.msp430.power.core.Measurement"> 
+                    <void property="accTotal"> 
+                     <double>7.209092400000003E12</double> 
+                    </void> 
+                    <void property="count"> 
+                     <long>1908</long> 
+                    </void> 
+                    <void property="lastValue"> 
+                     <double>2000000.0</double> 
+                    </void> 
+                    <void property="name"> 
+                     <string>Energy</string> 
+                    </void> 
+                    <void property="value"> 
+                     <double>7.558099999999795E9</double> 
+                    </void> 
+                    <void property="watermarks"> 
+                     <void property="hi"> 
+                      <double>7.558099999999795E9</double> 
+                     </void> 
+                     <void property="lo"> 
+                      <double>0.0</double> 
+                     </void> 
+                    </void> 
+                   </object> 
+                  </void> 
+                  <void index="1"> 
+                   <object class="com.ti.dvt.msp430.power.core.Measurement"> 
+                    <void property="accTotal"> 
+                     <double>4.018337095E12</double> 
+                    </void> 
+                    <void property="count"> 
+                     <long>1908</long> 
+                    </void> 
+                    <void property="lastValue"> 
+                     <double>1261000.0</double> 
+                    </void> 
+                    <void property="name"> 
+                     <string>Cycle</string> 
+                    </void> 
+                    <void property="value"> 
+                     <double>4.181051E9</double> 
+                    </void> 
+                    <void property="watermarks"> 
+                     <void property="hi"> 
+                      <double>4.181051E9</double> 
+                     </void> 
+                     <void property="lo"> 
+                      <double>3418000.0</double> 
+                     </void> 
+                    </void> 
+                   </object> 
+                  </void> 
+                 </array> 
+                </void> 
+               </object> 
+              </void> 
+              <void index="3"> 
+               <object class="com.ti.dvt.msp430.power.core.StatModel$FuncNode"> 
+                <void property="level"> 
+                 <int>3</int> 
+                </void> 
+                <void property="name"> 
+                 <string>handleQA</string> 
+                </void> 
+                <void property="parent"> 
+                 <object idref="StatModel$StateNode2"/> 
+                </void> 
+                <void id="NodeArray28" property="serChildren"/> 
+                <void property="serChildren"> 
+                 <object idref="NodeArray28"/> 
+                </void> 
+                <void property="serMeasurements"> 
+                 <array class="com.ti.dvt.msp430.power.core.Measurement" length="2"> 
+                  <void index="0"> 
+                   <object class="com.ti.dvt.msp430.power.core.Measurement"> 
+                    <void property="accTotal"> 
+                     <double>3.0300000000005823E8</double> 
+                    </void> 
+                    <void property="count"> 
+                     <long>13</long> 
+                    </void> 
+                    <void property="lastValue"> 
+                     <double>3200000.0000116415</double> 
+                    </void> 
+                    <void property="name"> 
+                     <string>Energy</string> 
+                    </void> 
+                    <void property="value"> 
+                     <double>4.340000000001602E7</double> 
+                    </void> 
+                    <void property="watermarks"> 
+                     <void property="hi"> 
+                      <double>4.340000000001602E7</double> 
+                     </void> 
+                     <void property="lo"> 
+                      <double>2000000.0</double> 
+                     </void> 
+                    </void> 
+                   </object> 
+                  </void> 
+                  <void index="1"> 
+                   <object class="com.ti.dvt.msp430.power.core.Measurement"> 
+                    <void property="accTotal"> 
+                     <double>1.64414E8</double> 
+                    </void> 
+                    <void property="count"> 
+                     <long>13</long> 
+                    </void> 
+                    <void property="lastValue"> 
+                     <double>1412000.0</double> 
+                    </void> 
+                    <void property="name"> 
+                     <string>Cycle</string> 
+                    </void> 
+                    <void property="value"> 
+                     <double>2.3659E7</double> 
+                    </void> 
+                    <void property="watermarks"> 
+                     <void property="hi"> 
+                      <double>2.3659E7</double> 
+                     </void> 
+                     <void property="lo"> 
+                      <double>1258000.0</double> 
+                     </void> 
+                    </void> 
+                   </object> 
+                  </void> 
+                 </array> 
+                </void> 
+               </object> 
+              </void> 
+              <void index="4"> 
+               <object class="com.ti.dvt.msp430.power.core.StatModel$FuncNode"> 
+                <void property="level"> 
+                 <int>3</int> 
+                </void> 
+                <void property="name"> 
+                 <string>handleReqRN</string> 
+                </void> 
+                <void property="parent"> 
+                 <object idref="StatModel$StateNode2"/> 
+                </void> 
+                <void id="NodeArray29" property="serChildren"/> 
+                <void property="serChildren"> 
+                 <object idref="NodeArray29"/> 
+                </void> 
+                <void property="serMeasurements"> 
+                 <array class="com.ti.dvt.msp430.power.core.Measurement" length="2"> 
+                  <void index="0"> 
+                   <object class="com.ti.dvt.msp430.power.core.Measurement"> 
+                    <void property="accTotal"> 
+                     <double>4.742710000000311E10</double> 
+                    </void> 
+                    <void property="count"> 
+                     <long>152</long> 
+                    </void> 
+                    <void property="lastValue"> 
+                     <double>3899999.9999941792</double> 
+                    </void> 
+                    <void property="name"> 
+                     <string>Energy</string> 
+                    </void> 
+                    <void property="value"> 
+                     <double>6.141000000000119E8</double> 
+                    </void> 
+                    <void property="watermarks"> 
+                     <void property="hi"> 
+                      <double>6.141000000000119E8</double> 
+                     </void> 
+                     <void property="lo"> 
+                      <double>4899999.999999636</double> 
+                     </void> 
+                    </void> 
+                   </object> 
+                  </void> 
+                  <void index="1"> 
+                   <object class="com.ti.dvt.msp430.power.core.Measurement"> 
+                    <void property="accTotal"> 
+                     <double>2.528297E10</double> 
+                    </void> 
+                    <void property="count"> 
+                     <long>152</long> 
+                    </void> 
+                    <void property="lastValue"> 
+                     <double>1257000.0</double> 
+                    </void> 
+                    <void property="name"> 
+                     <string>Cycle</string> 
+                    </void> 
+                    <void property="value"> 
+                     <double>3.22624E8</double> 
+                    </void> 
+                    <void property="watermarks"> 
+                     <void property="hi"> 
+                      <double>3.22624E8</double> 
+                     </void> 
+                     <void property="lo"> 
+                      <double>3418000.0</double> 
+                     </void> 
+                    </void> 
+                   </object> 
+                  </void> 
+                 </array> 
+                </void> 
+               </object> 
+              </void> 
+              <void index="5"> 
+               <object class="com.ti.dvt.msp430.power.core.StatModel$FuncNode"> 
+                <void property="level"> 
+                 <int>3</int> 
+                </void> 
+                <void property="name"> 
+                 <string>QRTimingLoop</string> 
+                </void> 
+                <void property="parent"> 
+                 <object idref="StatModel$StateNode2"/> 
+                </void> 
+                <void id="NodeArray30" property="serChildren"/> 
+                <void property="serChildren"> 
+                 <object idref="NodeArray30"/> 
+                </void> 
+                <void property="serMeasurements"> 
+                 <array class="com.ti.dvt.msp430.power.core.Measurement" length="2"> 
+                  <void index="0"> 
+                   <object class="com.ti.dvt.msp430.power.core.Measurement"> 
+                    <void property="accTotal"> 
+                     <double>1.6776240000000092E11</double> 
+                    </void> 
+                    <void property="count"> 
+                     <long>261</long> 
+                    </void> 
+                    <void property="lastValue"> 
+                     <double>4000000.0</double> 
+                    </void> 
+                    <void property="name"> 
+                     <string>Energy</string> 
+                    </void> 
+                    <void property="value"> 
+                     <double>1.3130999999999208E9</double> 
+                    </void> 
+                    <void property="watermarks"> 
+                     <void property="hi"> 
+                      <double>1.3130999999999208E9</double> 
+                     </void> 
+                     <void property="lo"> 
+                      <double>2699999.999999818</double> 
+                     </void> 
+                    </void> 
+                   </object> 
+                  </void> 
+                  <void index="1"> 
+                   <object class="com.ti.dvt.msp430.power.core.Measurement"> 
+                    <void property="accTotal"> 
+                     <double>9.160738E10</double> 
+                    </void> 
+                    <void property="count"> 
+                     <long>261</long> 
+                    </void> 
+                    <void property="lastValue"> 
+                     <double>1258000.0</double> 
+                    </void> 
+                    <void property="name"> 
+                     <string>Cycle</string> 
+                    </void> 
+                    <void property="value"> 
+                     <double>7.31042E8</double> 
+                    </void> 
+                    <void property="watermarks"> 
+                     <void property="hi"> 
+                      <double>7.31042E8</double> 
+                     </void> 
+                     <void property="lo"> 
+                      <double>1258000.0</double> 
+                     </void> 
+                    </void> 
+                   </object> 
+                  </void> 
+                 </array> 
+                </void> 
+               </object> 
+              </void> 
+              <void index="6"> 
+               <object class="com.ti.dvt.msp430.power.core.StatModel$FuncNode"> 
+                <void property="level"> 
+                 <int>3</int> 
+                </void> 
+                <void property="name"> 
+                 <string>handleQuery</string> 
+                </void> 
+                <void property="parent"> 
+                 <object idref="StatModel$StateNode2"/> 
+                </void> 
+                <void id="NodeArray31" property="serChildren"/> 
+                <void property="serChildren"> 
+                 <object idref="NodeArray31"/> 
+                </void> 
+                <void property="serMeasurements"> 
+                 <array class="com.ti.dvt.msp430.power.core.Measurement" length="2"> 
+                  <void index="0"> 
+                   <object class="com.ti.dvt.msp430.power.core.Measurement"> 
+                    <void property="accTotal"> 
+                     <double>2.7661810000000104E11</double> 
+                    </void> 
+                    <void property="count"> 
+                     <long>406</long> 
+                    </void> 
+                    <void property="lastValue"> 
+                     <double>2500000.0</double> 
+                    </void> 
+                    <void property="name"> 
+                     <string>Energy</string> 
+                    </void> 
+                    <void property="value"> 
+                     <double>1.354799999999934E9</double> 
+                    </void> 
+                    <void property="watermarks"> 
+                     <void property="hi"> 
+                      <double>1.354799999999934E9</double> 
+                     </void> 
+                     <void property="lo"> 
+                      <double>2000000.0</double> 
+                     </void> 
+                    </void> 
+                   </object> 
+                  </void> 
+                  <void index="1"> 
+                   <object class="com.ti.dvt.msp430.power.core.Measurement"> 
+                    <void property="accTotal"> 
+                     <double>1.32971603E11</double> 
+                    </void> 
+                    <void property="count"> 
+                     <long>406</long> 
+                    </void> 
+                    <void property="lastValue"> 
+                     <double>1553000.0</double> 
+                    </void> 
+                    <void property="name"> 
+                     <string>Cycle</string> 
+                    </void> 
+                    <void property="value"> 
+                     <double>6.54084E8</double> 
+                    </void> 
+                    <void property="watermarks"> 
+                     <void property="hi"> 
+                      <double>6.54084E8</double> 
+                     </void> 
+                     <void property="lo"> 
+                      <double>1261000.0</double> 
+                     </void> 
+                    </void> 
+                   </object> 
+                  </void> 
+                 </array> 
+                </void> 
+               </object> 
+              </void> 
+              <void index="7"> 
+               <object class="com.ti.dvt.msp430.power.core.StatModel$FuncNode"> 
+                <void property="level"> 
+                 <int>3</int> 
+                </void> 
+                <void property="name"> 
+                 <string>ModeB_process</string> 
+                </void> 
+                <void property="parent"> 
+                 <object idref="StatModel$StateNode2"/> 
+                </void> 
+                <void id="NodeArray32" property="serChildren"/> 
+                <void property="serChildren"> 
+                 <object idref="NodeArray32"/> 
+                </void> 
+                <void property="serMeasurements"> 
+                 <array class="com.ti.dvt.msp430.power.core.Measurement" length="2"> 
+                  <void index="0"> 
+                   <object class="com.ti.dvt.msp430.power.core.Measurement"> 
+                    <void property="accTotal"> 
+                     <double>9.458900000002531E9</double> 
+                    </void> 
+                    <void property="count"> 
+                     <long>66</long> 
+                    </void> 
+                    <void property="lastValue"> 
+                     <double>4200000.0000116415</double> 
+                    </void> 
+                    <void property="name"> 
+                     <string>Energy</string> 
+                    </void> 
+                    <void property="value"> 
+                     <double>2.850000000001019E8</double> 
+                    </void> 
+                    <void property="watermarks"> 
+                     <void property="hi"> 
+                      <double>2.850000000001019E8</double> 
+                     </void> 
+                     <void property="lo"> 
+                      <double>4000000.0</double> 
+                     </void> 
+                    </void> 
+                   </object> 
+                  </void> 
+                  <void index="1"> 
+                   <object class="com.ti.dvt.msp430.power.core.Measurement"> 
+                    <void property="accTotal"> 
+                     <double>4.891165E9</double> 
+                    </void> 
+                    <void property="count"> 
+                     <long>66</long> 
+                    </void> 
+                    <void property="lastValue"> 
+                     <double>1463000.0</double> 
+                    </void> 
+                    <void property="name"> 
+                     <string>Cycle</string> 
+                    </void> 
+                    <void property="value"> 
+                     <double>1.46636E8</double> 
+                    </void> 
+                    <void property="watermarks"> 
+                     <void property="hi"> 
+                      <double>1.46636E8</double> 
+                     </void> 
+                     <void property="lo"> 
+                      <double>1260000.0</double> 
+                     </void> 
+                    </void> 
+                   </object> 
+                  </void> 
+                 </array> 
+                </void> 
+               </object> 
+              </void> 
+              <void index="8"> 
+               <object class="com.ti.dvt.msp430.power.core.StatModel$FuncNode"> 
+                <void property="level"> 
+                 <int>3</int> 
+                </void> 
+                <void property="name"> 
+                 <string>calc_wordPtr</string> 
+                </void> 
+                <void property="parent"> 
+                 <object idref="StatModel$StateNode2"/> 
+                </void> 
+                <void id="NodeArray33" property="serChildren"/> 
+                <void property="serChildren"> 
+                 <object idref="NodeArray33"/> 
+                </void> 
+                <void property="serMeasurements"> 
+                 <array class="com.ti.dvt.msp430.power.core.Measurement" length="2"> 
+                  <void index="0"> 
+                   <object class="com.ti.dvt.msp430.power.core.Measurement"> 
+                    <void property="accTotal"> 
+                     <double>1.3786000000006316E9</double> 
+                    </void> 
+                    <void property="count"> 
+                     <long>28</long> 
+                    </void> 
+                    <void property="lastValue"> 
+                     <double>3000000.0</double> 
+                    </void> 
+                    <void property="name"> 
+                     <string>Energy</string> 
+                    </void> 
+                    <void property="value"> 
+                     <double>9.090000000003056E7</double> 
+                    </void> 
+                    <void property="watermarks"> 
+                     <void property="hi"> 
+                      <double>9.090000000003056E7</double> 
+                     </void> 
+                     <void property="lo"> 
+                      <double>1400000.0000014552</double> 
+                     </void> 
+                    </void> 
+                   </object> 
+                  </void> 
+                  <void index="1"> 
+                   <object class="com.ti.dvt.msp430.power.core.Measurement"> 
+                    <void property="accTotal"> 
+                     <double>8.98654E8</double> 
+                    </void> 
+                    <void property="count"> 
+                     <long>28</long> 
+                    </void> 
+                    <void property="lastValue"> 
+                     <double>1261000.0</double> 
+                    </void> 
+                    <void property="name"> 
+                     <string>Cycle</string> 
+                    </void> 
+                    <void property="value"> 
+                     <double>5.8173E7</double> 
+                    </void> 
+                    <void property="watermarks"> 
+                     <void property="hi"> 
+                      <double>5.8173E7</double> 
+                     </void> 
+                     <void property="lo"> 
+                      <double>1544000.0</double> 
+                     </void> 
+                    </void> 
+                   </object> 
+                  </void> 
+                 </array> 
+                </void> 
+               </object> 
+              </void> 
+              <void index="9"> 
+               <object class="com.ti.dvt.msp430.power.core.StatModel$FuncNode"> 
+                <void property="level"> 
+                 <int>3</int> 
+                </void> 
+                <void property="name"> 
+                 <string>V1_Load_Data</string> 
+                </void> 
+                <void property="parent"> 
+                 <object idref="StatModel$StateNode2"/> 
+                </void> 
+                <void id="NodeArray34" property="serChildren"/> 
+                <void property="serChildren"> 
+                 <object idref="NodeArray34"/> 
+                </void> 
+                <void property="serMeasurements"> 
+                 <array class="com.ti.dvt.msp430.power.core.Measurement" length="2"> 
+                  <void index="0"> 
+                   <object class="com.ti.dvt.msp430.power.core.Measurement"> 
+                    <void property="accTotal"> 
+                     <double>7.14612705E13</double> 
+                    </void> 
+                    <void property="count"> 
+                     <long>6023</long> 
+                    </void> 
+                    <void property="lastValue"> 
+                     <double>9100000.00000582</double> 
+                    </void> 
+                    <void property="name"> 
+                     <string>Energy</string> 
+                    </void> 
+                    <void property="value"> 
+                     <double>2.3745599999999332E10</double> 
+                    </void> 
+                    <void property="watermarks"> 
+                     <void property="hi"> 
+                      <double>2.3745599999999332E10</double> 
+                     </void> 
+                     <void property="lo"> 
+                      <double>2400000.000000091</double> 
+                     </void> 
+                    </void> 
+                   </object> 
+                  </void> 
+                  <void index="1"> 
+                   <object class="com.ti.dvt.msp430.power.core.Measurement"> 
+                    <void property="accTotal"> 
+                     <double>4.2561083099E13</double> 
+                    </void> 
+                    <void property="count"> 
+                     <long>6023</long> 
+                    </void> 
+                    <void property="lastValue"> 
+                     <double>3415000.0</double> 
+                    </void> 
+                    <void property="name"> 
+                     <string>Cycle</string> 
+                    </void> 
+                    <void property="value"> 
+                     <double>1.4014778E10</double> 
+                    </void> 
+                    <void property="watermarks"> 
+                     <void property="hi"> 
+                      <double>1.4014778E10</double> 
+                     </void> 
+                     <void property="lo"> 
+                      <double>1258000.0</double> 
+                     </void> 
+                    </void> 
+                   </object> 
+                  </void> 
+                 </array> 
+                </void> 
+               </object> 
+              </void> 
+              <void index="10"> 
+               <object class="com.ti.dvt.msp430.power.core.StatModel$FuncNode"> 
+                <void property="level"> 
+                 <int>3</int> 
+                </void> 
+                <void property="name"> 
+                 <string>badDelim</string> 
+                </void> 
+                <void property="parent"> 
+                 <object idref="StatModel$StateNode2"/> 
+                </void> 
+                <void id="NodeArray35" property="serChildren"/> 
+                <void property="serChildren"> 
+                 <object idref="NodeArray35"/> 
+                </void> 
+                <void property="serMeasurements"> 
+                 <array class="com.ti.dvt.msp430.power.core.Measurement" length="2"> 
+                  <void index="0"> 
+                   <object class="com.ti.dvt.msp430.power.core.Measurement"> 
+                    <void property="accTotal"> 
+                     <double>1.14930583E13</double> 
+                    </void> 
+                    <void property="count"> 
+                     <long>2363</long> 
+                    </void> 
+                    <void property="lastValue"> 
+                     <double>2199999.9999825377</double> 
+                    </void> 
+                    <void property="name"> 
+                     <string>Energy</string> 
+                    </void> 
+                    <void property="value"> 
+                     <double>9.914599999999878E9</double> 
+                    </void> 
+                    <void property="watermarks"> 
+                     <void property="hi"> 
+                      <double>9.914599999999878E9</double> 
+                     </void> 
+                     <void property="lo"> 
+                      <double>2000000.0</double> 
+                     </void> 
+                    </void> 
+                   </object> 
+                  </void> 
+                  <void index="1"> 
+                   <object class="com.ti.dvt.msp430.power.core.Measurement"> 
+                    <void property="accTotal"> 
+                     <double>6.083020643E12</double> 
+                    </void> 
+                    <void property="count"> 
+                     <long>2363</long> 
+                    </void> 
+                    <void property="lastValue"> 
+                     <double>1553000.0</double> 
+                    </void> 
+                    <void property="name"> 
+                     <string>Cycle</string> 
+                    </void> 
+                    <void property="value"> 
+                     <double>5.254161E9</double> 
+                    </void> 
+                    <void property="watermarks"> 
+                     <void property="hi"> 
+                      <double>5.254161E9</double> 
+                     </void> 
+                     <void property="lo"> 
+                      <double>1260000.0</double> 
+                     </void> 
+                    </void> 
+                   </object> 
+                  </void> 
+                 </array> 
+                </void> 
+               </object> 
+              </void> 
+              <void index="11"> 
+               <object class="com.ti.dvt.msp430.power.core.StatModel$FuncNode"> 
+                <void property="level"> 
+                 <int>3</int> 
+                </void> 
+                <void property="name"> 
+                 <string>RxClock</string> 
+                </void> 
+                <void property="parent"> 
+                 <object idref="StatModel$StateNode2"/> 
+                </void> 
+                <void id="NodeArray36" property="serChildren"/> 
+                <void property="serChildren"> 
+                 <object idref="NodeArray36"/> 
+                </void> 
+                <void property="serMeasurements"> 
+                 <array class="com.ti.dvt.msp430.power.core.Measurement" length="2"> 
+                  <void index="0"> 
+                   <object class="com.ti.dvt.msp430.power.core.Measurement"> 
+                    <void property="accTotal"> 
+                     <double>4.4690000000026345E8</double> 
+                    </void> 
+                    <void property="count"> 
+                     <long>14</long> 
+                    </void> 
+                    <void property="lastValue"> 
+                     <double>3200000.0000116415</double> 
+                    </void> 
+                    <void property="name"> 
+                     <string>Energy</string> 
+                    </void> 
+                    <void property="value"> 
+                     <double>6.580000000000292E7</double> 
+                    </void> 
+                    <void property="watermarks"> 
+                     <void property="hi"> 
+                      <double>6.580000000000292E7</double> 
+                     </void> 
+                     <void property="lo"> 
+                      <double>2700000.0000043656</double> 
+                     </void> 
+                    </void> 
+                   </object> 
+                  </void> 
+                  <void index="1"> 
+                   <object class="com.ti.dvt.msp430.power.core.Measurement"> 
+                    <void property="accTotal"> 
+                     <double>2.38786E8</double> 
+                    </void> 
+                    <void property="count"> 
+                     <long>14</long> 
+                    </void> 
+                    <void property="lastValue"> 
+                     <double>1260000.0</double> 
+                    </void> 
+                    <void property="name"> 
+                     <string>Cycle</string> 
+                    </void> 
+                    <void property="value"> 
+                     <double>3.3483E7</double> 
+                    </void> 
+                    <void property="watermarks"> 
+                     <void property="hi"> 
+                      <double>3.3483E7</double> 
+                     </void> 
+                     <void property="lo"> 
+                      <double>1259000.0</double> 
+                     </void> 
+                    </void> 
+                   </object> 
+                  </void> 
+                 </array> 
+                </void> 
+               </object> 
+              </void> 
+             </array> 
+            </void> 
+            <void property="serMeasurements"> 
+             <array class="com.ti.dvt.msp430.power.core.Measurement" length="2"> 
+              <void index="0"> 
+               <object class="com.ti.dvt.msp430.power.core.Measurement"> 
+                <void property="name"> 
+                 <string>Energy</string> 
+                </void> 
+                <void property="value"> 
+                 <double>6.96946999999991E10</double> 
+                </void> 
+               </object> 
+              </void> 
+              <void index="1"> 
+               <object class="com.ti.dvt.msp430.power.core.Measurement"> 
+                <void property="name"> 
+                 <string>Cycle</string> 
+                </void> 
+                <void property="value"> 
+                 <double>3.3926772E10</double> 
+                </void> 
+               </object> 
+              </void> 
+             </array> 
+            </void> 
+           </object> 
+          </void> 
+         </array> 
+        </void> 
+        <void property="serMeasurements"> 
+         <array class="com.ti.dvt.msp430.power.core.Measurement" length="2"> 
+          <void index="0"> 
+           <object class="com.ti.dvt.msp430.power.core.Measurement"> 
+            <void property="name"> 
+             <string>Energy</string> 
+            </void> 
+            <void property="value"> 
+             <double>1.7881080000000577E11</double> 
+            </void> 
+           </object> 
+          </void> 
+          <void index="1"> 
+           <object class="com.ti.dvt.msp430.power.core.Measurement"> 
+            <void property="name"> 
+             <string>Cycle</string> 
+            </void> 
+            <void property="value"> 
+             <double>1.071465E11</double> 
+            </void> 
+           </object> 
+          </void> 
+         </array> 
+        </void> 
+       </object> 
+      </void> 
+      <void index="3"> 
+       <object class="com.ti.dvt.msp430.power.core.StatModel$SystemNode"> 
+        <void property="level"> 
+         <int>1</int> 
+        </void> 
+        <void property="name"> 
+         <string>System</string> 
+        </void> 
+        <void property="parent"> 
+         <object idref="Node0"/> 
+        </void> 
+        <void id="NodeArray37" property="serChildren"/> 
+        <void property="serChildren"> 
+         <object idref="NodeArray37"/> 
+        </void> 
+        <void property="serMeasurements"> 
+         <array class="com.ti.dvt.msp430.power.core.Measurement" length="5"> 
+          <void index="0"> 
+           <object class="com.ti.dvt.msp430.power.core.Measurement"> 
+            <void property="accTotal"> 
+             <double>98972.79729630052</double> 
+            </void> 
+            <void property="count"> 
+             <long>58343</long> 
+            </void> 
+            <void property="lastValue"> 
+             <double>4.9176344</double> 
+            </void> 
+            <void property="name"> 
+             <string>Power</string> 
+            </void> 
+            <void property="value"> 
+             <double>4.9176344</double> 
+            </void> 
+            <void property="watermarks"> 
+             <void property="hi"> 
+              <double>7.0858539</double> 
+             </void> 
+             <void property="lo"> 
+              <double>0.0055796</double> 
+             </void> 
+            </void> 
+           </object> 
+          </void> 
+          <void index="1"> 
+           <object class="com.ti.dvt.msp430.power.core.Measurement"> 
+            <void property="accTotal"> 
+             <double>4.6947638202E15</double> 
+            </void> 
+            <void property="count"> 
+             <long>58343</long> 
+            </void> 
+            <void property="lastValue"> 
+             <double>4899999.999994179</double> 
+            </void> 
+            <void property="name"> 
+             <string>Energy</string> 
+            </void> 
+            <void property="value"> 
+             <double>1.7881080000001767E11</double> 
+            </void> 
+            <void property="watermarks"> 
+             <void property="hi"> 
+              <double>1.7881080000001767E11</double> 
+             </void> 
+             <void property="lo"> 
+              <double>1000000.0</double> 
+             </void> 
+            </void> 
+           </object> 
+          </void> 
+          <void index="2"> 
+           <object class="com.ti.dvt.msp430.power.core.Measurement"> 
+            <void property="accTotal"> 
+             <double>1.15590649E8</double> 
+            </void> 
+            <void property="count"> 
+             <long>58343</long> 
+            </void> 
+            <void property="lastValue"> 
+             <double>1981.0</double> 
+            </void> 
+            <void property="name"> 
+             <string>Voltage</string> 
+            </void> 
+            <void property="value"> 
+             <double>1981.0</double> 
+            </void> 
+            <void property="watermarks"> 
+             <void property="hi"> 
+              <double>2214.0</double> 
+             </void> 
+             <void property="lo"> 
+              <double>1973.0</double> 
+             </void> 
+            </void> 
+           </object> 
+          </void> 
+          <void index="3"> 
+           <object class="com.ti.dvt.msp430.power.core.Measurement"> 
+            <void property="accTotal"> 
+             <double>3.081980665992E15</double> 
+            </void> 
+            <void property="count"> 
+             <long>58343</long> 
+            </void> 
+            <void property="lastValue"> 
+             <double>1268000.0</double> 
+            </void> 
+            <void property="name"> 
+             <string>Cycle</string> 
+            </void> 
+            <void property="value"> 
+             <double>1.071465E11</double> 
+            </void> 
+            <void property="watermarks"> 
+             <void property="hi"> 
+              <double>1.071465E11</double> 
+             </void> 
+             <void property="lo"> 
+              <double>1340000.0</double> 
+             </void> 
+            </void> 
+           </object> 
+          </void> 
+          <void index="4"> 
+           <object class="com.ti.dvt.msp430.power.core.Measurement"> 
+            <void property="accTotal"> 
+             <double>4.99891869E10</double> 
+            </void> 
+            <void property="count"> 
+             <long>58343</long> 
+            </void> 
+            <void property="lastValue"> 
+             <double>2482400.0</double> 
+            </void> 
+            <void property="name"> 
+             <string>Current</string> 
+            </void> 
+            <void property="value"> 
+             <double>2482400.0</double> 
+            </void> 
+            <void property="watermarks"> 
+             <void property="hi"> 
+              <double>3573300.0</double> 
+             </void> 
+             <void property="lo"> 
+              <double>2600.0</double> 
+             </void> 
+            </void> 
+           </object> 
+          </void> 
+         </array> 
+        </void> 
+       </object> 
+      </void> 
+     </array> 
+    </void> 
+    <void property="serMeasurements"> 
+     <array class="com.ti.dvt.msp430.power.core.Measurement" length="2"> 
+      <void index="0"> 
+       <object class="com.ti.dvt.msp430.power.core.Measurement"> 
+        <void property="name"> 
+         <string>Energy</string> 
+        </void> 
+       </object> 
+      </void> 
+      <void index="1"> 
+       <object class="com.ti.dvt.msp430.power.core.Measurement"> 
+        <void property="name"> 
+         <string>Cycle</string> 
+        </void> 
+       </object> 
+      </void> 
+     </array> 
+    </void> 
+   </object> 
+  </void> 
+  <void property="targetStopWatch"> 
+   <void property="end"> 
+    <long>107145232000</long> 
+   </void> 
+  </void> 
+ </object> 
+</java> 
