@@ -1,0 +1,203 @@
+% This document provides the style to be used for a MSc Thesis at the
+% Parallel and Distributed Systems group
+\documentclass[11pt,twoside,a4paper,openright]{report}
+
+% math packages
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+% textblocks for title page
+\usepackage[absolute]{textpos}
+
+% use babel for proper hyphenation
+\usepackage[british]{babel}
+
+% Graphics: different for pdflatex or dvi output, choose one
+%%\usepackage[dvips]{graphicx}
+%%\usepackage[pdftex]{graphicx}
+\usepackage{graphicx}
+
+\usepackage{epstopdf}
+\usepackage{rotating}
+\usepackage{subfigure}
+
+% FONT
+\usepackage[scaled=.92]{helvet}
+%\usepackage{times}
+
+% for url's use "\url{http://www.google.com/}"
+\usepackage{url}
+\usepackage[plainpages=false]{hyperref} 
+\usepackage{cleveref}
+
+% Information that will be filled in at various points in the report
+\newcommand{\reportTitle}{Robust Downstream Communication on Transient Powered Computational RFID Devices}
+\newcommand{\reportAuthor}{Jethro Tan}
+\newcommand{\reportEmail}{J.E.T.Tan@student.tudelft.nl}
+\newcommand{\reportUrlEmail}{\href{mailto:\reportEmail}{\reportEmail}}
+\newcommand{\reportDate}{\today} %TODO: Dit is de datum van uitgifte van final versie aan de afstudeer commissie 
+\newcommand{\presentationDate}{\today} %TODO: Dit is de datum van de afstudeerpresentatie 
+\newcommand{\graduationCommittee}{
+Prof. Dr. K. G. Langendoen & Delft University of Technology \\
+Dr. Przemyslaw (Przemek) Pawelczak & Delft University of Technology \\
+}
+
+\newcommand{\reportAbstract}{TODO ABSTRACT}
+\newcommand{\reportKeywords}{TODO KEYWORDS}
+
+% For pdflatex
+\pdfinfo{
+   /Author (\reportAuthor)
+   /Title  (\reportTitle)
+   /Keywords (\reportKeywords)
+}
+
+\begin{document}
+
+\pagenumbering{alph}
+\pagestyle{empty}
+
+
+% FRONTCOVER
+\include{frontcover}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\hoffset=1.63cm
+\oddsidemargin=0in
+\evensidemargin=0in
+\textwidth=5in
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\parindent=1em
+
+% EMPTY PAGE
+\cleardoublepage
+
+\pagestyle{plain}
+\pagenumbering{roman}
+\setcounter{page}{1}
+
+% TITLE PAGE: page i (hidden)
+\include{titlepage}
+
+% GRADUATION DATA AND ABSTRACT: pages ii and iii (hidden)
+\include{graduationdata}
+%\setcounter{page}{4}
+
+% EMPTY PAGE: page iv
+\cleardoublepage
+
+% OPTIONAL QUOTATION: page v
+%\include{quotation}
+% EMPTY PAGE: page vi
+%\cleardoublepage
+
+
+
+
+% PREFACE: page v
+\chapter*{Preface}
+\addcontentsline{toc}{chapter}{Preface}
+TODO MOTIVATION FOR RESEARCH TOPIC
+
+\vspace{1\baselineskip}
+
+\noindent
+TODO ACKNOWLEDGEMENTS
+
+\vspace{1\baselineskip}
+
+\noindent
+TODO AUTHOR
+
+\vspace{1\baselineskip}
+
+\noindent
+Delft, The Netherlands
+
+\noindent
+\today
+
+
+% EMPTY PAGE: page vi
+\cleardoublepage
+
+
+% GLOSSARY: page vii
+\chapter*{Glossary}
+\addcontentsline{toc}{chapter}{Glossary}
+
+
+
+
+
+
+
+
+% EMPTY PAGE: page viii
+\cleardoublepage
+
+
+
+% TABLE OF CONTENTS: starting at page vii
+\tableofcontents
+
+\cleardoublepage
+
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+% INTRODUCTION
+\chapter{Introduction}
+\label{intro}
+
+\section{Computational RFID}
+The WISP \cite{4539485}
+
+\section{Challenges}
+
+\section{Problem Statement}
+
+\section{Contributions}
+
+\section{Thesis Organization}
+The remainder of this thesis is as follows.
+First, we introduce some the related work on 
+Finally, we conclude our work in \cref{conclusions}.
+
+% RELATED WORK
+\chapter{Related Work}
+\label{relatedwork}
+
+
+% CONTENT CHAPTER
+\chapter{Protocol Design and Implementation}
+\label{design}
+
+
+% CONTENT CHAPTER
+\chapter{Experimental Results}
+\label{results}
+
+
+% CONCLUSIONS AND FUTURE WORK
+\chapter{Conclusions and Future Work}
+\label{conclusions}
+
+\section{Conclusions}
+
+\section{Future Work}
+
+
+% BIBLIOGRAPHY
+\bibliographystyle{../bib/latex8}
+\bibliography{../bib/article,../bib/booklet,../bib/inbook,../bib/inproceedings,../bib/misc,../bib/phdthesis,../bib/technicalreport,../bib/book,../bib/conference,../bib/incollection,../bib/manual,../bib/mscthesis,../bib/proceedings,../bib/unpublished}
+\addcontentsline{toc}{chapter}{Bibliography}
+
+% APPENDIX
+%\appendix
+
+%\include{appendix_a}
+
+\end{document}
+

@@ -1,0 +1,32 @@
+@comment{
+  An article from a journal or a magazine
+
+  required fields: author, title, journal, year
+  optional fields: volume, number, pages, month, note
+}
+
+@Article{a,
+  author    =   "a",
+  title     =   "b",
+  journal   =   "",
+  year      =   "",
+  volume    =   "",
+  number    =   "",
+  pages     =   "",
+  month     =   "",
+  note      =   ""
+}
+
+@ARTICLE{4539485,
+author={Sample, A.P. and Yeager, D.J. and Powledge, P.S. and Mamishev, A.V. and Smith, J.R.},
+journal={Instrumentation and Measurement, IEEE Transactions on},
+title={Design of an RFID-Based Battery-Free Programmable Sensing Platform},
+year={2008},
+month={Nov},
+volume={57},
+number={11},
+pages={2608-2615},
+keywords={product codes;radiofrequency identification;sensors;EPC protocol;RFID-based battery-free programmable sensing platform;cyclical redundancy checking;electronic product code;sensor-enhanced radio frequency identification;ultralow-power microcontroller;wireless identification;Programmable radio frequency identification (RFID);RFID sensors;UHF;sensor;transponder;wireless power},
+doi={10.1109/TIM.2008.925019},
+ISSN={0018-9456},}
+
