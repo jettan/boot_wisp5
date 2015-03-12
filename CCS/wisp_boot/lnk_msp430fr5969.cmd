@@ -1,6 +1,3 @@
-__BOOT_PASSWD    = 0x001C00;
-__STAT_CTRL      = 0x001C02;
-
 MEMORY {
     SFR                     : origin = 0x0000, length = 0x0010
     PERIPHERALS_8BIT        : origin = 0x0010, length = 0x00F0
@@ -10,9 +7,30 @@ MEMORY {
     INFOB                   : origin = 0x1900, length = 0x0080
     INFOC                   : origin = 0x1880, length = 0x0080
     INFOD                   : origin = 0x1800, length = 0x0080
-    FRAM                    : origin = 0x4400, length = 0x3600
-    FRAM_APP				: origin = 0x7A00, length = 0x8480
+
+	// Each APP section is 5632 bytes long (1500 hex).
+
+    // APP1 (4400 - 57FF)
+    FRAM_APP1               : origin = 0x4400, length = 0x1500
+
+    // APP2 (5900 - 6DFF)
+    FRAM_APP2				: origin = 0x5900, length = 0x1500
+
+    // APP3 (6E00 - 82FF)
+    FRAM_APP3				: origin = 0x6E00, length = 0x1500
+
+	// APP4 (8300 - 97FF)
+	FRAM_APP4				: origin = 0x8300, length = 0x1500
+
+	// The bootloader section is 1280 bytes long (500 hex).
+	// BOOTLOADER/APP SELECTOR/DFU MODE (EA00 - EFFF)
+	FRAM_BOOT				: origin = 0xEA00, length = 0x600
+
+    // Unused FRAM section past main device's ISR table (10000-14000)
     FRAM2                   : origin = 0x10000,length = 0x4000
+
+	// Only the relevant interrupt vector table for *this* project's application is defined here.
+	// In this case, this is the interrupt vector table of: BOOTLOADER
     SIGNATURE               : origin = 0xFF80, length = 0x0010
     INT00                   : origin = 0xFF90, length = 0x0002
     INT01                   : origin = 0xFF92, length = 0x0002
@@ -100,7 +118,7 @@ SECTIONS
        {
           .text       : {}                   /* CODE                              */
        }
-    } > FRAM_APP
+    } > FRAM_BOOT
 
     .bss        : {} > RAM                /* GLOBAL & STATIC VARS              */
     .data       : {} > RAM                /* GLOBAL & STATIC VARS              */
@@ -188,3 +206,4 @@ __mpusam = 0x7513;
 /****************************************************************************/
 
 -l msp430fr5969.cmd
+
