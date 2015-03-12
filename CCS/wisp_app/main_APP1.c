@@ -1,9 +1,9 @@
 #include "wisp-base.h"
 
-#define SIZE_ADDR        0x1900
-#define ADDRESS_ADDR_HI  0x1903
-#define ADDRESS_ADDR_LO  0x1902
-#define BSL_PASSWD       0x1910
+#define SIZE_ADDR        0x1910
+#define ADDRESS_ADDR_HI  0x1913
+#define ADDRESS_ADDR_LO  0x1912
+#define BSL_PASSWD       0x1920
 
 WISP_dataStructInterface_t wispData;
 
