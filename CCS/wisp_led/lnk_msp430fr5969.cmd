@@ -10,10 +10,27 @@ MEMORY {
     INFOB                   : origin = 0x1900, length = 0x0080
     INFOC                   : origin = 0x1880, length = 0x0080
     INFOD                   : origin = 0x1800, length = 0x0080
-    FRAM                    : origin = 0x4400, length = 0x3600
-    FRAM_APP				: origin = 0x7A00, length = 0x8480
+	// Each APP section is 2000 hex bytes long.
+
+    // APP1 (4400 - 57FF)
+    FRAM_APP1               : origin = 0x4400, length = 0x2000
+
+    // APP2 (5900 - 6DFF)
+    FRAM_APP2				: origin = 0x6400, length = 0x2000
+
+    // APP3 (6E00 - 82FF)
+    FRAM_APP3				: origin = 0x8400, length = 0x2000
+
+	// APP4 (8300 - 97FF)
+	FRAM_APP4				: origin = 0xA400, length = 0x2000
+
+	// The bootloader section is 1280 bytes long (500 hex).
+	// BOOTLOADER/APP SELECTOR/DFU MODE (EA00 - EFFF)
+	FRAM_BOOT				: origin = 0xEA00, length = 0x600
+
+    // Unused FRAM section past main device's ISR table (10000-14000)
     FRAM2                   : origin = 0x10000,length = 0x4000
-    SIGNATURE               : origin = 0xFE80, length = 0x0010
+
     /*
     INT00                   : origin = 0xFE90, length = 0x0002
     INT01                   : origin = 0xFE92, length = 0x0002
@@ -71,7 +88,7 @@ MEMORY {
     INT53                   : origin = 0xFEFA, length = 0x0002
     INT54                   : origin = 0xFEFC, length = 0x0002
     */
-    RESET                   : origin = 0xFEFE, length = 0x0002
+    RESET                   : origin = 0xFDFE, length = 0x0002
 }
 
 /****************************************************************************/
@@ -80,7 +97,7 @@ MEMORY {
 
 SECTIONS
 {
-    GROUP(ALL_APP)
+    GROUP(ALL_APP2)
     {
        GROUP(READ_WRITE_MEMORY): ALIGN(0x0200) RUN_START(fram_rw_start)
        {
@@ -102,7 +119,7 @@ SECTIONS
        {
           .text       : {}                   /* CODE                              */
        }
-    } > FRAM
+    } > FRAM_APP2
 
     .bss        : {} > RAM                /* GLOBAL & STATIC VARS              */
     .data       : {} > RAM                /* GLOBAL & STATIC VARS              */

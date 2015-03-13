@@ -1,5 +1,6 @@
 #include "wisp-base.h"
 
+#define SELECTED_APP     0x1900
 #define SIZE_ADDR        0x1910
 #define ADDRESS_ADDR_HI  0x1913
 #define ADDRESS_ADDR_LO  0x1912
@@ -80,17 +81,21 @@ void main(void) {
 
 	FRAM_init();
 
+	// Since we entered this app with success, we set ourselves as the SELECTED_APP.
+	//(* (uint16_t *) (SELECTED_APP)) = 0xFEFE;
+
 	// Set up EPC
 	wispData.epcBuf[5] = 0x00; // Alive for this many rounds of writeCallbacks
 	wispData.epcBuf[9] = 0xde; // RFID Status/Control
 	wispData.epcBuf[10]= 0xad; // RFID Status/Control
 
+
 	// Talk to the RFID reader.
 	while (FOREVER) {
 
-		// If command is given, jump to application.
+		// If command is given, jump to  next application.
 		if (wispData.epcBuf[9] == 0xBE && wispData.epcBuf[10] == 0xEF) {
-			(*((void (*)(void))(*(unsigned int *)0xFEFE)))();
+			(*((void (*)(void))(*(unsigned int *)0xFDFE)))();
 		}
 
 		wispData.epcBuf[6] = (* (uint8_t *) (SIZE_ADDR));

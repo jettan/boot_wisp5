@@ -3,7 +3,6 @@
 	<name>wisp_boot</name>
 	<comment></comment>
 	<projects>
-		<project>wisp-base</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

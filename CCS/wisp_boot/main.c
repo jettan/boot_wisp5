@@ -1,7 +1,9 @@
 #include <msp430.h>
+#include <stdint.h>
 
 // Memory space containing address of RESET vector of whatever application is selected as active application.
 #define SELECTED_APP     0x1900
+#define FALLBACK_APP     0xFEFE
 
 void main_boot(void) {
 
@@ -16,14 +18,13 @@ void main_boot(void) {
 	__delay_cycles(3);
 
 	// Read the RESET vector of whatever app is chosen.
-	unsigned int address = (* (unsigned int *) (SELECTED_APP));
+	uint16_t address = (* (uint16_t *) (SELECTED_APP));
 
-	// Do something to ensure the function returns.
-	// TODO: Find out how to do this...
-
-	// Otherwise, restore the value to APP1.
-	(* (unsigned int *) (SELECTED_APP)) = 0xFEFE;
+	// If RESET vector of selected app is outside F000 - FFFF, boot the default app instead.
+	if (address < 0xF000 || address > 0xFFFF) {
+		address = FALLBACK_APP;
+	}
 
 	// Jump to the selected application.
-	(*((void (*)(void))(*(unsigned int *)(address))))();
+	(*((void (*)(void))(*(uint16_t *)(0xFEFE))))();
 }

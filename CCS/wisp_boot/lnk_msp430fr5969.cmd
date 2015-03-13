@@ -8,19 +8,19 @@ MEMORY {
     INFOC                   : origin = 0x1880, length = 0x0080
     INFOD                   : origin = 0x1800, length = 0x0080
 
-	// Each APP section is 5632 bytes long (1500 hex).
+	// Each APP section is 2000 hex bytes long.
 
     // APP1 (4400 - 57FF)
-    FRAM_APP1               : origin = 0x4400, length = 0x1500
+    FRAM_APP1               : origin = 0x4400, length = 0x2000
 
     // APP2 (5900 - 6DFF)
-    FRAM_APP2				: origin = 0x5900, length = 0x1500
+    FRAM_APP2				: origin = 0x6400, length = 0x2000
 
     // APP3 (6E00 - 82FF)
-    FRAM_APP3				: origin = 0x6E00, length = 0x1500
+    FRAM_APP3				: origin = 0x8400, length = 0x2000
 
 	// APP4 (8300 - 97FF)
-	FRAM_APP4				: origin = 0x8300, length = 0x1500
+	FRAM_APP4				: origin = 0xA400, length = 0x2000
 
 	// The bootloader section is 1280 bytes long (500 hex).
 	// BOOTLOADER/APP SELECTOR/DFU MODE (EA00 - EFFF)
