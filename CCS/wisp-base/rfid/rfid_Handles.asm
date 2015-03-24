@@ -81,11 +81,7 @@ QRTimingLoop:
 	MOV.B	rfid.TRext,	R15			;[3] load TRext
 	CALLA	#TxFM0					;[5] call the routine @us@todo: need to check RN16 in the future, fake TxFM0 in TX
 
-	;Restore faster Rx Clock
-	;MOV		&(INFO_ADDR_RXUCS0), &UCSCTL0 ;[] switch to corr Rx Frequency
-	;MOV		&(INFO_ADDR_RXUCS1), &UCSCTL1 ;[] ""
-
-	CALLA #RxClock	;Switch to Rx Clock
+	CALLA #RxClock	;Switch back to Rx Clock
 
 	RETA
 
@@ -283,7 +279,7 @@ ackWaits:
 
 
 	;STEP2: Wakeup and Parse--------------------------------------------------------------------------------------------------------//
-	BIC		#(GIE), SR				;[1] don't need anymore bits, so turn off Rx_SM
+	BIC		#(GIE), SR				;[1] don't need anymore bits, so turn off RX_SM
 	NOP
 	;BIC.B   #(PIN_RX_EN), &PRXEOUT    ;@us_change
 	;BIC.B   #(PIN_RX_EN), &PDIR_RX_EN ;@us_change
@@ -482,7 +478,7 @@ handleReqRN:
 	MOV.B	(cmd+2), 	   R_scratch0 ;[]now the rxHandle is loaded
 	BIS		R_scratch0,	   R_scratch1 ;[]
 	CMP		(rfid.handle), R_scratch1 ;[]
-	JNE		reqRN_badHandle			;[]
+	JNE		reqRN_badHandle			  ;[]
 
 	;Generate a new handle! (Grab a Random Value from Random Value Table in InfoB)
 	MOV.B	rfid.rn8_ind,	R_scratch0 ;[1] bring in rn8_ind
