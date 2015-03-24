@@ -23,7 +23,7 @@
 	.retain
 	.retainrefs
 
-RX_ISR:							;[X]t=2.24us into delim (measured @ 12.84MHz) -> each check is 6cyc -> .46875
+RX_ISR:
 	;*********************************************************************************************************************************
 	; TOO EARLY (DELIM <6us)
 	;*********************************************************************************************************************************
@@ -35,69 +35,93 @@ RX_ISR:							;[X]t=2.24us into delim (measured @ 12.84MHz) -> each check is 6cy
 	;; For JNZ or JZ taken 3 or 4 cycles
 	;;
 	;; jettan:
-	;; Start this ISR at t = 0.75 us
+	;; Start this ISR at t = 0.75 us, MCLK is **16 MHz**!
 
 	BIT.B	#PIN_RX,	&PRXIN		;[3]
-	JNZ		badDelim				;[2] t = 1.375 us
+	JNZ		badDelim				;[2] t = 1.0625 us
+	BIT.B	#PIN_RX,	&PRXIN		;[3]
+	JNZ		badDelim				;[2] t = 1.375
+	BIT.B	#PIN_RX,	&PRXIN		;[3]
+	JNZ		badDelim				;[2] t = 1.6875 us
 	BIT.B	#PIN_RX,	&PRXIN		;[3]
 	JNZ		badDelim				;[2] t = 2 us
 	BIT.B	#PIN_RX,	&PRXIN		;[3]
+	JNZ		badDelim				;[2] t = 2.3125 us
+	BIT.B	#PIN_RX,	&PRXIN		;[3]
 	JNZ		badDelim				;[2] t = 2.625 us
+	BIT.B	#PIN_RX,	&PRXIN		;[3]
+	JNZ		badDelim				;[2] t = 2.9375 us
 	BIT.B	#PIN_RX,	&PRXIN		;[3]
 	JNZ		badDelim				;[2] t = 3.25 us
 	BIT.B	#PIN_RX,	&PRXIN		;[3]
+	JNZ		badDelim				;[2] t = 3.5625 us
+	BIT.B	#PIN_RX,	&PRXIN		;[3]
 	JNZ		badDelim				;[2] t = 3.875 us
+	BIT.B	#PIN_RX,	&PRXIN		;[3]
+	JNZ		badDelim				;[2] t = 4.1875 us
 	BIT.B	#PIN_RX,	&PRXIN		;[3]
 	JNZ		badDelim				;[2] t = 4.5 us
 	BIT.B	#PIN_RX,	&PRXIN		;[3]
+	JNZ		badDelim				;[2] t = 4.8125 us
+	BIT.B	#PIN_RX,	&PRXIN		;[3]
 	JNZ		badDelim				;[2] t = 5.125 us
+	BIT.B	#PIN_RX,	&PRXIN		;[3]
+	JNZ		badDelim				;[2] t = 5.4375 us
 	BIT.B	#PIN_RX,	&PRXIN		;[3]
 	JNZ		badDelim				;[2] t = 5.75 us
 	BIT.B	#PIN_RX,	&PRXIN		;[3]
+	JNZ		badDelim				;[2] t = 6.0625 us
+	BIT.B	#PIN_RX,	&PRXIN		;[3]
 	JNZ		badDelim				;[2] t = 6.375 us
+	BIT.B	#PIN_RX,	&PRXIN		;[3]
+	JNZ		badDelim				;[2] t = 6.6875 us
 	BIT.B	#PIN_RX,	&PRXIN		;[3]
 	JNZ		badDelim				;[2] t = 7 us
 	BIT.B	#PIN_RX,	&PRXIN		;[3]
-	JNZ		badDelim				;[2] t = 7.625 us
+	JNZ		badDelim				;[2] t = 7.3125 us
+
+	;;; Impinj R1000 Magic good delimiter time window.
+	BIT.B	#PIN_RX,	&PRXIN		;[3]
+	JNZ		goodDelim				;[2] t = 7.625 us
+
+	BIT.B	#PIN_RX,	&PRXIN		;[3]
+	JNZ		badDelim				;[2] t = 7.9375 us
 	BIT.B	#PIN_RX,	&PRXIN		;[3]
 	JNZ		badDelim				;[2] t = 8.25 us
 	BIT.B	#PIN_RX,	&PRXIN		;[3]
+	JNZ		badDelim				;[2] t = 8.5625 us
+	BIT.B	#PIN_RX,	&PRXIN		;[3]
 	JNZ		badDelim				;[2] t = 8.875 us
+	BIT.B	#PIN_RX,	&PRXIN		;[3]
+	JNZ		badDelim				;[2] t = 9.1875 us
 	BIT.B	#PIN_RX,	&PRXIN		;[3]
 	JNZ		badDelim				;[2] t = 9.5 us
 	BIT.B	#PIN_RX,	&PRXIN		;[3]
+	JNZ		badDelim				;[2] t = 9.8125 us
+	BIT.B	#PIN_RX,	&PRXIN		;[3]
 	JNZ		badDelim				;[2] t = 10.125 us
 	BIT.B	#PIN_RX,	&PRXIN		;[3]
-	JNZ		badDelim				;[2] t = 10.75 us
-
-
-	;;; Official delimiter window (EPC C1G2 spec states this should be +/- 5% of 12.5 us, which is 11.875 us - 13.125 us).
+	JNZ		badDelim				;[2] t = 10.4375 us
 	BIT.B	#PIN_RX,	&PRXIN		;[3]
-	JNZ		goodDelim				;[2] t = 11.375 us
+	JNZ		badDelim				;[2] t = 10.75 us
+	BIT.B	#PIN_RX,	&PRXIN		;[3]
+	JNZ		badDelim				;[2] t = 11.0625 us
+	BIT.B	#PIN_RX,	&PRXIN		;[3]
+	JNZ		badDelim				;[2] t = 11.375 us
+
+	;;; Official allowed delimiter time window (EPC C1G2 spec states this should be +/- 5% of 12.5 us, which is 11.875 us - 13.125 us).
+	BIT.B	#PIN_RX,	&PRXIN		;[3]
+	JNZ		goodDelim				;[2] t = 11.6875 us
 	BIT.B	#PIN_RX,	&PRXIN		;[3]
 	JNZ		goodDelim				;[2] t = 12 us
 	BIT.B	#PIN_RX,	&PRXIN		;[3]
+	JNZ		goodDelim				;[2] t = 12.3125 us
+	BIT.B	#PIN_RX,	&PRXIN		;[3]
 	JNZ		goodDelim				;[2] t = 12.625 us
 	BIT.B	#PIN_RX,	&PRXIN		;[3]
+	JNZ		goodDelim				;[2] t = 12.9375 us
+	BIT.B	#PIN_RX,	&PRXIN		;[3]
 	JNZ		goodDelim				;[2] t = 13.25 us
-
-	;;; Compatibility fixes.
-	BIT.B	#PIN_RX,	&PRXIN		;[3]
-	JNZ		goodDelim				;[2] t = 13.875 us
-	BIT.B	#PIN_RX,	&PRXIN		;[3]
-	JNZ		goodDelim				;[2] t = 14.5 us (Impinj R1000)
-	BIT.B	#PIN_RX,	&PRXIN		;[3]
-	JNZ		goodDelim				;[2] t = 15.125 us
-	BIT.B	#PIN_RX,	&PRXIN		;[3]
-	JNZ		goodDelim				;[2] t = 15.75 us
-	BIT.B	#PIN_RX,	&PRXIN		;[3]
-	JNZ		goodDelim				;[2] t = 16.375 us
-	BIT.B	#PIN_RX,	&PRXIN		;[3]
-	JNZ		goodDelim				;[2] t = 17 us
-	BIT.B	#PIN_RX,	&PRXIN		;[3]
-	JNZ		goodDelim				;[2] t = 17.625 us
-	BIT.B	#PIN_RX,	&PRXIN		;[3]
-	JNZ		goodDelim				;[2] t = 18.25 us (Impinj R420 - breaks past this point)
 
 
 	;*********************************************************************************************************************************

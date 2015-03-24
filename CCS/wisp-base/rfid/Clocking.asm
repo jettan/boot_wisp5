@@ -14,8 +14,9 @@
     .cdecls C,LIST, "rfid.h"
 	.def  TxClock, RxClock
 
+;;; Switch to TX frequency (10.5 MHz)
 TxClock:
-	MOV.B           #(0xA5), &CSCTL0_H ;[] Switch to corr Tx frequency 10.5MHz
+	MOV.B           #(0xA5), &CSCTL0_H                                            ;CSCTL0_H = 0xA5
 	MOV.W           #(DCORSEL|DCOFSEL_6), &CSCTL1 ;
 	MOV.W           #(SELA_0|SELM_3), &CSCTL2     ;
 	BIS.W           #(SELS_3), &CSCTL2
@@ -25,9 +26,10 @@ TxClock:
 	RETA
 
 
+;;; Switch to RX frequency (8 MHz)
 RxClock:
-	MOV.B           #(0xA5), &CSCTL0_H ;[] Switch to corr Rx frequency  8MHz
-	MOV.W           #(DCORSEL|DCOFSEL_4), &CSCTL1 ;
+	MOV.B           #(0xA5), &CSCTL0_H                                            ;CSCTL0_H = 0xA5
+	MOV.W           #(DCORSEL|DCOFSEL_4), &CSCTL1                                 ;CSCTL1 = DCORSEL + DCOFSEL_3 (supposedly 8MHz, but actually 16!)
 	MOV.W           #(SELA_0|SELM_3), &CSCTL2     ;
 	BIS.W           #(SELS_3), &CSCTL2
 	MOV.W           #(DIVA_0|DIVS_0|DIVM_0), &CSCTL3 ;
