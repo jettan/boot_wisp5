@@ -33,112 +33,83 @@ RX_ISR:							;[X]t=2.24us into delim (measured @ 12.84MHz) -> each check is 6cy
 	;; For each of BIT.B 3 Cycles
 	;; For each JNZ or JZ not taken 2 Cycles
 	;; For JNZ or JZ taken 3 or 4 cycles
-;	DEBUG
-;	BIS.B 	#PIN_LED, 	&PLEDOUT
-	BIT.B	#PIN_RX,	&PRXIN		;[3]t=3.19..3.43us	(on the src fetch cycle)
-	JNZ		badDelim				;[2]
-	BIT.B	#PIN_RX,	&PRXIN		;[3]t=4.41..4.66us	""
-	JNZ		badDelim				;[2]
-	BIT.B	#PIN_RX,	&PRXIN		;[3]t=5.64..5.88us
-	JNZ		badDelim				;[2]
+	;;
+	;; jettan:
+	;; Start this ISR at t = 0.75 us
 
-	;@Saman Compatibility with other readers
-	;;;Around 2.7us
-	BIT.B	#PIN_RX,	&PRXIN		;[3]t=3.19..3.43us	(on the src fetch cycle)
-	JNZ		badDelim				;[2]
-	BIT.B	#PIN_RX,	&PRXIN		;[3]t=4.41..4.66us	""
-	JNZ		badDelim				;[2]
-	BIT.B	#PIN_RX,	&PRXIN		;[3]t=5.64..5.88us
-	JNZ		badDelim				;[2]
+	BIT.B	#PIN_RX,	&PRXIN		;[3]
+	JNZ		badDelim				;[2] t = 1.375 us
+	BIT.B	#PIN_RX,	&PRXIN		;[3]
+	JNZ		badDelim				;[2] t = 2 us
+	BIT.B	#PIN_RX,	&PRXIN		;[3]
+	JNZ		badDelim				;[2] t = 2.625 us
+	BIT.B	#PIN_RX,	&PRXIN		;[3]
+	JNZ		badDelim				;[2] t = 3.25 us
+	BIT.B	#PIN_RX,	&PRXIN		;[3]
+	JNZ		badDelim				;[2] t = 3.875 us
+	BIT.B	#PIN_RX,	&PRXIN		;[3]
+	JNZ		badDelim				;[2] t = 4.5 us
+	BIT.B	#PIN_RX,	&PRXIN		;[3]
+	JNZ		badDelim				;[2] t = 5.125 us
+	BIT.B	#PIN_RX,	&PRXIN		;[3]
+	JNZ		badDelim				;[2] t = 5.75 us
+	BIT.B	#PIN_RX,	&PRXIN		;[3]
+	JNZ		badDelim				;[2] t = 6.375 us
+	BIT.B	#PIN_RX,	&PRXIN		;[3]
+	JNZ		badDelim				;[2] t = 7 us
+	BIT.B	#PIN_RX,	&PRXIN		;[3]
+	JNZ		badDelim				;[2] t = 7.625 us
+	BIT.B	#PIN_RX,	&PRXIN		;[3]
+	JNZ		badDelim				;[2] t = 8.25 us
+	BIT.B	#PIN_RX,	&PRXIN		;[3]
+	JNZ		badDelim				;[2] t = 8.875 us
+	BIT.B	#PIN_RX,	&PRXIN		;[3]
+	JNZ		badDelim				;[2] t = 9.5 us
+	BIT.B	#PIN_RX,	&PRXIN		;[3]
+	JNZ		badDelim				;[2] t = 10.125 us
+	BIT.B	#PIN_RX,	&PRXIN		;[3]
+	JNZ		badDelim				;[2] t = 10.75 us
 
-	BIT.B	#PIN_RX,	&PRXIN		;[3]t=3.19..3.43us	(on the src fetch cycle)
-	JNZ		badDelim				;[2]
-	BIT.B	#PIN_RX,	&PRXIN		;[3]t=4.41..4.66us	""
-	JNZ		badDelim				;[2]
-	BIT.B	#PIN_RX,	&PRXIN		;[3]t=4.41..4.66us	""
-	JNZ		badDelim
-	;Around 8us
 
-	BIT.B	#PIN_RX,	&PRXIN		;[3]t=3.19..3.43us	(on the src fetch cycle)
-	JNZ		badDelim				;[2]
-	BIT.B	#PIN_RX,	&PRXIN		;[3]t=4.41..4.66us	""
-	JNZ		badDelim				;[2]
-	BIT.B	#PIN_RX,	&PRXIN		;[3]t=5.64..5.88us
-	JNZ		badDelim				;[2]
+	;;; Official delimiter window (EPC C1G2 spec states this should be +/- 5% of 12.5 us, which is 11.875 us - 13.125 us).
+	BIT.B	#PIN_RX,	&PRXIN		;[3]
+	JNZ		goodDelim				;[2] t = 11.375 us
+	BIT.B	#PIN_RX,	&PRXIN		;[3]
+	JNZ		goodDelim				;[2] t = 12 us
+	BIT.B	#PIN_RX,	&PRXIN		;[3]
+	JNZ		goodDelim				;[2] t = 12.625 us
+	BIT.B	#PIN_RX,	&PRXIN		;[3]
+	JNZ		goodDelim				;[2] t = 13.25 us
 
-	;@Saman Compatibility with other readers
-	;;;Around 2.7us
-	BIT.B	#PIN_RX,	&PRXIN		;[3]t=3.19..3.43us	(on the src fetch cycle)
-	JNZ		badDelim				;[2]
-	BIT.B	#PIN_RX,	&PRXIN		;[3]t=4.41..4.66us	""
-	JNZ		badDelim				;[2]
-	BIT.B	#PIN_RX,	&PRXIN		;[3]t=5.64..5.88us
-	JNZ		badDelim				;[2]
+	;;; Compatibility fixes.
+	BIT.B	#PIN_RX,	&PRXIN		;[3]
+	JNZ		goodDelim				;[2] t = 13.875 us
+	BIT.B	#PIN_RX,	&PRXIN		;[3]
+	JNZ		goodDelim				;[2] t = 14.5 us (Impinj R1000)
+	BIT.B	#PIN_RX,	&PRXIN		;[3]
+	JNZ		goodDelim				;[2] t = 15.125 us
+	BIT.B	#PIN_RX,	&PRXIN		;[3]
+	JNZ		goodDelim				;[2] t = 15.75 us
+	BIT.B	#PIN_RX,	&PRXIN		;[3]
+	JNZ		goodDelim				;[2] t = 16.375 us
+	BIT.B	#PIN_RX,	&PRXIN		;[3]
+	JNZ		goodDelim				;[2] t = 17 us
+	BIT.B	#PIN_RX,	&PRXIN		;[3]
+	JNZ		goodDelim				;[2] t = 17.625 us
+	BIT.B	#PIN_RX,	&PRXIN		;[3]
+	JNZ		goodDelim				;[2] t = 18.25 us (Impinj R420 - breaks past this point)
 
-	BIT.B	#PIN_RX,	&PRXIN		;[3]t=3.19..3.43us	(on the src fetch cycle)
-	JNZ		badDelim				;[2]
-	BIT.B	#PIN_RX,	&PRXIN		;[3]t=4.41..4.66us	""
-	JNZ		badDelim				;[2]
-	BIT.B	#PIN_RX,	&PRXIN		;[3]t=4.41..4.66us	""
-	JNZ		badDelim
-
-	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-	;*********************************************************************************************************************************
-	; JUST RIGHT (8us < DELIM <16us @ 8MHz)
-	;*********************************************************************************************************************************
-	BIT.B	#PIN_RX,	&PRXIN		;[4]t=6.86-7.11us
-	JNZ		goodDelim				;[2]
-	BIT.B	#PIN_RX,	&PRXIN		;[4]t=8.09-8.33us
-	JNZ		goodDelim				;[2]
-	BIT.B	#PIN_RX,	&PRXIN		;[4]t=9.31-9.56us
-	JNZ		goodDelim				;[2]
-	BIT.B	#PIN_RX,	&PRXIN		;[4]t=10.54-10.78us
-	JNZ		goodDelim				;[2]
-	BIT.B	#PIN_RX,	&PRXIN		;[4]t=6.86-7.11us
-	JNZ		goodDelim
-	BIT.B	#PIN_RX,	&PRXIN		;[4]t=6.86-7.11us
-	JNZ		goodDelim
-	BIT.B	#PIN_RX,	&PRXIN		;[4]t=6.86-7.11us
-	JNZ		goodDelim
-	BIT.B	#PIN_RX,	&PRXIN		;[4]t=6.86-7.11us
-	JNZ		goodDelim
-	BIT.B	#PIN_RX,	&PRXIN		;[4]t=6.86-7.11us
-	JNZ		goodDelim
-	BIT.B	#PIN_RX,	&PRXIN		;[4]t=6.86-7.11us
-	JNZ		goodDelim
-	;;Aroudn 16uS
-
-	BIT.B	#PIN_RX,	&PRXIN		;[4]t=6.86-7.11us
-	JNZ		goodDelim				;[2]
-	BIT.B	#PIN_RX,	&PRXIN		;[4]t=8.09-8.33us
-	JNZ		goodDelim				;[2]
-	BIT.B	#PIN_RX,	&PRXIN		;[4]t=9.31-9.56us
-	JNZ		goodDelim				;[2]
-	BIT.B	#PIN_RX,	&PRXIN		;[4]t=10.54-10.78us
-	JNZ		goodDelim				;[2]
-	BIT.B	#PIN_RX,	&PRXIN		;[4]t=6.86-7.11us
-	JNZ		goodDelim
-	BIT.B	#PIN_RX,	&PRXIN		;[4]t=6.86-7.11us
-	JNZ		goodDelim
-	BIT.B	#PIN_RX,	&PRXIN		;[4]t=6.86-7.11us
-	JNZ		goodDelim
-	BIT.B	#PIN_RX,	&PRXIN		;[4]t=6.86-7.11us
-	JNZ		goodDelim
-	BIT.B	#PIN_RX,	&PRXIN		;[4]t=6.86-7.11us
-	JNZ		goodDelim
-	BIT.B	#PIN_RX,	&PRXIN		;[4]t=6.86-7.11us
-	JNZ		goodDelim
 
 	;*********************************************************************************************************************************
 	; ELSE TOO LONG!! (anything past here was too long)
 	;*********************************************************************************************************************************
 
-badDelim:							; Just Go Back To Sleep...
+badDelim:									; Go Back To Sleep.
 	BIT.B	R15, R14
-	BIC		#CCIFG, &TA0CCTL0		;[] clear the interrupt flag for Timer0A0 Compare (safety)
-	CLR		&TA0R					;[] reset TAR value
-	CLR		&(rfid.edge_capture_prev_ccr) ;[] Clear previous value of CCR capture
-	CLR.B		&PRXIFG					;[] clear the Port 1 flag.
+	BIC		#CCIFG, &TA0CCTL0				;[] clear the interrupt flag for Timer0A0 Compare (safety)
+	CLR		&TA0R							;[] reset TAR value
+	CLR		&(rfid.edge_capture_prev_ccr) 	;[] Clear previous value of CCR capture
+	CLR.B	&PRXIFG							;[] clear the Port 1 flag.
 	RETI
 
 	;*********************************************************************************************************************************
@@ -151,7 +122,7 @@ goodDelim:
 	BIS.B		#PIN_RX,	 &PRXSEL0	;[4] Enable Timer0A0
 	BIC.B		#PIN_RX,	 &PRXSEL1	;[4] Enable Timer0A0
 	CLR.B		&PRXIE					;[4] Disable the Port 1 Interrupt
-	BIC		#(SCG1), 0(SP)		    ;[] Enable the DCO to start counting.
+	BIC		#(SCG1), 0(SP)		    	;[] Enable the DCO to start counting.
 	PUSHM.A #1,	R15
 	MOV		#FORCE_SKIP_INTO_RTCAL, R15
 
@@ -170,7 +141,7 @@ startupT0A0_ISR:
 	CLR		&(rfid.edge_capture_prev_ccr) ;[] reset previous edge capture time
 	CLR.B	&PRXIFG					;[5] clear the Port 1 flag.
 	ADD 	#36, &TA0R				;The modified code seem to add some commands that increase the amount of waiting after finding the Good Delimiter.
-	;We just need to wait for 1 Tari (in this case 12.5us) which is equal to 50 cycles for 4MHz before counting the length of RTcal but instead in this code we wait for about
+	;We just need to wait for 1 Tari (7.14 us for R1000 and 6.25 us for R420!) which is equal to 50 cycles for R420 and 57-58 cycles for R1000 on 8MHz before counting the length of RTcal but instead in this code we wait for about
 	;86 cycles and after that clear the TA0R. This is the reason we added #36 to TA0R.
 
 	RETI
