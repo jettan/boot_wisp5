@@ -26,13 +26,13 @@ TxClock:
 	RETA
 
 
-;;; Switch to RX frequency (8 MHz)
+;;; Switch to RX frequency (16 MHz)
 RxClock:
 	MOV.B           #(0xA5), &CSCTL0_H                                            ;CSCTL0_H = 0xA5
-	MOV.W           #(DCORSEL|DCOFSEL_4), &CSCTL1                                 ;CSCTL1 = DCORSEL + DCOFSEL_3 (supposedly 8MHz, but actually 16!)
-	MOV.W           #(SELA_0|SELM_3), &CSCTL2     ;
-	BIS.W           #(SELS_3), &CSCTL2
-	MOV.W           #(DIVA_0|DIVS_0|DIVM_0), &CSCTL3 ;
+	MOV.W           #(DCORSEL|DCOFSEL_4), &CSCTL1                                 ;CSCTL1 = DCORSEL + DCOFSEL_4
+	MOV.W           #(SELA_0|SELM_3), &CSCTL2                                     ;CSCTL2 = SELA_0 + SELM_3
+	BIS.W           #(SELS_3), &CSCTL2                                            ;CSCTL2 |= SELS_3
+	MOV.W           #(DIVA_0|DIVS_0|DIVM_0), &CSCTL3                              ;CSCTL3 = DIVA_0 + DIVS_0 + DIVM_0
 	BIS.W           #(MODCLKREQEN|SMCLKREQEN|MCLKREQEN|ACLKREQEN), &CSCTL6
 	
 	RETA
