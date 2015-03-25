@@ -82,7 +82,6 @@ badDelim:									; Go Back To Sleep.
 	;Time To March Forward in the RX State Machine																					 *
 	;*********************************************************************************************************************************
 goodDelim:                                ;[23]
-	; TODO The following shouldn't overwrite other bits in PRXSEL!?
 	BIS.B   #PIN_RX, &PRXSEL0             ;[5] Enable Timer0A0
 	BIC.B   #PIN_RX, &PRXSEL1             ;[5] Enable Timer0A0
 	CLR.B   &PRXIE                        ;[4] Disable the Port 1 Interrupt
@@ -98,22 +97,19 @@ delimDelay:                               ;[103]
 	; Moved to here because the timer0A0 interrupt should not fire at falling edge of delay cycle which happen after Good Delimiter
 	BIS.W	#(CM_2+CCIE),&TA0CCTL0        ;[5]
 
-startupT0A0_ISR:                          ;[21] cycles = 1.3125 us
+startupT0A0_ISR:
 	BIC		#CCIFG, &TA0CCTL0		      ;[5] Clear the interrupt flag for Timer0A0 Compare
 	CLR		&TA0R					      ;[4] ***Reset clock!***
 	CLR		&(rfid.edge_capture_prev_ccr) ;[4] Clear previous value of CCR capture
 	CLR		&(rfid.edge_capture_prev_ccr) ;[4] Reset previous edge capture time TODO: Is this needed since it's already been done in the line above?
 	CLR.B	&PRXIFG					      ;[4] Clear the Port 1 flag.
-
-
-	ADD 	#36, &TA0R				      ;[5] The modified code seem to add some commands that increase the amount of waiting after finding the Good Delimiter.
-	;;We just need to wait for 1 Tari (7.14 us for R1000 and 6.25 us for R420!) which is equal to 100 cycles for R420 and 114-115 cycles for R1000 on 8MHz before counting the length of RTcal but instead in this code we wait for about
-	;;86 cycles (?) and after that clear the TA0R. This is the reason we added #36 to TA0R.
+	
+	ADD 	#36, &TA0R				      ;[5] Add number of cycles that have past between the real start of RTCAL and the TA0 reset. (should be 21 for R1000 and 35 for R420)
+	;; We just need to wait for 1 Tari (7.14 us for R1000 and 6.25 us for R420!) which is equal to 100 cycles for R420 and 115 cycles for R1000 on 8MHz before counting the length of RTcal.
+	;; But instead 23 + 103 + 9 = 135 cycles have past before the clock is reset again! This is the reason the difference is added to TA0R.
+	;; TODO: Do we need to add cycles for the ADD operation as well?
 
 	RETI                                  ;[5]
-
-	;; We are 153 cycles (9.5625 us) past delimiter.
-	;	//Now wait into data0 somewhere!
 
 ;*************************************************************************************************************************************
 ; DEFINE THE INTERRUPT VECTOR ASSIGNMENT																							 *
