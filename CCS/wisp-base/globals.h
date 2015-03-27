@@ -48,15 +48,15 @@
 //RFID TIMING DEFS                      /*4.08MHz                                                                                   */
 /** @todo map these better based on full range of valid vals!                                                                   */
 //Impinj Uses RTCal = 31.4us = 2.5*TARI (min possible.   RTCal goes between 2.5-3.0 TARI Per Spec)
-#define RTCAL_MIN       (2*85)
-#define RTCAL_NOM       (2*125)     /* (really only saw spread from 102 at high power to 96 at low power)                       */
-#define RTCAL_MAX       (2*150)     /*(this accounts for readers who use up to 3TARI, plus a little wiggle room)                */
-#define RTCAL_OFFS      (2*12)      /* see documentation for notes.                                                             */
+#define RTCAL_MIN       (250-53)
+#define RTCAL_NOM       (2*125)      /* (really only saw spread from 102 at high power to 96 at low power)  Never called         */
+#define RTCAL_MAX       (300)//(300-32)     /*(this accounts for readers who use up to 3TARI, plus a little wiggle room)               */
+#define RTCAL_OFFS      (42)         /* This is just the PW value that is not measured by the timer.                             */
 
 //Impinj Uses TRCal = 50.2us = 1.6*RTCAL(middle of road. TRCal goes between 1.1-3 RTCAL per spec. also said, 2.75-9.00 TARI)
-#define TRCAL_MIN       (2*140)
+#define TRCAL_MIN       (197)  // This is a super ugly hack because the timer knows the exact value of PW and we don't!
 #define TRCAL_NOM       (2*265)     /* (really only saw spread from 193 at high power to 192 at low power)                      */
-#define TRCAL_MAX       (2*451)     /* (this accounts for readers who use up to 9TARI)                                          */
+#define TRCAL_MAX       (930)  //
 
 //TIMING----------------------------------------------------------------------------------------------------------------------------//
 //Goal is 56.125/62.500/68.875us. Trying to shoot for the lower to save (a little) power.

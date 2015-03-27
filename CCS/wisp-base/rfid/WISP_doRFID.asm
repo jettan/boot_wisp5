@@ -130,23 +130,21 @@ keepDoingRFID:
 ;/***********************************************************************************************************************************/
 decodeCmd_lvl1:
 	MOV.B 	(cmd),  R_scratch0	;[] bring in cmd[0] to parse
-	AND.B	#0xC0,  R_scratch0	;[] just compare the first two bits
+	AND.B	#0xC0,  R_scratch0	;[] Only use first 2 bits.
 
-	CMP.B	#0xC0,	R_scratch0
+	CMP.B	#0xC0,	R_scratch0  ;[] Read "11" -> go to access commands.
 	JEQ		decodeCmd_lvl2_11
-	CMP.B	#0x80,	R_scratch0
+	CMP.B	#0x80,	R_scratch0  ;[] Read "10" -> go to query commands.
 	JEQ		decodeCmd_lvl2_10
 
 	CMP.B	#0,		&(rfid.isSelected)
 	JZ		tagNotSelected
 
-	CMP.B	#0x40,	R_scratch0
+	CMP.B	#0x40,	R_scratch0  ;[] Read "01" -> ACK
 	JEQ		callAckHandler
 
-	CMP.B	#0x00, R_scratch0
+	CMP.B	#0x00, R_scratch0   ;[] Read "00" -> QueryRep
 	JEQ		callQRHandler
-
-
 
 	JMP		endDoRFID
 
@@ -172,17 +170,17 @@ decodeCmd_lvl2_11:
 decodeCmd_lvl2_10:
 
 	MOV.B 	(cmd), 	R_scratch0	;[] bring in cmd[0] to parse
-	AND.B	#0x30,  R_scratch0	;[] just compare the second two bits
+	AND.B	#0x30,  R_scratch0	;[] Use second two bits
 
-	CMP.B	#0x20,	R_scratch0	;[] is it select?
+	CMP.B	#0x20,	R_scratch0	;[] Read "1010" -> Select
 	JEQ		callSelectHandler	;[]
 
 	CMP.B	#0,		&(rfid.isSelected)
 	JZ		tagNotSelected
 
-	CMP.B	#0x10,	R_scratch0	;[] is it queryAdjust?
+	CMP.B	#0x10,	R_scratch0	;[] Read "1001" -> queryAdjust?
 	JEQ		callQAHandler		;[]
-	CMP.B	#0x00,	R_scratch0	;[] is it query?
+	CMP.B	#0x00,	R_scratch0	;[] Read "1000" -> query
 	JEQ		callQueryHandler	;[]
 	JMP		endDoRFID			;[] come back and handle after query is working.
 

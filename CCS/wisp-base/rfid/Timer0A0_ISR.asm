@@ -53,19 +53,18 @@ Timer0A0_ISR:						;[6] entry cycles into an interrupt (well, 5-6)
 ;	MODE A: RTCal
 ;*************************************************************************************************************************************
 ModeA_process:
-; DEBUG!!
 	CMP		#RTCAL_MIN,  R_newCt 	;[2]error catch: check if valid RTCal (i.e. if TA0CCR1<2TARI)
 	JL		failed_RTCal		 	;[2] break if doesn't work.
     CMP		#RTCAL_MAX,	 R_newCt 	;[2]
     JGE		failed_RTCal		 	;[2] break if doesn't work.
 
 	;ok valid RTCal, now process to get pivot(R8)
-    MOV    	R_newCt, 	 R_scratch2 ;[1] Load R7 into a scratch reg(R9) so we can use this RTCal value in Mode 2 Processing next
-    ADD		#RTCAL_OFFS, R_newCt 	;[2] Compensate for lost cycles in this measurement method to get to actual RTCal val.
+    MOV    	R_newCt, 	 R_scratch2 ;[1] Load R7 into a scratch reg(R9) so we can use this RTCal value in Mode B Processing next
+    ADD	    #RTCAL_OFFS, R_newCt 	;[2] Compensate for lost cycles in this measurement method to get to actual RTCal val.
     RRA   	R_newCt             	;[1] Divide R7 by 2
-    MOV    	#(-1),		 R_pivot    ;[1] preload pivot value with MAX (i.e. 0xFFFFh)
-    SUB    	R_newCt, 	 R_pivot  	;[1] pivotReg = pivotReg-(currCount/2) <-- This sets up the pivot reg for calc discussed.
-    INC    	R_bits               	;[1] (r5=2) use r5 as a flag for the next entry (entry into mode 2)
+	MOV     #(-1), R_pivot          ;[1] preload pivot value with MAX (i.e. 0xFFFFh)
+    SUB     R_newCt, R_pivot        ;[1] pivotReg = pivotReg-(currCount/2) Make pivot negative (so we can use ADD later on).
+    INC    	R_bits               	;[1] Time for mode B.
     RETI                        	;[5] return from interrupt
 
 
@@ -75,12 +74,14 @@ ModeA_process:
 ModeB_process:
 	CMP    	R_scratch2, R_newCt		;[1] is currCount>RTCal? if so it's TRCal, else data
     JGE    	ModeB_TRCal        		;[2] if currCount>RTCal then jump to process TRCal
-
+	NOP
+	NOP
+	NOP
 
 	;else it's databit0. store it!
 ModeB_dataBit:
-    ADD    	R_pivot, 	R_newCt    	;[1] do pivotTest (currCount = currCount+pivotReg. if Carry, its data1) <-note: thus dataBit is stored in carry.
-    ADDC.B 	@R_dest+,	-1(R_dest) 	;[5] shift cmd[curr] by one (i.e. add it to itself), then store dataBit(carryFlag), into cmd[currCmdByte], then increment currCmdByte (all as one asm:))
+    ADD    	R_pivot, 	R_newCt    	;[1] Add -pivot to new measured value. result will overflow (==carry) iff (period > pivot) i.e. "1"-bit
+    ADDC.B 	@R_dest+,	-1(R_dest) 	;[5] Add R_dest to itself, i.e. multiply by 2, i.e. shift 1 bit left. Then add carry from previous operation.
 
     INC    	R_bits                  ;[1] update R5(bits) cause we got a databit
     INC    	R_bitCt                 ;[1] mark that we've stored a bit into r6(currCmdBits)
@@ -88,10 +89,8 @@ ModeB_dataBit:
     RETI                        	;[5] return from interrupt
 
 
-    ;Check if Valid TRCal (i.e. ~50.2us).
 ModeB_TRCal:
-    ;BIS.B	#PIN_DBG0, &PDBGOUT      ;@us_change: cancell debug line here
-    ;BIC.B	#PIN_DBG0, &PDBGOUT
+
     CMP		#TRCAL_MIN, R_newCt		;[2]
     JL		failed_TRCal 			;[2] reset RX State Machine if TRCal is too short!! we won't check if too long, because 320kHz uses the max TRCal length.
     CMP		#TRCAL_MAX,  R_newCt 	;[2] error catch: check if valid TRCal (i.e. if TA0CCR1>2TARI)
