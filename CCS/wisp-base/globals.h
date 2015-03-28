@@ -43,7 +43,7 @@
 #define CMD_PARSE_AS_QUERY_REP          (0x00)          // The WISP ignores the Session fields/parameters. So when we get bits "00", we don't wait for more bits to come in and fill cmd[0] with 0x00 (all zeroes).
 #define ENOUGH_BITS_TO_FORCE_EXECUTION  (200)
 
-#define RESET_BITS_VAL                  (-1)            // this is the value which will reset the TA1_SM if found in 'bits (R5)' by rfid_sm         */
+#define RESET_BITS_VAL                  (-2)            // this is the value which will reset the TA1_SM if found in 'bits (R5)' by rfid_sm         */
 
 // R420 TIMINGS
 #define RTCAL_MIN                       (250)           // 2.5*TARI = 2.5*6.25 = 15.625 us

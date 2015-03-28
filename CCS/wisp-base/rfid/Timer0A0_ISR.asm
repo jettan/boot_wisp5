@@ -46,20 +46,23 @@ Timer0A0_ISR:                                                ;[6]
 	JEQ     ModeC_process                                    ;[2] R_bits = 1  -> 2nd data bit
 	CMP     #(0), R_bits                                     ;[2]
 	JEQ     ModeB_process                                    ;[2] R_bits = 0  -> TRCAL and/or 1st data bit
-	                                                         ;[0] R_bits = -1 -> RTCAL
+	CMP     #(-1), R_bits                                    ;[2] R_bits = -1 -> RTCAL
+	JEQ     ModeA_process                                    ;[2]
+	
+	INC     R_bits                                           ;[0] Else, we detected the falling edge of data-0 after the delimiter.
+	RETI                                                     ;[5] Return from interrupt.
 
 ;*************************************************************************************************************************************
 ;   MODE A: RTCal
 ;*************************************************************************************************************************************
 ModeA_process:
-	CMP     #RTCAL_MIN, R_newCt                              ;[2] RTCAL-PW >= 2.5*TARI - PW?
-	JL      failed_RTCal                                     ;[2] RTCAL-PW  too small
-	CMP     #RTCAL_MAX, R_newCt                              ;[2] RTCAL-PW <= 3*TARI - PW?
-	JGE     failed_RTCal                                     ;[2] RTCAL-PW too large
+	CMP     #RTCAL_MIN, R_newCt                              ;[2] RTCAL >= 2.5*TARI - PW?
+	JL      failed_RTCal                                     ;[2] RTCAL  too small
+	CMP     #RTCAL_MAX, R_newCt                              ;[2] RTCAL <= 3*TARI - PW?
+	JGE     failed_RTCal                                     ;[2] RTCAL too large
 	
 	;RTCAL is correct length, now proceed to compute pivot.
-	MOV     R_newCt, R_scratch2                              ;[1] Save RTCAL-PW to compare with TRCAL later on.
-	ADD     #RTCAL_OFFS, R_newCt                             ;[2] RTCAL-PW + PW_ESTIMATE = RTCAL (sort of)
+	MOV     R_newCt, R_scratch2                              ;[1] Save RTCAL to compare with TRCAL later on.
 	RRA     R_newCt                                          ;[1] pivot = RTCAL/2
 	MOV     #(-1), R_pivot                                   ;[1] Preload pivot value with MAX (i.e. 0xFFFFh)
 	SUB     R_newCt, R_pivot                                 ;[1] Make pivot negative (so we can use ADD later on).
@@ -71,7 +74,7 @@ ModeA_process:
 ;	MODE B: TRCal/bit0
 ;*************************************************************************************************************************************
 ModeB_process:
-	CMP     R_scratch2, R_newCt                              ;[1] delta > RTCAL -> TRCAL, else 1st data bit.
+	CMP     R_scratch2, R_newCt                              ;[1] delta >= RTCAL -> TRCAL, else 1st data bit.
 	JGE     ModeB_TRCal                                      ;[2]
 	NOP                                                      ;[]  Pipeline dodging. TODO: Is this needed?
 	NOP
