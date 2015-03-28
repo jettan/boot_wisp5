@@ -102,29 +102,20 @@ badDelim:
 	RETI
 
 ; We found a delim ~12.5 us, now turn off PORT1 and prepare Timer0A0.
-goodDelim:                                              ;[23]
+goodDelim:                                              ;[24]
 	BIS.B   #PIN_RX, &PRXSEL0                           ;[5] Enable Timer0A0
 	BIC.B   #PIN_RX, &PRXSEL1                           ;[5] Enable Timer0A0
 	CLR.B   &PRXIE                                      ;[4] Disable the Port 1 Interrupt
 	BIC     #(SCG1), 0(SP)                              ;[5] Enable the DCO to start counting
-	PUSHM.A #1, R15                                     ;[2] Backup data of R15.
-	MOV     #FORCE_SKIP_INTO_RTCAL, R15                 ;[2] Set R15 to 24.
+	BIS.W   #(CM_2+CCIE), &TA0CCTL0                     ;[5] Wake up so we can make use of Timer0A0 control registers?
 
-delimDelay:                                             ;[103]
-	DEC     R15                                         ;[2] Executed 24 times.
-	JNZ     delimDelay                                  ;[2] Executed 24 times.
-	POPM.A  #1, R15                                     ;[2] Restore data of R15.
-	BIS.W   #(CM_2+CCIE), &TA0CCTL0                     ;[5] We don't want T0A0 to trigger on the falling edge of data-0, this is why we have a delimDelay.
-
-startupT0A0_ISR:
+startupT0A0_ISR:                                        ;[22]
 	BIC     #CCIFG, &TA0CCTL0                           ;[5] Clear the interrupt flag for Timer0A0 Compare
 	CLR     &TA0R                                       ;[4] ***Reset clock!***
 	CLR     &(rfid.edge_capture_prev_ccr)               ;[4] Clear previous value of CCR capture
-	CLR     &(rfid.edge_capture_prev_ccr)               ;[4] Reset previous edge capture time TODO: Is this needed since it's already been done in the line above?
 	CLR.B   &PRXIFG                                     ;[4] Clear the Port 1 flag.
 	
-	ADD     #36, &TA0R                                  ;[5] Add number of cycles that have past between the real start of RTCAL and the TA0 reset. (should be 21 for R1000 and 35 for R420)
-	RETI                                                ;[5] Return from interrupt.
+	RETI                                                ;[5] Return from interrupt (46 cycles total).
 
 ;*************************************************************************************************************************************
 ; DEFINE THE INTERRUPT VECTOR ASSIGNMENT
