@@ -33,38 +33,16 @@
 #define RFIDBUFF_SIZE                   (1+16+2+2+50)                   // Longest command the WISP can currently process is a READ command for 8 words.
 #define USRBANK_SIZE                    (32)                            // Size of the USRBANK of the WISP in the memory. But the USRBANK is never used since WISP ignores the Sel field in Query.
 
-/// THESE DEFINES ARE NEVER USED?
-#define RTCAL_NOM                       (2*125)         // Supposedly halfway value of RTCAL.
-#define TRCAL_NOM                       (2*265)         // Supposedly halfway value of TRCAL.
-#define CMD_PARSE_AS_OVF                (0xFF)          // This command does not even exist... "11111111"
-#define RFID_SEED                       (0x1234)        // Change this to change the RN16 selection behavior.
-
-
-#define CMD_PARSE_AS_QUERY_REP          (0x00)          // The WISP ignores the Session fields/parameters. So when we get bits "00", we don't wait for more bits to come in and fill cmd[0] with 0x00 (all zeroes).
+#define CMD_PARSE_AS_QUERY_REP          (0x20)          // The WISP ignores the Session fields/parameters. So when we get bits "00", we don't wait for more bits to come in and fill cmd[0] with 0x20 "00100000".
 #define ENOUGH_BITS_TO_FORCE_EXECUTION  (200)
 
 #define RESET_BITS_VAL                  (-2)            // this is the value which will reset the TA1_SM if found in 'bits (R5)' by rfid_sm         */
 
-// R420 TIMINGS
-#define RTCAL_MIN                       (250)           // 2.5*TARI = 2.5*6.25 = 15.625 us
+// RFID TIMINGS (Taken a bit more liberately to support both R420 and R1000).
+#define RTCAL_MIN                       (200)           // strictly calculated it should be 2.5*TARI = 2.5*6.25 = 15.625 us = 250 cycles
 #define RTCAL_MAX                       (300)           // 3*TARI = 3*6.25 = 18.75 us
-#define TRCAL_MIN                       (275)           // We don't have time to do a MUL instruction, so we do 1.1*RTCAL_MIN instead of 1.1*RTCAL.
+#define TRCAL_MIN                       (220)           // We don't have time to do a MUL instruction, so we do 1.1*RTCAL_MIN instead of 1.1*RTCAL.
 #define TRCAL_MAX                       (900)           // We don't have time to do a MUL instruction, so we do 3*RTCAL_MAX instead of 3*RTCAL.
-
-// R1000 TIMINGS
-//#define RTCAL_MIN                       (285)           // 2.5*TARI = 2.5*7.14 = 17.85 us (R1000)
-//#define RTCAL_MAX                       (342)           // 3*TARI = 3*7.14 = 21.42 us (R1000)
-//#define TRCAL_MIN                       (313)           // We don't have time to do a MUL instruction, so we do 1.1*RTCAL_MIN instead of 1.1*RTCAL.
-//#define TRCAL_MAX                       (1026)          // We don't have time to do a MUL instruction, so we do 3*RTCAL_MAX instead of 3*RTCAL.
-
-/* Abolishing RTCAL_OFFS
-#define RTCAL_MIN       (250-53)
-#define RTCAL_MAX       (300)//(300-32)     //(this accounts for readers who use up to 3TARI, plus a little wiggle room)
-#define RTCAL_OFFS      (42)         // This is just the PW value that is not measured by the timer.
-#define TRCAL_MIN                       (197)           // This is a super ugly hack because the timer knows the exact value of PW and we don't!
-#define TRCAL_MAX                       (930)           //
-#define FORCE_SKIP_INTO_RTCAL   (24)                    // after delim, wait till data0 passes before starting TA1_SM.
-*/
 
 
 //TIMING----------------------------------------------------------------------------------------------------------------------------//
