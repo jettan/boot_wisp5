@@ -34,44 +34,49 @@ R_scratch0	.set	R15
 ;//***********************************************************************************************************************************
 handleQR:
 	;WISP ignores "Session" field, so no need to wait for the extra bits...
-	BIC		#(GIE),	SR				;[] clear the GIE bit just as a safety. RX_SM already cleared it for us.
-	NOP
+	BIC		#(GIE),	SR				;[2] clear the GIE bit just as a safety. RX_SM already cleared it for us.
+	NOP                             ;[1]
 	
-	CLR		&TA0CTL					;[] todo: maybe come back and remove this line.
+	CLR		&TA0CTL					;[4] todo: maybe come back and remove this line.
 	
 	; if (slotcount >= 1) -> slotcount--
-	CMP		#(1),	&rfid.slotCount	;[]
-	JL		QRTimeToBackscatter		;[] if (slotcount == 0) -> backscatter
+	CMP		#(1),	&rfid.slotCount	;[2]
+	JL		QRTimeToBackscatter		;[2] if (slotcount == 0) -> backscatter
 
 QRJustDecrementAndLeave:
 	DEC		&(rfid.slotCount)		;[] slotcount--
 	RETA							;[]
 
 QRTimeToBackscatter:
-	MOV		#(0),	&(rfid.slotCount) ;[] As a safety, set slotcount to 0 (because we are paranoid).
+	MOV		#(0),	&(rfid.slotCount) ;[4] As a safety, set slotcount to 0 (because we are paranoid).
 	
 	;Delay is a bit tricky because of stupid Q. Q adds 8*Q cycles to the timing. So we need to subtract that (grr...)
-	MOV		#TX_TIMING_QR,  R5		;[]
+	MOV		#TX_TIMING_QR,  R5		  ;[2]
+
+	;[17]
 
 QRTimingLoop:
 	NOP								;[1]
 	DEC		R5						;[1] Info stored in N: N = (R5<0)
 	JNZ		QRTimingLoop			;[2] Break out of loop on N
 
+	;[4]*52 = 208
+
 	;Load up function call, then transmit! bam!
 	MOV		(rfid.handle), 	R_scratch0 ;[3] bring in the RN16
-	SWPB	R_scratch0				;[1] swap bytes so we can shove full word out in one call (MSByte into dataBuf[0],...)
-	MOV		R_scratch0, &(rfidBuf)	;[4] load the MSByte
+	SWPB	R_scratch0				   ;[1] swap bytes so we can shove full word out in one call (MSByte into dataBuf[0],...)
+	MOV		R_scratch0, &(rfidBuf)	   ;[3] load the MSByte
 
 	;Setup TxFM0
 	;TRANSMIT (16 pre, 38 till Tx in TxFM0 -> 54cycles)
 	MOV		#(rfidBuf),	R12			;[2] load the &rfidBuf[0]
-	MOV		#(2),		R13			;[1] load into corr reg (numBytes)
-	MOV		#(0),		R14			;[1] load numBits=0
+	MOV		#(2),		R13			;[2] load into corr reg (numBytes)
+	MOV		#(0),		R14			;[2] load numBits=0
 	MOV.B	rfid.TRext,	R15			;[3] load TRext
 	
 	CALLA	#TxFM0					;[5] call the routine @us@todo: need to check RN16 in the future, fake TxFM0 in TX
 	
+	;[246] cycles in = 15.375 us
 	CALLA #RxClock	;Switch back to Rx Clock
 	
 	RETA
@@ -105,7 +110,6 @@ QRTimingLoop:
 ; * 	[Target]     1 cmd[1].b3
 ; * 	[Q]          4 cmd[1].b2-b0 | cmd[2].b7
 ; * 	[CRC-5] cmd[2].b6-b2	*assuming cmd[2] had shifted in all the way. last bit of CRC-5 will actually just be in b0.
-; *
 ; *	@section	Response Format
 ; *     [RN16]	rfidBuf[0].b7-b0 | rfidBuf[1].b7-b0
 ; *
@@ -124,34 +128,31 @@ handleQuery:
 	; STEP 1: Parse the Command
 	;*********************************************************************************************************************************
 	
+
+
 	;Wait until full Query command and all its parameters are received.
-	CMP		#NUM_QUERY_BITS, R_bits	;[1] Is R_bits>=22? Info stored in C: ( C = (R_bits>=22) )
-	
-	;;;;;;;;;;;;Debug
-	;BIS.B 	#PIN_LED2, &PDIR_LED2
-	;XOR.B	#PIN_LED2, &PLED2OUT
-	
-	JLO		handleQuery				;[2] Loop until C pops up.
+	CMP		#NUM_QUERY_BITS, R_bits	 ;[2] Is R_bits>=22? Info stored in C: ( C = (R_bits>=22) )
+	JLO		handleQuery				 ;[2] Loop until C pops up.
 	
 	;STEP2: Wakeup and Parse--------------------------------------------------------------------------------------------------------//
-	BIC		#(GIE), SR				;[1] don't need anymore bits, so turn off Rx_SM
-	NOP
+	BIC		#(GIE), SR				 ;[2] don't need anymore bits, so turn off Rx_SM
+	NOP                              ;[1]
 	
-	CLR		&TA0CTL
+	CLR		&TA0CTL                  ;[4]
 	
+
+	; (╯°□°)╯︵ ┻━┻
 	;Parse TRext as cmd[0].b0
-	MOV.B	(cmd),	R_scratch0		;[3] parse TRext
-	AND.B	#0x01,	R_scratch0		;[1] it is cmd[0].b0
-	MOV.B	R_scratch0, &(rfid.TRext);[4] push it out
+	;MOV.B	#0x00, &(rfid.TRext)         ;[4] push it out
 	
 	;Parse Q as cmd[1].b2-b0 | cmd[2].b7
-	MOV.B	(cmd+1), R_scratch0		;[3] prep to parse Q (in cmd[1]/cmd[2])
-	MOV.B	(cmd+2), R_scratch1		;[3]
-	
-	RRA		R_scratch1				;[1]
-	RLC		R_scratch0				;[1]
-	AND		#0x000F, R_scratch0		;[2]
-	MOV.B	R_scratch0, &(rfid.Q)	;[4] store Q
+	;MOV.B	(cmd+1), R_scratch0		     ;[3] prep to parse Q (in cmd[1]/cmd[2])
+	;MOV.B	(cmd+2), R_scratch1		     ;[3]
+
+	;RLA		R_scratch1				 ;[1]
+	;RLC		R_scratch0				 ;[1]
+	;AND		#0x000F, R_scratch0		 ;[2]
+	;MOV.B	R_scratch0, &(rfid.Q)	     ;[3] store Q
 	
 	;Exit: Q and TRext have been parsed. no registers are held.
 
@@ -161,63 +162,79 @@ handleQuery:
 	;*********************************************************************************************************************************
 	;Generate psuedo-random #---------------------------------------------------------------------------------------------------------
 	;Grab a Random Value from Random Value Table in InfoB
-	MOV.B	rfid.rn8_ind,	R_scratch0 ;[1] bring in rn8_ind
-	INC		R_scratch0				;[1] rn8_ind++
-	AND		#0x001F, 		R_scratch0 ;[1] modulo 32 on the ind
-	MOV.B	R_scratch0, 	&rfid.rn8_ind ;[4] store new rn8_ind
+	;MOV.B	rfid.rn8_ind,	R_scratch0    ;[3] bring in rn8_ind
+	;INC		R_scratch0				      ;[1] rn8_ind++
+	;AND		#0x001F, 		R_scratch0    ;[2] modulo 32 on the ind
+	;MOV.B	R_scratch0, 	&rfid.rn8_ind ;[3] store new rn8_ind
 	
 	;Grab the RN8 (as a 16bit val) and use for RN16 and slotCount
-	ADD		#MEM_MAP_INFOB_START, R_scratch0 ;[] offset the index into the table
-	MOV		@R_scratch0, 	R_scratch0 ;[] bring in random val (as int, grab some other byte too!)
-	MOV		R_scratch0,		&rfid.handle ;[] store the handle (don't store slotCount just yet!)
+	;ADD		#MEM_MAP_INFOB_START, R_scratch0 ;[2] offset the index into the table
+	;MOV		@R_scratch0, 	R_scratch0       ;[2] bring in random val (as int, grab some other byte too!)
+	;MOV		R_scratch0,		&rfid.handle     ;[3] store the handle (don't store slotCount just yet!)
 	
 	;Generate the Slot Count Mask into R_scratch2
-	CLR		R_scratch2				;[1] load Rs2 with a empty mask
-	MOV.B	(rfid.Q),  		R_scratch1 ;[] bring Q in too
+	;CLR		R_scratch2				         ;[4] load Rs2 with a empty mask
+	;MOV.B	(rfid.Q), R_scratch1             ;[3] bring Q in too
+
+	;[23]
 
 	;Mask Slot Count to only contain (Q) bits (i.e. slotCount<2^Q)
 keepShifting:
-	CMP.B	#1,		R_scratch1		;[1] is Qctr>=1? Info stored in C: ( C = (R_s1>=1) )
-	JNC		doneShifting			;[2] break when Qctr is 0.
+	;CMP.B	#1,		R_scratch1		         ;[2] is Qctr>=1? Info stored in C: ( C = (R_s1>=1) )
+	;JNC		doneShifting			         ;[2] break when Qctr is 0.
+
+	JMP     rspWithQuery                     ;[2]
 	
-	DEC		R_scratch1				;[1] Decrement the Qctr
-	SETC							;[1] Load a C bit
-	RLC		R_scratch2				;[1] insert the 1 bit into mask
-	JMP		keepShifting			;[2] continue shifting
+	;[4]
+
+	DEC		R_scratch1				         ;[1] Decrement the Qctr
+	SETC							         ;[2] Load a C bit
+	RLC		R_scratch2				         ;[1] insert the 1 bit into mask
+	JMP		keepShifting			         ;[2] continue shifting
+
+	;[6]
 
 doneShifting:
 	;now apply mask to slotCount (and also inc the RN16)
-	AND		R_scratch2, R_scratch0	;[4] apply mask to slotCount (in Rs0)
-	MOV		R_scratch0, &rfid.slotCount	;[] move it out!
+	AND		R_scratch2, R_scratch0	         ;[1] apply mask to slotCount (in Rs0)
+	MOV		R_scratch0, &rfid.slotCount	     ;[3] move it out!
 	
 	;is it our turn? (recall, slotCount is still in Rs0)
-	CMP #(1), R_scratch0			;[2] is SlotCt>=1? Info stored in C: ( C = (SlotCt>=1) )
-	JNC	rspWithQuery				;[2] respond with a query if !C
+	CMP #(1), R_scratch0			         ;[2] is SlotCt>=1? Info stored in C: ( C = (SlotCt>=1) )
+	JNC	rspWithQuery				         ;[2] respond with a query if !C
 	
-	RETA								;[5] not our turn; return from call
+	;[8]
+
+	RETA								     ;[5] not our turn; return from call
 
 rspWithQuery:
 	;Delay is a bit tricky because of stupid Q. Q adds 8*Q cycles to the timing. So we need to subtract that (grr...)
-	MOV		#TX_TIMING_QUERY,  R5	;[]
+	MOV		#TX_TIMING_QUERY,  R5	         ;[2]
 
 queryTimingLoop:
-	NOP								;[1]
-	DEC		R5						;[1] Info stored in N: N = (R5<0)
-	JNZ		queryTimingLoop			;[2] Break out of loop on N
+	NOP								         ;[1]
+	DEC		R5						         ;[1] Info stored in N: N = (R5<0)
+	JNZ		queryTimingLoop			         ;[2] Break out of loop on N
+
+	;[4]*TX_TIMING_QUERY
 
 	;Load up function call, then transmit! bam!
-	MOV		(rfid.handle), 	R_scratch0 ;[3] bring in the RN16
-	SWPB	R_scratch0				;[1] swap bytes so we can shove full word out in one call (MSByte into dataBuf[0],...)
-	MOV		R_scratch0, 	&(rfidBuf) ;[4] load the MSByte
+	MOV		(rfid.handle), 	R_scratch0       ;[3] bring in the RN16
+	SWPB	R_scratch0				         ;[1] swap bytes so we can shove full word out in one call (MSByte into dataBuf[0],...)
+	MOV		R_scratch0, 	&(rfidBuf)       ;[3] load the MSByte
 
 	;Setup TxFM0
 	;TRANSMIT (16pre,38tillTxinTxFM0 -> 54cycles)
-	MOV		#(rfidBuf),		R12		;[2] load the &rfidBuf[0]
-	MOV		#(2),			R13		;[1] load into corr reg (numBytes)
-	MOV		#(0),			R14		;[1] load numBits=0
-	MOV.B	rfid.TRext,		R15		;[3] load TRext
-	CALLA	#TxFM0					;[5] call the routine
+	MOV		#(rfidBuf),		R12		         ;[2] load the &rfidBuf[0]
+	MOV		#(2),			R13		         ;[2] load into corr reg (numBytes)
+	MOV		#(0),			R14		         ;[2] load numBits=0
+	MOV.B	rfid.TRext,		R15		         ;[3] load TRext
+	CALLA	#TxFM0					         ;[5] call the routine
 	
+	;[21]
+
+	;[182] cycles in = 11.375 us
+
 	RETA											;[5]
 
 
@@ -232,33 +249,36 @@ handleAck:
 
 ackWaits:
 	;STEP1: Wait For Enough Bits----------------------------------------------------------------------------------------------------//
-	CMP		#NUM_ACK_BITS, R_bits	;[1] Is R_bits>=18? Info stored in C: ( C = (R_bits>=18) )
+	CMP		#NUM_ACK_BITS, R_bits	;[2] Is R_bits>=18? Info stored in C: ( C = (R_bits>=18) )
 	JNC		ackWaits				;[2] Loop until C pops up.
 	
 	;STEP2: Wakeup and Parse--------------------------------------------------------------------------------------------------------//
-	BIC		#(GIE), SR				;[1] don't need anymore bits, so turn off RX_SM
-	NOP
+	BIC		#(GIE), SR				;[2] don't need anymore bits, so turn off RX_SM
+	NOP                             ;[1]
 	
-	CLR		&TA0CTL
+	CLR		&TA0CTL                 ;[4]
     
 	;Check RN16 @TODO note:check RN16 for read command or write?
-	MOV.B 	(cmd),  		R_scratch0	 ;[] bring in cmd[0] to parse:01(ACK)+(00 00 00)RN16_MARK(b0-b5): MSB is b0
-	SWPB    R_scratch0					 ;01(ACK)+RN16 b0-b2 +  0x00;
-	MOV.B   (cmd+1),	  	R_scratch1   ;ACK+RN16 is b2-b17 in cm[0-3]; get RN16_b6-b13
-	BIS     R_scratch1,	   	R_scratch0   ;get 01+RN16 b0-b13
-	RLA     R_scratch0                   ;left shift 2 bits to get b14-b15,now it is b0-b13 + (0+0)
-	RLA     R_scratch0
+	MOV.B 	(cmd),  		R_scratch0	 ;[3] bring in cmd[0] to parse:01(ACK)+(00 00 00)RN16_MARK(b0-b5): MSB is b0
+	SWPB    R_scratch0					 ;[1] 01(ACK)+RN16 b0-b2 +  0x00;
+	MOV.B   (cmd+1),	  	R_scratch1   ;[3] ACK+RN16 is b2-b17 in cm[0-3]; get RN16_b6-b13
+	BIS     R_scratch1,	   	R_scratch0   ;[1] get 01+RN16 b0-b13
+	RLA     R_scratch0                   ;[1] left shift 2 bits to get b14-b15,now it is b0-b13 + (0+0)
+	RLA     R_scratch0                   ;[1]
 
-	MOV.B   (cmd+2),	   	R_scratch1   ;get b1b0 @us check: does cmd+2 save as b1b0+00000000 or 000000b1b0
-	AND   	#0003,			R_scratch1
-	ADD   	R_scratch1,		R_scratch0
-	CMP   	(rfid.handle),  R_scratch0
-	JNE     ackSkipHookCall
+	MOV.B   (cmd+2),	   	R_scratch1   ;[3] get b1b0 @us check: does cmd+2 save as b1b0+00000000 or 000000b1b0
+	AND   	#0003,			R_scratch1   ;[2]
+	ADD   	R_scratch1,		R_scratch0   ;[1]
+	CMP   	(rfid.handle),  R_scratch0   ;[3]
+	JNE     ackSkipHookCall              ;[2]
+
 	;;;;;;;;;;;;;;
 	;keepDoingHandleACK if it is passed RN16	check
 keepDoHandleACK:	
 	;Delay for 10us(28.5cycles) so we can hit the 57.0us mark (remember, we're at 2.85MHz now)
 	MOV		#TX_TIMING_ACK, R5		;[2]
+
+	;[34]
 
 ackTimingLoop:
 	NOP								;[1]
@@ -266,17 +286,21 @@ ackTimingLoop:
 	DEC		R5						;[1] Info stored in N: N = (R5<0)
 	JNZ		ackTimingLoop			;[2] Break out of loop on N
 	
+	;[5]*TX_TIMING_ACK = 100
+
 	;Setup TxFM0
 	;TRANSMIT (16pre,38tillTxinTxFM0 -> 54cycles)
 	MOV		#dataBuf,	R12			;[2] load the &dataBuf[0]
-	MOV		#(16),		R13			;[1] load into corr reg (numBytes)
-	MOV		#(0),		R14			;[1] load numBits=0
+	MOV		#(16),		R13			;[2] load into corr reg (numBytes)
+	MOV		#(0),		R14			;[2] load numBits=0
 	MOV.B	rfid.TRext,	R15			;[3] load TRext
 	
 	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;NO HIT
 	
 	CALLA	#TxFM0					;[5] call transmit routine
 	
+	;[148] = 9.25 us
+
 	CALLA #RxClock	;Switch to RxClock
 	
 	;Call user hook function if it's configured (if it's non-NULL)
