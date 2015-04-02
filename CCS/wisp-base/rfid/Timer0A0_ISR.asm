@@ -161,9 +161,7 @@ failed_TRCal:
 	BIC.B   #PIN_RX, &PRXSEL0                                ;[] disable TimerA1
 	BIC.B   #PIN_RX, &PRXSEL1                                ;[] disable TimerA1
 	BIC.W   #4010h, TA0CCTL0                                 ;[5] Turn off TimerA1 -> 4010h -> b14+b4 -> TA0CCTL1 &= ~CM0+CCIE (CM0-> CAPTURE ON RISING EDGE)
-
-	; /** @todo Figure out why the following line gives us trouble. What state do/should we return to here? */
-;	BIS     #(LPM4+GIE), SR_SP_OFF(SP)                       ;[5] put tag back into LPM4, set GIE
+	
 	RETI                                                     ;[5] return from interrupt
 
 ;*************************************************************************************************************************************
