@@ -111,6 +111,7 @@ typedef struct {
     uint8_t     memBank;                    /* for Rd/Wr, this will hold memBank parsed from cmd when hook is called            */
     uint8_t     wordPtr;                    /* for Rd/Wr, this will hold wordPtr parsed from cmd when hook is called            */
     uint16_t    wrData;                     /* for Write this will hold the 16-bit Write Data value when hook is called         */
+    uint8_t     wordCnt;                    // for BlockWrite, this will hold the word count.
     uint16_t    bwrByteCount;               /* for BlockWrite this will hold the number of BYTES received                       */
     uint16_t*    bwrBufPtr;                  /* for BlockWrite this will hold a pointer to the data buffer containing write data */
 
