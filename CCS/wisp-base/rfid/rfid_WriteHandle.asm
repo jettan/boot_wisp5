@@ -243,7 +243,7 @@ writeHandle_BreakOutofRFID:
 writeHandle_Ignore:
 	DINT							;[2]
 	NOP
-s
+
 	CLR		&TA0CTL					;[4]
 	POPM.A	#1,	R_scratch0			;[] Need to pop this off stack to avoid returning to address (RN16) !!
 	;MOV		&(INFO_ADDR_RXUCS0), &UCSCTL0;[] switch to corr Rx Frequency

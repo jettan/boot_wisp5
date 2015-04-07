@@ -56,6 +56,7 @@
 #define TX_TIMING_REQRN (33)//60.4us
 #define TX_TIMING_READ  (29)//58.0us
 #define TX_TIMING_WRITE (31)//60.4us
+#define TX_TIMING_BWR   (100)
 
 //PROTOCOL DEFS---------------------------------------------------------------------------------------------------------------------//
 //(if # is rounded to 8 that is so  cmd[n] was finished being shifted in)
