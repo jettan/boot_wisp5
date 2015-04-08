@@ -203,8 +203,12 @@ callBlockWriteHandler:
 	BIT.B   #MODE_WRITE, &(rfid.mode)      ;[] Check if we are supposed to handle Write or BlockWrite commands at all.
 	JNC     endDoRFID                      ;[2]
 	CALLA   #handleBlockWrite              ;[] Call BlockWrite handle.
-	JMP     endDoRFID                      ;[2]
 
+endDoRFIDBlockWrite:
+	TST.B   (rfid.abortFlag)
+	JZ      WISP_doRFID
+	MOV     #(0), &(TA0CCTL0)
+	RETA
 
 ; If the abort flag has been set during the RFID transaction, return. Otherwise, keep doing RFID.
 endDoRFID:

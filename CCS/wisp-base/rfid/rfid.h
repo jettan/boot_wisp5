@@ -18,9 +18,9 @@
 #define MODE_USES_SEL   (BIT2)      /* tags only use select when they want to play nice (they don't have to)                    */
 
 // RFID command IDs
-#define CMD_ID_ACK      (BIT0)
-#define CMD_ID_READ     (BIT1)
-#define CMD_ID_WRITE    (BIT2)
+#define CMD_ID_ACK        (BIT0)
+#define CMD_ID_READ       (BIT1)
+#define CMD_ID_WRITE      (BIT2)
 #define CMD_ID_BLOCKWRITE (BIT3)
 
 // Client interface to read, write, and EPC memory buffers

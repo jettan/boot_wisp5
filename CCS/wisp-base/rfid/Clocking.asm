@@ -26,13 +26,13 @@ TxClock:
 
 ; RX clock frequency: 16 MHz.
 RxClock:
-	MOV.B           #(0xA5), &CSCTL0_H                                            ; Write CSKEY password.
-	MOV.W           #(DCORSEL|DCOFSEL_4), &CSCTL1                                 ; Set clocks to 16 MHz.
-	MOV.W           #(SELA_0|SELM_3), &CSCTL2                                     ; Select  LFXTCTL as ACLK source and DCOCLK as MCLK source.
-	BIS.W           #(SELS_3), &CSCTL2                                            ; Select DCOCLK as SMCLK source.
-	MOV.W           #(DIVA_0|DIVS_0|DIVM_0), &CSCTL3                              ; Don't divide clock.
-	BIS.W           #(MODCLKREQEN|SMCLKREQEN|MCLKREQEN|ACLKREQEN), &CSCTL6        ; Enable clock requests.
+	MOV.B           #(0xA5), &CSCTL0_H                                            ;[] Write CSKEY password.
+	MOV.W           #(DCORSEL|DCOFSEL_4), &CSCTL1                                 ;[] Set clocks to 16 MHz.
+	MOV.W           #(SELA_0|SELM_3), &CSCTL2                                     ;[] Select  LFXTCTL as ACLK source and DCOCLK as MCLK source.
+	BIS.W           #(SELS_3), &CSCTL2                                            ;[] Select DCOCLK as SMCLK source.
+	MOV.W           #(DIVA_0|DIVS_0|DIVM_0), &CSCTL3                              ;[] Don't divide clock.
+	BIS.W           #(MODCLKREQEN|SMCLKREQEN|MCLKREQEN|ACLKREQEN), &CSCTL6        ;[] Enable clock requests.
 	
-	RETA
+	RETA                                                                          ;[5]
 
 	.end
