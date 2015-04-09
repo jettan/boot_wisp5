@@ -69,14 +69,14 @@ calc_wordPtr:
 ;	JLO     waitOnBits_2                                    ;[2]
 ;
 ;calc_wordCnt:
-;	MOV.B 	(cmd+2), R_scratch0                             ;[3] bring in top 6 bits into b5-b0 of R_scratch0 (wordCt.b7-b2)
-;	MOV.B 	(cmd+3), R_scratch1                             ;[3] bring in bot 2 bits into b7b6  of R_scratch1 (wordCt.b1-b0)
-;	RLC.B	R_scratch1                                      ;[1] pull out b7 from R_scratch1 (wordCt.b1)
-;	RLC.B	R_scratch0                                      ;[1] shove it into R_scratch0 at bottom (wordCt.b1)
-;	RLC.B	R_scratch1                                      ;[1] pull out b7 from R_scratch1 (wordCt.b0)
-;	RLC.B	R_scratch0                                      ;[1] shove it into R_scratch0 at bottom (wordCt.b0)
-;	MOV.B	R_scratch0, R_scratch0                          ;[1] mask wordPtr to just lower 8 bits
-;	;MOV.B	R_scratch0, &(RWData.wrData)                    ;[3] store the wordCnt
+;	MOV.B   (cmd+2), R_scratch0                             ;[3] bring in top 6 bits into b5-b0 of R_scratch0 (wordCt.b7-b2)
+;	MOV.B   (cmd+3), R_scratch1                             ;[3] bring in bot 2 bits into b7b6  of R_scratch1 (wordCt.b1-b0)
+;	RLC.B   R_scratch1                                      ;[1] pull out b7 from R_scratch1 (wordCt.b1)
+;	RLC.B   R_scratch0                                      ;[1] shove it into R_scratch0 at bottom (wordCt.b1)
+;	RLC.B   R_scratch1                                      ;[1] pull out b7 from R_scratch1 (wordCt.b0)
+;	RLC.B   R_scratch0                                      ;[1] shove it into R_scratch0 at bottom (wordCt.b0)
+;	MOV.B   R_scratch0, R_scratch0                          ;[1] mask wordPtr to just lower 8 bits
+;	MOV.B  R_scratch0, &(RWData.wrData)                     ;[3] store the wordCnt
 
 
 ; Wait for data to write.
@@ -92,23 +92,22 @@ store_Word:
 	RLC.B   R_scratch2                                      ;[1]
 	RLC.B   R_scratch1                                      ;[1]
 	RLC.B   R_scratch2                                      ;[1]
-	RLC.B   R_scratch1                                       ;[1]
-	RRC.B   R_scratch2                                             ;[1]
-	RRC.B   R_scratch2                                             ;[1]
+	RLC.B   R_scratch1                                      ;[1]
+	RRC.B   R_scratch2                                      ;[1]
+	RRC.B   R_scratch2                                      ;[1]
 
-	RLC.B   R12                                                    ;[1]
-	RLC.B   R_scratch2                                             ;[1]
-	RLC.B   R12                                                    ;[1]
-	RLC.B   R_scratch2                                             ;[1]
+	RLC.B   R12                                             ;[1]
+	RLC.B   R_scratch2                                      ;[1]
+	RLC.B   R12                                             ;[1]
+	RLC.B   R_scratch2                                      ;[1]
 
-	SWPB    R_scratch1                                             ;[1]
-	BIS     R_scratch2, R_scratch1                                 ;[1] merge b15-b8(R_scratch1) and b7-b(R_scratch2) together into R_scratch1
+	SWPB    R_scratch1                                      ;[1]
+	BIS     R_scratch2, R_scratch1                          ;[1] merge b15-b8(R_scratch1) and b7-b(R_scratch2) together into R_scratch1
 
-	MOV.B   &(RWData.wordPtr), R_scratch2                          ;[] Pull offset to R15
-	RLAM.A  #1, R_scratch2                                   ;[] Offset *= 2
-	ADDX.A  &(RWData.bwrBufPtr), R_scratch2                              ;[3] Add base to offset.
-	;MOVA    &(RWData.bwrBufPtr), R_scratch2
-	MOV     R_scratch1, 0(R_scratch2)                         ;[3] move the data out
+	MOV.B   &(RWData.wordPtr), R_scratch2                   ;[] Put offset to R15
+	RLAM.A  #1, R_scratch2                                  ;[] Offset *= 2
+	ADDX.A  &(RWData.bwrBufPtr), R_scratch2                 ;[3] Add base address to offset.
+	MOV     R_scratch1, 0(R_scratch2)                       ;[3] move the data out to the correct address.
 
 ; Wait on handle.
 waitOnBits_4:
@@ -116,27 +115,27 @@ waitOnBits_4:
 	JLO     waitOnBits_4                                    ;[2]
 
 ; Pull handle into R_scratch1.
-	MOV.B   (cmd+5), R_scratch1                                    ;[3] bring in top 6 bits into b5-b0 of R_scratch1 (data.b15-b10)
-	MOV.B   (cmd+6), R_scratch2                                    ;[3] bring in mid 8 bits into b7-b0 of R_scratch2 (data.b9-b2)
+	MOV.B   (cmd+5), R_scratch1                             ;[3] bring in top 6 bits into b5-b0 of R_scratch1 (data.b15-b10)
+	MOV.B   (cmd+6), R_scratch2                             ;[3] bring in mid 8 bits into b7-b0 of R_scratch2 (data.b9-b2)
 	MOV.B   (cmd+7), R12                                    ;[3] bring in bot 2 bits into b7b6  of R12 (data.b1b0)
 	
-	RLC.B   R_scratch2                                             ;[1]
-	RLC.B   R_scratch1                                             ;[1]
-	RLC.B   R_scratch2                                             ;[1]
-	RLC.B   R_scratch1                                             ;[1]
-	RRC.B   R_scratch2                                             ;[1]
-	RRC.B   R_scratch2                                             ;[1]
+	RLC.B   R_scratch2                                      ;[1]
+	RLC.B   R_scratch1                                      ;[1]
+	RLC.B   R_scratch2                                      ;[1]
+	RLC.B   R_scratch1                                      ;[1]
+	RRC.B   R_scratch2                                      ;[1]
+	RRC.B   R_scratch2                                      ;[1]
 	
 	RLC.B   R12                                             ;[1]
-	RLC.B   R_scratch2                                             ;[1]
+	RLC.B   R_scratch2                                      ;[1]
 	RLC.B   R12                                             ;[1]
-	RLC.B   R_scratch2                                             ;[1]
+	RLC.B   R_scratch2                                      ;[1]
 	
-	SWPB    R_scratch1                                             ;[1]
-	BIS     R_scratch2, R_scratch1                                        ;[1] merge b15-b8(R_scratch1) and b7-b(R_scratch2) together into R_scratch1
+	SWPB    R_scratch1                                      ;[1]
+	BIS     R_scratch2, R_scratch1                          ;[1] merge b15-b8(R_scratch1) and b7-b(R_scratch2) together into R_scratch1
 
 ; Check if handle matches.
-	CMP     R_scratch1, &rfid.handle                               ;[2]
+	CMP     R_scratch1, &rfid.handle                        ;[2]
 	JNE     exit_safely                                     ;[2] Handle doesn't match, so exit.
 
 ; Prepare rfid transmission buffer, CRC16 0-bit and handle.
@@ -144,8 +143,8 @@ waitOnBits_4:
 	SWPB    R_scratch0                                      ;[1] swap bytes so we can shove full word out in one call (MSByte into dataBuf[0],...)
 	MOV     R_scratch0, &(rfidBuf)                          ;[3] load the MSByte
 
-	MOV     #(rfidBuf), R_scratch2                                 ;[2] load &dataBuf[0] as dataPtr
-	MOV     #(2), R_scratch1                                       ;[2] load num of bytes in ACK
+	MOV     #(rfidBuf), R_scratch2                          ;[2] load &dataBuf[0] as dataPtr
+	MOV     #(2), R_scratch1                                ;[2] load num of bytes in ACK
 
 	MOV     #ZERO_BIT_CRC, R12                              ;[2]
 	CALLA   #crc16_ccitt                                    ;[5+196]
@@ -166,13 +165,15 @@ waitOnBits_5:
 	CMP.W   #74, R_bits                                     ;[2]
 	JLO     waitOnBits_5                                    ;[2]
 
+; TODO: Figure out when we REALLY need to respond to the reader... commercial tags are not responding before they have written ALL words.
+
 ; Reset cmd buffer.
-	MOV		#(cmd), R4                                      ;[] Now reset cmd buffer.
+	MOV     #(cmd), R4                                      ;[] Now reset cmd buffer.
 	MOV     #(-3), R_bits                                   ;[] Prepare to parse frame sync.
 	CLR     R6                                              ;[] Clear the bitcount.
 
-	;TST.B   &(RWData.wordPtr)                               ;[]
-	;JNE     waitOnBits_0                                    ;[2] As long as we still have words to process, loop.
+;	TST.B   &(RWData.wordPtr)                               ;[]
+;	JNE     waitOnBits_0                                    ;[2] As long as we still have words to process, loop.
 
 
 ; We are done... now disable interrupt and wait at least RTCAL*0.85 - 2us before sending (Table 6.16 EPC C1G2)
@@ -182,34 +183,34 @@ waitOnBits_5:
 
 ; TCAL*0.85 - 2 us <= DELAY before response <= 20 ms
 call_my_BlockWriteCallback:
-	CMP.B		#(0), &(RWData.bwrHook)                     ;[4]
-	JEQ			move_timing_delay_BlockWrite                ;[2] If there is no user callback, wait before responding.
-	MOV			&(RWData.bwrHook), R_scratch0               ;[3]
-	CALLA		R_scratch0                                  ;[5]
+	CMP.B       #(0), &(RWData.bwrHook)                     ;[4]
+	JEQ         move_timing_delay_BlockWrite                ;[2] If there is no user callback, wait before responding.
+	MOV         &(RWData.bwrHook), R_scratch0               ;[3]
+	CALLA       R_scratch0                                  ;[5]
 
 ; Just in case the user has no BlockWrite callback, we wait ~15 us.
 move_timing_delay_BlockWrite:
-	MOV     #100, R_scratch0                                       ;[2] TODO: Find out the super magic number.
+	MOV     #100, R_scratch0                                ;[2] TODO: Find out the super magic number.
 
 timing_delay_for_BlockWrite:
-	DEC     R_scratch0                                             ;[1]
+	DEC     R_scratch0                                      ;[1]
 	JNZ     timing_delay_for_BlockWrite                     ;[2]
 
 respond_to_BlockWrite:
-	MOV		#rfidBuf, 	R12			                        ;[2] load the &rfidBuf[0]
-	MOV		#(4),		R_scratch2			                        ;[1] load into corr reg (numBytes)
-	MOV		#1,			R_scratch1			                        ;[1] load numBits=1
-	MOV.B	#TREXT_ON,	R_scratch0			                        ;[3] load TRext
+	MOV     #rfidBuf, R12                                   ;[2] load the &rfidBuf[0]
+	MOV     #(4), R_scratch2                                ;[1] load into corr reg (numBytes)
+	MOV     #1, R_scratch1                                  ;[1] load numBits=1
+	MOV.B   #TREXT_ON, R_scratch0                           ;[3] load TRext
 
-	CALLA	#TxFM0					                        ;[5] Send response.
+	CALLA   #TxFM0                                          ;[5] Send response.
 
 ; After our transmission, we have T2 = 3*Tpri = 4.7 us worst case before the reader talks again. (75 cycles)
 ; Do we need to prepare for FrameSync here so we can get the next command!?
 
 ;	CALLA   #RxClock                                        ;[5+x] Switch to RxClock
-;	BIC		#(GIE), SR				                        ;[1] don't need anymore bits, so turn off Rx_SM
+;	BIC     #(GIE), SR                                      ;[1] don't need anymore bits, so turn off Rx_SM
 ;	NOP
-;	CLR		&TA0CTL
+;	CLR     &TA0CTL
 	RETA
 
 
