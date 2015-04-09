@@ -2,7 +2,7 @@
 ;*	@brief
 ;* 	@details
 ;*
-;*	@author		Aaron Parks, Justin Reina, UW Sensor Systems Lab
+;*	@author		Jethro Tan, Aaron Parks, Justin Reina, UW Sensor Systems Lab
 ;*	@created
 ;*	@last rev
 ;*
@@ -104,8 +104,8 @@ store_Word:
 	SWPB    R_scratch1                                      ;[1]
 	BIS     R_scratch2, R_scratch1                          ;[1] merge b15-b8(R_scratch1) and b7-b(R_scratch2) together into R_scratch1
 
-	MOV.B   &(RWData.wordPtr), R_scratch2                   ;[] Put offset to R15
-	RLAM.A  #1, R_scratch2                                  ;[] Offset *= 2
+	MOV.B   &(RWData.wordPtr), R_scratch2                   ;[3] Put offset to R15
+	RLAM.A  #1, R_scratch2                                  ;[2] Offset *= 2
 	ADDX.A  &(RWData.bwrBufPtr), R_scratch2                 ;[3] Add base address to offset.
 	MOV     R_scratch1, 0(R_scratch2)                       ;[3] move the data out to the correct address.
 
@@ -172,10 +172,6 @@ waitOnBits_5:
 	MOV     #(-3), R_bits                                   ;[] Prepare to parse frame sync.
 	CLR     R6                                              ;[] Clear the bitcount.
 
-;	TST.B   &(RWData.wordPtr)                               ;[]
-;	JNE     waitOnBits_0                                    ;[2] As long as we still have words to process, loop.
-
-
 ; We are done... now disable interrupt and wait at least RTCAL*0.85 - 2us before sending (Table 6.16 EPC C1G2)
 	DINT                                                    ;[3]
 	NOP                                                     ;[1]
@@ -204,24 +200,23 @@ respond_to_BlockWrite:
 
 	CALLA   #TxFM0                                          ;[5] Send response.
 
-; After our transmission, we have T2 = 3*Tpri = 4.7 us worst case before the reader talks again. (75 cycles)
-; Do we need to prepare for FrameSync here so we can get the next command!?
+; TODO: In what order do we receive the words!? Figure out correct stop condition.
 
+; Experimental, breaks BlockWrite atm... pls fix.
+;blockwriteHandle_SkipHookCall:
+;	BIT.B	#(CMD_ID_BLOCKWRITE), (rfid.abortOn)            ;[] Should we abort on BlockWrite?
+;	JNZ		blockwriteHandle_BreakOutofRFID                 ;[]
+;	RETA                                                    ;[] else return w/o setting flag
+
+
+;blockwriteHandle_BreakOutofRFID:
+;	BIS.B	#1, (rfid.abortFlag)                            ;[] by setting this bit we'll abort correctly!
 ;	CALLA   #RxClock                                        ;[5+x] Switch to RxClock
 ;	BIC     #(GIE), SR                                      ;[1] don't need anymore bits, so turn off Rx_SM
 ;	NOP
 ;	CLR     &TA0CTL
-	RETA
-
-
-;blockwriteHandle_SkipHookCall:
-;	BIT.B		#(CMD_ID_BLOCKWRITE), (rfid.abortOn) ;[] Should we abort on BlockWrite?
-;	JNZ			blockwriteHandle_BreakOutofRFID      ;[]
-;	RETA                                             ;[] else return w/o setting flag
-
-;blockwriteHandle_BreakOutofRFID:
-;	BIS.B		#1, (rfid.abortFlag)     ;[] by setting this bit we'll abort correctly!
 ;	RETA
+
 
 exit_safely:
 	DINT
