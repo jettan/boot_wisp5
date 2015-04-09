@@ -184,9 +184,9 @@ call_my_BlockWriteCallback:
 	MOV         &(RWData.bwrHook), R_scratch0               ;[3]
 	CALLA       R_scratch0                                  ;[5]
 
-; Just in case the user has no BlockWrite callback, we wait ~15 us.
+; Just in case the user has no BlockWrite callback, we delay the response.
 move_timing_delay_BlockWrite:
-	MOV     #100, R_scratch0                                ;[2] TODO: Find out the super magic number.
+	MOV     #100, R_scratch0                                ;[2] Wait 300*0.0625 = 18.75 us.
 
 timing_delay_for_BlockWrite:
 	DEC     R_scratch0                                      ;[1]
@@ -201,7 +201,6 @@ respond_to_BlockWrite:
 	CALLA   #TxFM0                                          ;[5] Send response.
 
 ; TODO: In what order do we receive the words!? Figure out correct stop condition.
-
 ; Experimental, breaks BlockWrite atm... pls fix.
 ;blockwriteHandle_SkipHookCall:
 ;	BIT.B	#(CMD_ID_BLOCKWRITE), (rfid.abortOn)            ;[] Should we abort on BlockWrite?
