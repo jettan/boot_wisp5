@@ -186,7 +186,7 @@ call_my_BlockWriteCallback:
 
 ; Just in case the user has no BlockWrite callback, we delay the response.
 move_timing_delay_BlockWrite:
-	MOV     #100, R_scratch0                                ;[2] Wait 300*0.0625 = 18.75 us.
+	MOV     #750, R_scratch0                                ;[2] Why is this value working for both readers? WTF happens during T5 anyway!?
 
 timing_delay_for_BlockWrite:
 	DEC     R_scratch0                                      ;[1]
