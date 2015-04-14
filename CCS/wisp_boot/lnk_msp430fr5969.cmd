@@ -68,7 +68,7 @@ MEMORY {
     INT33                   : origin = 0xFFD2, length = 0x0002
     INT34                   : origin = 0xFFD4, length = 0x0002
     INT35                   : origin = 0xFFD6, length = 0x0002
-    INT36                   : origin = 0xFFD8, length = 0x0002
+    //INT36                   : origin = 0xFFD8, length = 0x0002
     INT37                   : origin = 0xFFDA, length = 0x0002
     INT38                   : origin = 0xFFDC, length = 0x0002
     INT39                   : origin = 0xFFDE, length = 0x0002
@@ -76,8 +76,8 @@ MEMORY {
     INT41                   : origin = 0xFFE2, length = 0x0002
     INT42                   : origin = 0xFFE4, length = 0x0002
     INT43                   : origin = 0xFFE6, length = 0x0002
-    INT44                   : origin = 0xFFE8, length = 0x0002
-    INT45                   : origin = 0xFFEA, length = 0x0002
+    //INT44                   : origin = 0xFFE8, length = 0x0002
+    //INT45                   : origin = 0xFFEA, length = 0x0002
     INT46                   : origin = 0xFFEC, length = 0x0002
     INT47                   : origin = 0xFFEE, length = 0x0002
     INT48                   : origin = 0xFFF0, length = 0x0002
@@ -166,7 +166,7 @@ SECTIONS
     PORT3        : { * ( .int33 ) } > INT33 type = VECT_INIT
     TIMER3_A1    : { * ( .int34 ) } > INT34 type = VECT_INIT
     TIMER3_A0    : { * ( .int35 ) } > INT35 type = VECT_INIT
-    PORT2        : { * ( .int36 ) } > INT36 type = VECT_INIT
+    //PORT2        : { * ( .int36 ) } > INT36 type = VECT_INIT
     TIMER2_A1    : { * ( .int37 ) } > INT37 type = VECT_INIT
     TIMER2_A0    : { * ( .int38 ) } > INT38 type = VECT_INIT
     PORT1        : { * ( .int39 ) } > INT39 type = VECT_INIT
@@ -174,8 +174,8 @@ SECTIONS
     TIMER1_A0    : { * ( .int41 ) } > INT41 type = VECT_INIT
     DMA          : { * ( .int42 ) } > INT42 type = VECT_INIT
     USCI_A1      : { * ( .int43 ) } > INT43 type = VECT_INIT
-    TIMER0_A1    : { * ( .int44 ) } > INT44 type = VECT_INIT
-    TIMER0_A0    : { * ( .int45 ) } > INT45 type = VECT_INIT
+    //TIMER0_A1    : { * ( .int44 ) } > INT44 type = VECT_INIT
+    //TIMER0_A0    : { * ( .int45 ) } > INT45 type = VECT_INIT
     ADC12        : { * ( .int46 ) } > INT46 type = VECT_INIT
     USCI_B0      : { * ( .int47 ) } > INT47 type = VECT_INIT
     USCI_A0      : { * ( .int48 ) } > INT48 type = VECT_INIT
