@@ -159,6 +159,9 @@ The WISP \cite{4539485}
 \section{Problem Statement}
 
 \section{Contributions}
+BlockWrite for the WISP
+Fast downstream communication on CRFID
+Protocol for wireless reprogramming of CRFID
 
 \section{Thesis Organization}
 The remainder of this thesis is as follows.
@@ -174,6 +177,22 @@ Finally, we conclude our work in \cref{conclusions}.
 \chapter{Protocol Design and Implementation}
 \label{design}
 
+\section{Scribble}
+The protocol was first implemented without the use of BlockWrite (an optional command in EPC C1G2).
+BlockWrite was then implemented with the purpose of speeding up the downstream communication.
+Both the Impinj R1000 and R420 do not execute BlockWrite as one would expect or stated in EPC C1G2 (BulkBlockWrite).
+
+Tests were done by flashing a firmware that turned on a LED light on the WISP.
+Write: ~ 4 mins
+BlockWrite (using up to 5 words per BlockWrite): ~8 secs
+
+Theoretically, one can send up to X words using BlockWrite (source?), but because Impinj performs a BulkBlockWrite rather than a BlockWrite, there is no knowing when exactly all words are received correctly.
+Nor is the CRC16 that the reader sends usable verify the checksum of the whole block.
+The only way is then to make use of the EPC and echo the BlockWrite buffer in it.
+
+Alternatively, one can perform a BlockWrite with content larger than the EPC and use a Read command to verify whether all words have been written.
+While using the Read to verify a BlockWrite enables us to perform larger BlockWrites, it also cuts the downstream communication time effectively in half, since the EPC is seen every round before any access command.
+Furthermore, performing a larger BlockWrite also means you lose more data should the WISP come to the end of its power cycle.
 
 % CONTENT CHAPTER
 \chapter{Experimental Results}
