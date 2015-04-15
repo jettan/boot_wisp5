@@ -3,8 +3,7 @@
 
 //#define SELECTED_APP     0x1900
 #define SIZE_ADDR        0x1910
-#define ADDRESS_ADDR_HI  0x1913
-#define ADDRESS_ADDR_LO  0x1912
+#define ADDRESS_ADDR     0x1912
 #define BSL_PASSWD       0x1920
 
 WISP_dataStructInterface_t wispData;
@@ -25,43 +24,21 @@ void my_writeCallback (void) {
 	uint8_t hi = (wispData.writeBufPtr[0] >> 8)  & 0xFF;
 	uint8_t lo = (wispData.writeBufPtr[0])  & 0xFF;
 
-	// If the BSL password in memory is correct, we can enter FRAM write mode.
-	if ((* (uint16_t *) (BSL_PASSWD)) == 0xB105) {
-		// Size of data.
-		if (hi == 0xFD) {
-			(* (uint8_t *) (SIZE_ADDR)) = lo;
-		} else if (hi == 0xFE) {
-			(* (uint8_t *) (ADDRESS_ADDR_HI)) = lo;
-		} else if (hi == 0xFF) {
-			(* (uint8_t *) (ADDRESS_ADDR_LO)) = lo;
-			// End of line reached.
-		} else if (hi < 0x20) {
-			uint16_t address = (* (uint16_t *) (ADDRESS_ADDR_HI));
-			(* (uint8_t *) (address + hi)) = lo;
-		}
+	// Check whether we got a command to enter FRAM write mode.
+	if (hi == 0xB1 && lo == 0x05) {
+		// Write the BSL password.
+		(* (uint16_t *) (BSL_PASSWD)) = 0xB105;
 
 		// Acknowledge the message.
 		wispData.epcBuf[0]  = (wispData.writeBufPtr[0] >> 8)  & 0xFF;
 		wispData.epcBuf[1] = (wispData.writeBufPtr[0])  & 0xFF;
 
+		// Otherwise, enter application directly.
 	} else {
-		// Check whether we got a command to enter FRAM write mode.
-		if (hi == 0xB1 && lo == 0x05) {
-			// Write the BSL password.
-			(* (uint16_t *) (BSL_PASSWD)) = 0xB105;
-
-			// Acknowledge the message.
-			wispData.epcBuf[0]  = (wispData.writeBufPtr[0] >> 8)  & 0xFF;
-			wispData.epcBuf[1] = (wispData.writeBufPtr[0])  & 0xFF;
-
-			// Otherwise, enter application directly.
-		} else {
-			wispData.epcBuf[0]   = 0XB0;
-			wispData.epcBuf[1]  = 0X07;
-		}
+		wispData.epcBuf[0]   = 0XB0;
+		wispData.epcBuf[1]  = 0X07;
 	}
 
-	asm(" NOP");
 }
 
 /**
@@ -70,43 +47,85 @@ void my_writeCallback (void) {
  * [0] is used for packet_type
  */
 void my_blockWriteCallback  (void) {
-	wispData.epcBuf[0]  = (wispData.blockWriteBufPtr[0] >> 8)  & 0xFF;
-	wispData.epcBuf[1]  = (wispData.blockWriteBufPtr[0])  & 0xFF;
-	wispData.epcBuf[2]  = (wispData.blockWriteBufPtr[1] >> 8)  & 0xFF;
-	wispData.epcBuf[3]  = (wispData.blockWriteBufPtr[1])  & 0xFF;
+	uint8_t pckt_type = (wispData.blockWriteBufPtr[0] >> 8)  & 0xFF;
+	uint8_t pckt_num  = 0;
+	uint16_t address  = 0;
 
-	// Change rest of EPC only if it's data packets.
-	if (((wispData.blockWriteBufPtr[0] >> 8)  & 0xFF) == 0xDA) {
-		wispData.epcBuf[4]  = (wispData.blockWriteBufPtr[2] >> 8)  & 0xFF;
-		wispData.epcBuf[5]  = (wispData.blockWriteBufPtr[2])  & 0xFF;
-		wispData.epcBuf[6]  = (wispData.blockWriteBufPtr[3] >> 8)  & 0xFF;
-		wispData.epcBuf[7]  = (wispData.blockWriteBufPtr[3])  & 0xFF;
-		wispData.epcBuf[8]  = (wispData.blockWriteBufPtr[4] >> 8)  & 0xFF;
-		wispData.epcBuf[9]  = (wispData.blockWriteBufPtr[4])  & 0xFF;
-		wispData.epcBuf[10] = (wispData.blockWriteBufPtr[5] >> 8)  & 0xFF;
-		wispData.epcBuf[11] = (wispData.blockWriteBufPtr[5])  & 0xFF;
+	switch (pckt_type) {
+		// New line, no ISR.
+		case 0xDD:
+			// Save the size and address to info memory.
+			(* (uint8_t *) (SIZE_ADDR)) = (wispData.blockWriteBufPtr[0])  & 0xFF;
+			(* (uint16_t *) (ADDRESS_ADDR)) = (wispData.blockWriteBufPtr[1]);
 
-	// ISR vector entry data.
-	} else if (((wispData.blockWriteBufPtr[0] >> 8)  & 0xFF) == 0xFE)  {
-		wispData.epcBuf[4]  = (wispData.blockWriteBufPtr[2] >> 8)  & 0xFF;
-		wispData.epcBuf[5]  = (wispData.blockWriteBufPtr[2])  & 0xFF;
-		wispData.epcBuf[6] = 0x00;
-		wispData.epcBuf[7] = 0x00;
-		wispData.epcBuf[8] = 0x00;
-		wispData.epcBuf[9] = 0x00;
-		wispData.epcBuf[10]= 0x00;
-		wispData.epcBuf[11]= 0x00;
+			wispData.epcBuf[0]  = (wispData.blockWriteBufPtr[0] >> 8)  & 0xFF;
+			wispData.epcBuf[1]  = (wispData.blockWriteBufPtr[0])  & 0xFF;
+			wispData.epcBuf[2]  = (wispData.blockWriteBufPtr[1] >> 8)  & 0xFF;
+			wispData.epcBuf[3]  = (wispData.blockWriteBufPtr[1])  & 0xFF;
+			wispData.epcBuf[4]  = 0x00;
+			wispData.epcBuf[5]  = 0x00;
+			wispData.epcBuf[6]  = 0x00;
+			wispData.epcBuf[7]  = 0x00;
+			wispData.epcBuf[8]  = 0x00;
+			wispData.epcBuf[9]  = 0x00;
+			wispData.epcBuf[10] = 0x00;
+			wispData.epcBuf[11] = 0x00;
+			break;
 
-	// size + address only.
-	} else {
-		wispData.epcBuf[4] = 0x00;
-		wispData.epcBuf[5] = 0x00;
-		wispData.epcBuf[6] = 0x00;
-		wispData.epcBuf[7] = 0x00;
-		wispData.epcBuf[8] = 0x00;
-		wispData.epcBuf[9] = 0x00;
-		wispData.epcBuf[10]= 0x00;
-		wispData.epcBuf[11]= 0x00;
+		// New line, ISR only.
+		case 0xDE:
+			// Save the size and address to info memory.
+			//(* (uint8_t *) (SIZE_ADDR)) = (wispData.blockWriteBufPtr[0])  & 0xFF;
+			//(* (uint16_t *) (ADDRESS_ADDR)) = (wispData.blockWriteBufPtr[1]);
+
+			// Write the ISR entry in FRAM.
+			address = (wispData.blockWriteBufPtr[1]);
+			(* (uint16_t *) (address)) = ((wispData.blockWriteBufPtr[2] & 0xff) << 8) | ((wispData.blockWriteBufPtr[2] & 0xff00) >> 8);
+
+			wispData.epcBuf[0]  = (wispData.blockWriteBufPtr[0] >> 8)  & 0xFF;
+			wispData.epcBuf[1]  = (wispData.blockWriteBufPtr[0])  & 0xFF;
+			wispData.epcBuf[2]  = (wispData.blockWriteBufPtr[1] >> 8)  & 0xFF;
+			wispData.epcBuf[3]  = (wispData.blockWriteBufPtr[1])  & 0xFF;
+			wispData.epcBuf[4]  = (wispData.blockWriteBufPtr[2] >> 8)  & 0xFF;
+			wispData.epcBuf[5]  = (wispData.blockWriteBufPtr[2])  & 0xFF;
+			wispData.epcBuf[6] = 0x00;
+			wispData.epcBuf[7] = 0x00;
+			wispData.epcBuf[8] = 0x00;
+			wispData.epcBuf[9] = 0x00;
+			wispData.epcBuf[10]= 0x00;
+			wispData.epcBuf[11]= 0x00;
+			break;
+
+		// Data packets.
+		case 0xDA:
+			// Find out at which address we need to write.
+			address = (* (uint16_t *) (ADDRESS_ADDR));
+
+			// Get the packet number from header and calculate offset.
+			pckt_num = ((wispData.blockWriteBufPtr[0])  & 0xFF) << 3;
+
+			//uint16_t y = ((x & 0xff) << 8) | ((x & 0xff00) >> 8);
+
+			(* (uint16_t *) (address + pckt_num + 0)) = ((wispData.blockWriteBufPtr[1] & 0xff) << 8) | ((wispData.blockWriteBufPtr[1] & 0xff00) >> 8);
+			(* (uint16_t *) (address + pckt_num + 2)) = ((wispData.blockWriteBufPtr[2] & 0xff) << 8) | ((wispData.blockWriteBufPtr[2] & 0xff00) >> 8);
+			(* (uint16_t *) (address + pckt_num + 4)) = ((wispData.blockWriteBufPtr[3] & 0xff) << 8) | ((wispData.blockWriteBufPtr[3] & 0xff00) >> 8);
+			(* (uint16_t *) (address + pckt_num + 6)) = ((wispData.blockWriteBufPtr[4] & 0xff) << 8) | ((wispData.blockWriteBufPtr[4] & 0xff00) >> 8);
+
+			wispData.epcBuf[0]  = (wispData.blockWriteBufPtr[0] >> 8)  & 0xFF;
+			wispData.epcBuf[1]  = (wispData.blockWriteBufPtr[0])  & 0xFF;
+			wispData.epcBuf[2]  = (wispData.blockWriteBufPtr[1] >> 8)  & 0xFF;
+			wispData.epcBuf[3]  = (wispData.blockWriteBufPtr[1])  & 0xFF;
+			wispData.epcBuf[4]  = (wispData.blockWriteBufPtr[2] >> 8)  & 0xFF;
+			wispData.epcBuf[5]  = (wispData.blockWriteBufPtr[2])  & 0xFF;
+			wispData.epcBuf[6]  = (wispData.blockWriteBufPtr[3] >> 8)  & 0xFF;
+			wispData.epcBuf[7]  = (wispData.blockWriteBufPtr[3])  & 0xFF;
+			wispData.epcBuf[8]  = (wispData.blockWriteBufPtr[4] >> 8)  & 0xFF;
+			wispData.epcBuf[9]  = (wispData.blockWriteBufPtr[4])  & 0xFF;
+			wispData.epcBuf[10] = (wispData.blockWriteBufPtr[5] >> 8)  & 0xFF;
+			wispData.epcBuf[11] = (wispData.blockWriteBufPtr[5])  & 0xFF;
+			break;
+		default:
+			break;
 	}
 }
 
