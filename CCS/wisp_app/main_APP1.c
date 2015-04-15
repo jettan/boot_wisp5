@@ -50,9 +50,10 @@ void my_blockWriteCallback  (void) {
 	uint8_t pckt_type = (wispData.blockWriteBufPtr[0] >> 8)  & 0xFF;
 	uint8_t pckt_num  = 0;
 	uint16_t address  = 0;
+	uint8_t num_words = 0;
 
 	switch (pckt_type) {
-		// New line, no ISR.
+		// New line, no data packets.
 		case 0xDD:
 			// Save the size and address to info memory.
 			(* (uint8_t *) (SIZE_ADDR)) = (wispData.blockWriteBufPtr[0])  & 0xFF;
@@ -68,19 +69,25 @@ void my_blockWriteCallback  (void) {
 			wispData.epcBuf[7]  = 0x00;
 			wispData.epcBuf[8]  = 0x00;
 			wispData.epcBuf[9]  = 0x00;
-			wispData.epcBuf[10] = 0x00;
-			wispData.epcBuf[11] = 0x00;
 			break;
 
-		// New line, ISR only.
+		// New line with data packets.
 		case 0xDE:
-			// Save the size and address to info memory.
-			//(* (uint8_t *) (SIZE_ADDR)) = (wispData.blockWriteBufPtr[0])  & 0xFF;
-			//(* (uint16_t *) (ADDRESS_ADDR)) = (wispData.blockWriteBufPtr[1]);
+			// Get the size
+			num_words = ((wispData.blockWriteBufPtr[0])  & 0xFF) >> 1;
 
-			// Write the ISR entry in FRAM.
+			// Write data in FRAM.
 			address = (wispData.blockWriteBufPtr[1]);
+
 			(* (uint16_t *) (address)) = ((wispData.blockWriteBufPtr[2] & 0xff) << 8) | ((wispData.blockWriteBufPtr[2] & 0xff00) >> 8);
+
+			if (num_words > 0x01) {
+				(* (uint16_t *) (address + 2)) = ((wispData.blockWriteBufPtr[3] & 0xff) << 8) | ((wispData.blockWriteBufPtr[3] & 0xff00) >> 8);
+			}
+
+			if (num_words > 0x02) {
+				(* (uint16_t *) (address + 4)) = ((wispData.blockWriteBufPtr[4] & 0xff) << 8) | ((wispData.blockWriteBufPtr[4] & 0xff00) >> 8);
+			}
 
 			wispData.epcBuf[0]  = (wispData.blockWriteBufPtr[0] >> 8)  & 0xFF;
 			wispData.epcBuf[1]  = (wispData.blockWriteBufPtr[0])  & 0xFF;
@@ -88,12 +95,10 @@ void my_blockWriteCallback  (void) {
 			wispData.epcBuf[3]  = (wispData.blockWriteBufPtr[1])  & 0xFF;
 			wispData.epcBuf[4]  = (wispData.blockWriteBufPtr[2] >> 8)  & 0xFF;
 			wispData.epcBuf[5]  = (wispData.blockWriteBufPtr[2])  & 0xFF;
-			wispData.epcBuf[6] = 0x00;
-			wispData.epcBuf[7] = 0x00;
-			wispData.epcBuf[8] = 0x00;
-			wispData.epcBuf[9] = 0x00;
-			wispData.epcBuf[10]= 0x00;
-			wispData.epcBuf[11]= 0x00;
+			wispData.epcBuf[6]  = num_words > 0x01 ? (wispData.blockWriteBufPtr[3] >> 8)  & 0xFF : 0x00;
+			wispData.epcBuf[7]  = num_words > 0x01 ? (wispData.blockWriteBufPtr[3])  & 0xFF : 0x00;
+			wispData.epcBuf[8]  = num_words > 0x02 ? (wispData.blockWriteBufPtr[4] >> 8)  & 0xFF : 0x00;
+			wispData.epcBuf[9]  = num_words > 0x02 ? (wispData.blockWriteBufPtr[4])  & 0xFF : 0x00;
 			break;
 
 		// Data packets.
@@ -103,8 +108,6 @@ void my_blockWriteCallback  (void) {
 
 			// Get the packet number from header and calculate offset.
 			pckt_num = ((wispData.blockWriteBufPtr[0])  & 0xFF) << 3;
-
-			//uint16_t y = ((x & 0xff) << 8) | ((x & 0xff00) >> 8);
 
 			(* (uint16_t *) (address + pckt_num + 0)) = ((wispData.blockWriteBufPtr[1] & 0xff) << 8) | ((wispData.blockWriteBufPtr[1] & 0xff00) >> 8);
 			(* (uint16_t *) (address + pckt_num + 2)) = ((wispData.blockWriteBufPtr[2] & 0xff) << 8) | ((wispData.blockWriteBufPtr[2] & 0xff00) >> 8);
@@ -121,12 +124,12 @@ void my_blockWriteCallback  (void) {
 			wispData.epcBuf[7]  = (wispData.blockWriteBufPtr[3])  & 0xFF;
 			wispData.epcBuf[8]  = (wispData.blockWriteBufPtr[4] >> 8)  & 0xFF;
 			wispData.epcBuf[9]  = (wispData.blockWriteBufPtr[4])  & 0xFF;
-			wispData.epcBuf[10] = (wispData.blockWriteBufPtr[5] >> 8)  & 0xFF;
-			wispData.epcBuf[11] = (wispData.blockWriteBufPtr[5])  & 0xFF;
 			break;
 		default:
 			break;
 	}
+	wispData.epcBuf[10] = 0x00;
+	wispData.epcBuf[11] = 0x00;
 }
 
 void main(void) {
