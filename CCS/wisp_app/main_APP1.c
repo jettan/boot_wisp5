@@ -54,7 +54,7 @@ void my_blockWriteCallback  (void) {
 
 	switch (pckt_type) {
 		// New line, no data packets.
-		case 0xDD:
+		case 0xDA:
 			// Save the size and address to info memory.
 			(* (uint8_t *) (SIZE_ADDR)) = (wispData.blockWriteBufPtr[0])  & 0xFF;
 			(* (uint16_t *) (ADDRESS_ADDR)) = (wispData.blockWriteBufPtr[1]);
@@ -72,7 +72,7 @@ void my_blockWriteCallback  (void) {
 			break;
 
 		// New line with data packets.
-		case 0xDE:
+		case 0xDB:
 			// Get the size
 			num_words = ((wispData.blockWriteBufPtr[0])  & 0xFF) >> 1;
 
@@ -101,8 +101,11 @@ void my_blockWriteCallback  (void) {
 			wispData.epcBuf[9]  = num_words > 0x02 ? (wispData.blockWriteBufPtr[4])  & 0xFF : 0x00;
 			break;
 
-		// Data packets.
-		case 0xDA:
+		// Data packets with 1/2/3/4 words.
+		case 0xDC:
+		case 0xDD:
+		case 0xDE:
+		case 0xDF:
 			// Find out at which address we need to write.
 			address = (* (uint16_t *) (ADDRESS_ADDR));
 
@@ -110,20 +113,29 @@ void my_blockWriteCallback  (void) {
 			pckt_num = ((wispData.blockWriteBufPtr[0])  & 0xFF) << 3;
 
 			(* (uint16_t *) (address + pckt_num + 0)) = ((wispData.blockWriteBufPtr[1] & 0xff) << 8) | ((wispData.blockWriteBufPtr[1] & 0xff00) >> 8);
-			(* (uint16_t *) (address + pckt_num + 2)) = ((wispData.blockWriteBufPtr[2] & 0xff) << 8) | ((wispData.blockWriteBufPtr[2] & 0xff00) >> 8);
-			(* (uint16_t *) (address + pckt_num + 4)) = ((wispData.blockWriteBufPtr[3] & 0xff) << 8) | ((wispData.blockWriteBufPtr[3] & 0xff00) >> 8);
-			(* (uint16_t *) (address + pckt_num + 6)) = ((wispData.blockWriteBufPtr[4] & 0xff) << 8) | ((wispData.blockWriteBufPtr[4] & 0xff00) >> 8);
+
+			if (pckt_type > 0xDC) {
+				(* (uint16_t *) (address + pckt_num + 2)) = ((wispData.blockWriteBufPtr[2] & 0xff) << 8) | ((wispData.blockWriteBufPtr[2] & 0xff00) >> 8);
+			}
+
+			if (pckt_type > 0xDD) {
+				(* (uint16_t *) (address + pckt_num + 4)) = ((wispData.blockWriteBufPtr[3] & 0xff) << 8) | ((wispData.blockWriteBufPtr[3] & 0xff00) >> 8);
+			}
+
+			if (pckt_type > 0xDE) {
+				(* (uint16_t *) (address + pckt_num + 6)) = ((wispData.blockWriteBufPtr[4] & 0xff) << 8) | ((wispData.blockWriteBufPtr[4] & 0xff00) >> 8);
+			}
 
 			wispData.epcBuf[0]  = (wispData.blockWriteBufPtr[0] >> 8)  & 0xFF;
 			wispData.epcBuf[1]  = (wispData.blockWriteBufPtr[0])  & 0xFF;
 			wispData.epcBuf[2]  = (wispData.blockWriteBufPtr[1] >> 8)  & 0xFF;
 			wispData.epcBuf[3]  = (wispData.blockWriteBufPtr[1])  & 0xFF;
-			wispData.epcBuf[4]  = (wispData.blockWriteBufPtr[2] >> 8)  & 0xFF;
-			wispData.epcBuf[5]  = (wispData.blockWriteBufPtr[2])  & 0xFF;
-			wispData.epcBuf[6]  = (wispData.blockWriteBufPtr[3] >> 8)  & 0xFF;
-			wispData.epcBuf[7]  = (wispData.blockWriteBufPtr[3])  & 0xFF;
-			wispData.epcBuf[8]  = (wispData.blockWriteBufPtr[4] >> 8)  & 0xFF;
-			wispData.epcBuf[9]  = (wispData.blockWriteBufPtr[4])  & 0xFF;
+			wispData.epcBuf[4]  = pckt_type > 0xDC ? (wispData.blockWriteBufPtr[2] >> 8)  & 0xFF : 0x00;
+			wispData.epcBuf[5]  = pckt_type > 0xDC ? (wispData.blockWriteBufPtr[2])  & 0xFF : 0x00;
+			wispData.epcBuf[6]  = pckt_type > 0xDD ? (wispData.blockWriteBufPtr[3] >> 8)  & 0xFF : 0x00;
+			wispData.epcBuf[7]  = pckt_type > 0xDD ? (wispData.blockWriteBufPtr[3])  & 0xFF : 0x00;
+			wispData.epcBuf[8]  = pckt_type > 0xDE ? (wispData.blockWriteBufPtr[4] >> 8)  & 0xFF : 0x00;
+			wispData.epcBuf[9]  = pckt_type > 0xDE ? (wispData.blockWriteBufPtr[4])  & 0xFF : 0x00;
 			break;
 		default:
 			break;
