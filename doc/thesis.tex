@@ -157,6 +157,9 @@ The WISP \cite{4539485}
 \section{Challenges}
 
 \section{Problem Statement}
+How can we achieve robust downstream communication on transient powered computational RFID devices?
+
+Case study: Wireless reprogramming on the WISP5.
 
 \section{Contributions}
 BlockWrite for the WISP
@@ -178,6 +181,8 @@ Finally, we conclude our work in \cref{conclusions}.
 \label{design}
 
 \section{Scribble}
+Here, design considerations and descriptions of the implementation of the protocol for downstream communication are described using the Write command only and an upgraded version with BlockWrite.
+
 The protocol was first implemented without the use of BlockWrite (an optional command in EPC C1G2).
 BlockWrite was then implemented with the purpose of speeding up the downstream communication.
 Both the Impinj R1000 and R420 do not execute BlockWrite as one would expect or stated in EPC C1G2 (BulkBlockWrite).
@@ -193,6 +198,10 @@ The only way is then to make use of the EPC and echo the BlockWrite buffer in it
 Alternatively, one can perform a BlockWrite with content larger than the EPC and use a Read command to verify whether all words have been written.
 While using the Read to verify a BlockWrite enables us to perform larger BlockWrites, it also cuts the downstream communication time effectively in half, since the EPC is seen every round before any access command.
 Furthermore, performing a larger BlockWrite also means you lose more data should the WISP come to the end of its power cycle.
+
+Due to the nature of this BlockWrite, the protocol is robust to the WISP power cycling.
+Unlike the Write command where it was given that whatever is going through the communication channel makes it correctly to the WISP, this was not the case for BlockWrite.
+Because the protocol HAS to wait for all words of the BlockWrite to appear in the EPC, scenarios wherein the WISP is moved away causes the protocol to wait and keep resending until either all words are echoed or a timeout occurs.
 
 % CONTENT CHAPTER
 \chapter{Experimental Results}
