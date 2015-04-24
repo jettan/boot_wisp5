@@ -2,7 +2,7 @@
 # Automatically-generated file. Do not edit!
 ################################################################################
 
-CG_TOOL_ROOT := /home/jettan/ti/ccsv6/tools/compiler/msp430_4.3.3
+CG_TOOL_ROOT := /home/dutiir/ti/ccsv6/tools/compiler/msp430_4.3.3
 
 ORDERED_OBJS += \
 $(GEN_CMDS__FLAG) \
@@ -126,13 +126,13 @@ all: wisp_led.out secondary-outputs
 wisp_led.out: $(OBJS) $(CMD_SRCS) $(GEN_CMDS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: MSP430 Linker'
-	"/home/jettan/ti/ccsv6/tools/compiler/msp430_4.3.3/bin/cl430" -vmspx --abi=eabi --data_model=restricted --advice:power=all --advice:hw_config=1 -g --define=__MSP430FR5969__ --diag_warning=225 --display_error_number --diag_wrap=off --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU40 --printf_support=minimal -z -m"wisp_led.map" --heap_size=160 --stack_size=160 --use_hw_mpy=F5 --cinit_hold_wdt=on -i"/home/jettan/ti/ccsv6/ccs_base/msp430/include" -i"/home/jettan/ti/ccsv6/tools/compiler/msp430_4.3.3/lib" -i"/home/jettan/ti/ccsv6/tools/compiler/msp430_4.3.3/include" -i"/home/jettan/ti/ccsv6/ccs_base/msp430/lib/5xx_6xx_FRxx" -i"/home/jettan/ti/ccsv6/ccs_base/msp430/lib/FR59xx" --reread_libs --priority --warn_sections --display_error_number --diag_wrap=off --xml_link_info="wisp_led_linkInfo.xml" --rom_model -o "wisp_led.out" $(ORDERED_OBJS)
+	"/home/dutiir/ti/ccsv6/tools/compiler/msp430_4.3.3/bin/cl430" -vmspx --abi=eabi --data_model=restricted --advice:power=all --advice:hw_config=1 -g --define=__MSP430FR5969__ --diag_warning=225 --display_error_number --diag_wrap=off --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU40 --printf_support=minimal -z -m"wisp_led.map" --heap_size=160 --stack_size=160 --use_hw_mpy=F5 --cinit_hold_wdt=on -i"/home/dutiir/ti/ccsv6/ccs_base/msp430/include" -i"/home/dutiir/ti/ccsv6/tools/compiler/msp430_4.3.3/lib" -i"/home/dutiir/ti/ccsv6/tools/compiler/msp430_4.3.3/include" -i"/home/dutiir/ti/ccsv6/ccs_base/msp430/lib/5xx_6xx_FRxx" -i"/home/dutiir/ti/ccsv6/ccs_base/msp430/lib/FR59xx" --reread_libs --priority --warn_sections --display_error_number --diag_wrap=off --xml_link_info="wisp_led_linkInfo.xml" --rom_model -o "wisp_led.out" $(ORDERED_OBJS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
 wisp_led.hex: $(EXE_OUTPUTS)
 	@echo 'Invoking: MSP430 Hex Utility'
-	"/home/jettan/ti/ccsv6/tools/compiler/msp430_4.3.3/bin/hex430" --memwidth=8 --romwidth=8 --intel -o "wisp_led.hex" $(EXE_OUTPUTS__QUOTED)
+	"/home/dutiir/ti/ccsv6/tools/compiler/msp430_4.3.3/bin/hex430" --memwidth=8 --romwidth=8 --intel -o "wisp_led.hex" $(EXE_OUTPUTS__QUOTED)
 	@echo 'Finished building: $@'
 	@echo ' '
 
