@@ -91,6 +91,7 @@
 								<option id="com.ti.ccstudio.buildDefinitions.MSP430_4.3.hex.MEMWIDTH.1186133024" name="Specify memory width (--memwidth, -memwidth)" superClass="com.ti.ccstudio.buildDefinitions.MSP430_4.3.hex.MEMWIDTH" value="8" valueType="string"/>
 								<option id="com.ti.ccstudio.buildDefinitions.MSP430_4.3.hex.TOOL_ENABLE.300970332" name="Enable tool" superClass="com.ti.ccstudio.buildDefinitions.MSP430_4.3.hex.TOOL_ENABLE" value="true" valueType="boolean"/>
 								<option id="com.ti.ccstudio.buildDefinitions.MSP430_4.3.hex.OUTPUT_FORMAT.836371361" name="Output format" superClass="com.ti.ccstudio.buildDefinitions.MSP430_4.3.hex.OUTPUT_FORMAT" value="com.ti.ccstudio.buildDefinitions.MSP430_4.3.hex.OUTPUT_FORMAT.INTEL" valueType="enumerated"/>
+								<option id="com.ti.ccstudio.buildDefinitions.MSP430_4.3.hex.OLENGTH.821131952" name="Number of data items per line of hex output (--olength, -olength)" superClass="com.ti.ccstudio.buildDefinitions.MSP430_4.3.hex.OLENGTH" value="" valueType="string"/>
 							</tool>
 						</toolChain>
 					</folderInfo>

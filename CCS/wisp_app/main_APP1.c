@@ -54,7 +54,6 @@ void my_writeCallback (void) {
 	}
 }
 
-
 /**
  * This function is hidden within the process time of the wisp BEFORE responding to the reader!
  * While the maximum delayed response time is 20 ms, the WISP lives for ~14 ms per power cycle.
@@ -68,24 +67,28 @@ void my_blockWriteCallback  (void) {
 	uint8_t offset     = 0x00;
 	uint8_t calcsum    = 0x00;
 
-	for (offset = 0x00; offset < word_count; offset++) {
-		calcsum += (wispData.blockWriteBufPtr[offset] >> 8) & 0xff;
-		calcsum += wispData.blockWriteBufPtr[offset] & 0xff;
+	// Calculate checksum.
+	for (offset = word_count; offset > 0; offset--) {
+		calcsum += (wispData.blockWriteBufPtr[offset-1] >> 8) & 0xff;
+		calcsum += wispData.blockWriteBufPtr[offset-1] & 0xff;
 	}
 
+	// Only do stuff if checksum matches.
+	if (calcsum == checksum) {
+		checksum = word_count + size + ((address >> 8) & 0xFF) + (address & 0xFF);
+		for (offset = 0x00; offset < size; offset += 0x02) {
+			(* (uint16_t *) (address + offset)) = ((wispData.blockWriteBufPtr[2 + (offset >> 1)] & 0xff) << 8) | ((wispData.blockWriteBufPtr[2 + (offset >> 1)] & 0xff00) >> 8);
+			checksum += (* (uint8_t *) (address + offset));
+			checksum += (* (uint8_t *) (address + offset + 0x01));
+		}
 
-	for (offset = 0x00; offset < size; offset += 0x02) {
-		(* (uint16_t *) (address + offset)) = ((wispData.blockWriteBufPtr[2 + (offset >> 1)] & 0xff) << 8) | ((wispData.blockWriteBufPtr[2 + (offset >> 1)] & 0xff00) >> 8);
+		// Send ACK.
+		wispData.epcBuf[0]  = word_count;
+		wispData.epcBuf[1]  = size;
+		wispData.epcBuf[2]  = (address >> 8)  & 0xFF;
+		wispData.epcBuf[3]  = (address)  & 0xFF;
+		wispData.epcBuf[4]  = checksum;
 	}
-
-
-	// Send ACK.
-	wispData.epcBuf[0]  = (wispData.blockWriteBufPtr[0] >> 8)  & 0xFF;
-	wispData.epcBuf[1]  = (wispData.blockWriteBufPtr[0])  & 0xFF;
-	wispData.epcBuf[2]  = (wispData.blockWriteBufPtr[1] >> 8)  & 0xFF;
-	wispData.epcBuf[3]  = (wispData.blockWriteBufPtr[1])  & 0xFF;
-	wispData.epcBuf[4]  = calcsum;
-
 }
 
 
