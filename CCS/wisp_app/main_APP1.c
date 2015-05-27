@@ -45,12 +45,12 @@ void my_writeCallback (void) {
 	// Check whether we got a command to enter FRAM write mode.
 	if (hi == 0xB1 && lo == 0x05) {
 		// Acknowledge the message.
-		wispData.epcBuf[0]  = (wispData.writeBufPtr[0] >> 8)  & 0xFF;
-		wispData.epcBuf[1] = (wispData.writeBufPtr[0])  & 0xFF;
+		wispData.epcBuf[2]  = (wispData.writeBufPtr[0] >> 8)  & 0xFF;
+		wispData.epcBuf[3] = (wispData.writeBufPtr[0])  & 0xFF;
 		// Otherwise, enter application directly.
 	} else {
-		wispData.epcBuf[0]   = 0XB0;
-		wispData.epcBuf[1]  = 0X07;
+		wispData.epcBuf[2]   = 0XB0;
+		wispData.epcBuf[3]  = 0X07;
 	}
 }
 
@@ -83,11 +83,11 @@ void my_blockWriteCallback  (void) {
 		}
 
 		// Send ACK.
-		wispData.epcBuf[0]  = word_count;
-		wispData.epcBuf[1]  = size;
-		wispData.epcBuf[2]  = (address >> 8)  & 0xFF;
-		wispData.epcBuf[3]  = (address)  & 0xFF;
-		wispData.epcBuf[4]  = checksum;
+		wispData.epcBuf[2]  = word_count;
+		wispData.epcBuf[3]  = size;
+		wispData.epcBuf[4]  = (address >> 8)  & 0xFF;
+		wispData.epcBuf[5]  = (address)  & 0xFF;
+		wispData.epcBuf[6]  = checksum;
 	}
 }
 
@@ -98,8 +98,8 @@ void my_blockWriteCallback  (void) {
  * Must call WISP_init() in the first line of main()
  * Must call WISP_doRFID() at some point to start interacting with a reader
  */
-void main(void) {
 
+void main(void) {
 	WISP_init();
 
 	// Register callback functions with WISP comm routines
@@ -120,13 +120,13 @@ void main(void) {
 	WISP_setAbortConditions(CMD_ID_READ | CMD_ID_WRITE /*| CMD_ID_BLOCKWRITE*/ );
 
 	// Set up EPC
-	wispData.epcBuf[0] = 0x00; // WISP version
-	wispData.epcBuf[1] = 0x00;
-	wispData.epcBuf[2] = 0x00;
-	wispData.epcBuf[3] = 0x00;
-	wispData.epcBuf[4] = 0x00;
-	wispData.epcBuf[5] = 0x00;
-	wispData.epcBuf[6] = 0x00;
+	wispData.epcBuf[0] = 0x13; // WISP ID
+	wispData.epcBuf[1] = 0x37; // WISP ID
+	wispData.epcBuf[2] = 0x00; // Header
+	wispData.epcBuf[3] = 0x00; // Header
+	wispData.epcBuf[4] = 0x00; // Address
+	wispData.epcBuf[5] = 0x00; // Address
+	wispData.epcBuf[6] = 0x00; // Checksum
 	wispData.epcBuf[7] = 0x00;
 	wispData.epcBuf[8] = 0x00;
 	wispData.epcBuf[9] = 0x00; // RFID Status/Control
@@ -136,7 +136,7 @@ void main(void) {
 	// Talk to the RFID reader.
 	while (FOREVER) {
 		// If command is given, jump to  next application.
-		if (wispData.epcBuf[0] == 0xB0 && wispData.epcBuf[1] == 0x07) {
+		if (wispData.epcBuf[2] == 0xB0 && wispData.epcBuf[3] == 0x07) {
 			(*((void (*)(void))(*(unsigned int *)0xFDFE)))();
 		}
 		WISP_doRFID();
