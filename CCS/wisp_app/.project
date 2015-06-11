@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>wisp_APP1</name>
+	<name>wisp_app</name>
 	<comment></comment>
 	<projects>
 		<project>wisp-base</project>
