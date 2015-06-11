@@ -2,7 +2,7 @@ MEMORY {
     SFR                     : origin = 0x0000, length = 0x0010
     PERIPHERALS_8BIT        : origin = 0x0010, length = 0x00F0
     PERIPHERALS_16BIT       : origin = 0x0100, length = 0x0100
-    RAM                     : origin = 0x1C03, length = 0x07FD
+    RAM                     : origin = 0x1C00, length = 0x0800
     INFOA                   : origin = 0x1980, length = 0x0080
     INFOB                   : origin = 0x1900, length = 0x0080
     INFOC                   : origin = 0x1880, length = 0x0080
@@ -189,16 +189,6 @@ SECTIONS
     .reset       : {}               > RESET  /* MSP430 RESET VECTOR         */ 
 }
 
-/****************************************************************************/
-/* MPU SPECIFIC MEMORY SEGMENT DEFINITONS                                   */
-/****************************************************************************/
-
-/*
-mpusb1 = (fram_ro_start + 0x4000 - 0xFFFF - 1) * 32 / 0x4000 - 1 + 1; // Increment by 1 for Memory Size of x.5
-mpusb2 = (fram_rx_start + 0x4000 - 0xFFFF - 1) * 32 / 0x4000 - 1 + 1; // Increment by 1 for Memory Size of x.5
-__mpuseg = (mpusb2 << 8) | mpusb1;
-__mpusam = 0x7513;
-*/
 
 
 /****************************************************************************/

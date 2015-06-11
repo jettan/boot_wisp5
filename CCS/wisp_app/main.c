@@ -39,16 +39,20 @@ void my_writeCallback (void) {
 	uint8_t hi = (wispData.writeBufPtr[0] >> 8)  & 0xFF;
 	uint8_t lo = (wispData.writeBufPtr[0])  & 0xFF;
 
-	// Check whether we got a command to enter FRAM write mode.
+	// Write bootloader password if correct command is given.
 	if (hi == 0xB1 && lo == 0x05) {
-		// Acknowledge the message.
-		wispData.epcBuf[2]  = (wispData.writeBufPtr[0] >> 8)  & 0xFF;
-		wispData.epcBuf[3] = (wispData.writeBufPtr[0])  & 0xFF;
-		// Otherwise, enter application directly.
-	} else {
-		wispData.epcBuf[2]   = 0XB0;
-		wispData.epcBuf[3]  = 0X07;
+		(* (uint16_t *) (BSL_PASSWD)) = 0xB105;
+	} else if (hi == 0xB0 && lo == 0x07) {
+		(* (uint16_t *) (BSL_PASSWD)) = 0xB007;
+
+		// POR.
+		PMMCTL0 |= PMMSWPOR;
 	}
+
+	// Acknowledge the message.
+	wispData.epcBuf[2]  = (wispData.writeBufPtr[0] >> 8)  & 0xFF;
+	wispData.epcBuf[3] = (wispData.writeBufPtr[0])  & 0xFF;
+
 }
 
 /**
@@ -75,8 +79,8 @@ void my_blockWriteCallback  (void) {
 		checksum = word_count + size + ((address >> 8) & 0xFF) + (address & 0xFF);
 		for (offset = 0x00; offset < size; offset += 0x02) {
 			(* (uint16_t *) (address + offset)) =
-			          ((wispData.blockWriteBufPtr[2 + (offset >> 1)] & 0xff) << 8)
-			        | ((wispData.blockWriteBufPtr[2 + (offset >> 1)] & 0xff00) >> 8);
+					((wispData.blockWriteBufPtr[2 + (offset >> 1)] & 0xff) << 8)
+					| ((wispData.blockWriteBufPtr[2 + (offset >> 1)] & 0xff00) >> 8);
 			checksum += (* (uint8_t *) (address + offset));
 			checksum += (* (uint8_t *) (address + offset + 0x01));
 		}
@@ -100,6 +104,35 @@ void my_blockWriteCallback  (void) {
 
 void main(void) {
 	WISP_init();
+
+	// Check boot flag, give control of .int 36 .int44 .int45 to app and jump to app.
+	if ((* (uint16_t *) (BSL_PASSWD)) == 0xB007) {
+		if ((* (uint16_t *) (0xFFD8)) != (* (uint16_t *) (0xFED8)))
+			(* (uint16_t *) (0xFFD8)) = (* (uint16_t *) (0xFED8));
+
+		if ((* (uint16_t *) (0xFFE8)) != (* (uint16_t *) (0xFEE8)))
+			(* (uint16_t *) (0xFFE8)) = (* (uint16_t *) (0xFEE8));
+
+		if ((* (uint16_t *) (0xFFEA)) != (* (uint16_t *) (0xFEEA)))
+			(* (uint16_t *) (0xFFEA)) = (* (uint16_t *) (0xFEEA));
+
+		(*((void (*)(void))(*(unsigned int *)0xFDFE)))();
+		return;
+
+	} else if ((* (uint16_t *) (BSL_PASSWD)) == 0xB105) {
+		if ((* (uint16_t *) (0xFFD8)) != (uint16_t) &RX_ISR) {
+			(* (uint16_t *) (0xFFD8)) = (uint16_t) &RX_ISR;
+		}
+
+		if ((* (uint16_t *) (0xFFE8)) != (uint16_t) &Timer0A1_ISR) {
+			(* (uint16_t *) (0xFFD8)) = (uint16_t) &Timer0A1_ISR;
+		}
+
+		if ((* (uint16_t *) (0xFFEA)) != (uint16_t) &Timer0A0_ISR) {
+			(* (uint16_t *) (0xFFD8)) = (uint16_t) &Timer0A0_ISR;
+		}
+
+	}
 
 	// Register callback functions with WISP comm routines
 	WISP_registerCallback_ACK(&my_ackCallback);
@@ -134,10 +167,6 @@ void main(void) {
 
 	// Talk to the RFID reader.
 	while (FOREVER) {
-		// If command is given, jump to  next application.
-		if (wispData.epcBuf[2] == 0xB0 && wispData.epcBuf[3] == 0x07) {
-			(*((void (*)(void))(*(unsigned int *)0xFDFE)))();
-		}
 		WISP_doRFID();
 	}
 }
