@@ -31,63 +31,63 @@ MEMORY {
 
 	// Only the relevant interrupt vector table for *this* project's application is defined here.
 	// In this case, this is the interrupt vector table of: APP1
-    SIGNATURE                : origin = 0xFE80, length = 0x0010
-    INT00_1                  : origin = 0xFE90, length = 0x0002
-    INT01_1                  : origin = 0xFE92, length = 0x0002
-    INT02_1                  : origin = 0xFE94, length = 0x0002
-    INT03_1                  : origin = 0xFE96, length = 0x0002
-    INT04_1                  : origin = 0xFE98, length = 0x0002
-    INT05_1                  : origin = 0xFE9A, length = 0x0002
-    INT06_1                  : origin = 0xFE9C, length = 0x0002
-    INT07_1                  : origin = 0xFE9E, length = 0x0002
-    INT08_1                  : origin = 0xFEA0, length = 0x0002
-    INT09_1                  : origin = 0xFEA2, length = 0x0002
-    INT10_1                  : origin = 0xFEA4, length = 0x0002
-    INT11_1                  : origin = 0xFEA6, length = 0x0002
-    INT12_1                  : origin = 0xFEA8, length = 0x0002
-    INT13_1                  : origin = 0xFEAA, length = 0x0002
-    INT14_1                  : origin = 0xFEAC, length = 0x0002
-    INT15_1                  : origin = 0xFEAE, length = 0x0002
-    INT16_1                  : origin = 0xFEB0, length = 0x0002
-    INT17_1                  : origin = 0xFEB2, length = 0x0002
-    INT18_1                  : origin = 0xFEB4, length = 0x0002
-    INT19_1                  : origin = 0xFEB6, length = 0x0002
-    INT20_1                  : origin = 0xFEB8, length = 0x0002
-    INT21_1                  : origin = 0xFEBA, length = 0x0002
-    INT22_1                  : origin = 0xFEBC, length = 0x0002
-    INT23_1                  : origin = 0xFEBE, length = 0x0002
-    INT24_1                  : origin = 0xFEC0, length = 0x0002
-    INT25_1                  : origin = 0xFEC2, length = 0x0002
-    INT26_1                  : origin = 0xFEC4, length = 0x0002
-    INT27_1                  : origin = 0xFEC6, length = 0x0002
-    INT28_1                  : origin = 0xFEC8, length = 0x0002
-    INT29_1                  : origin = 0xFECA, length = 0x0002
-    INT30_1                  : origin = 0xFECC, length = 0x0002
-    INT31_1                  : origin = 0xFECE, length = 0x0002
-    INT32_1                  : origin = 0xFED0, length = 0x0002
-    INT33_1                  : origin = 0xFED2, length = 0x0002
-    INT34_1                  : origin = 0xFED4, length = 0x0002
-    INT35_1                  : origin = 0xFED6, length = 0x0002
-    INT36_1                  : origin = 0xFFD8, length = 0x0002
-    INT37_1                  : origin = 0xFEDA, length = 0x0002
-    INT38_1                  : origin = 0xFEDC, length = 0x0002
-    INT39_1                  : origin = 0xFEDE, length = 0x0002
-    INT40_1                  : origin = 0xFEE0, length = 0x0002
-    INT41_1                  : origin = 0xFEE2, length = 0x0002
-    INT42_1                  : origin = 0xFEE4, length = 0x0002
-    INT43_1                  : origin = 0xFEE6, length = 0x0002
-    INT44_1                  : origin = 0xFFE8, length = 0x0002
-    INT45_1                  : origin = 0xFFEA, length = 0x0002
-    INT46_1                  : origin = 0xFEEC, length = 0x0002
-    INT47_1                  : origin = 0xFEEE, length = 0x0002
-    INT48_1                  : origin = 0xFEF0, length = 0x0002
-    INT49_1                  : origin = 0xFEF2, length = 0x0002
-    INT50_1                  : origin = 0xFEF4, length = 0x0002
-    INT51_1                  : origin = 0xFEF6, length = 0x0002
-    INT52_1                  : origin = 0xFEF8, length = 0x0002
-    INT53_1                  : origin = 0xFEFA, length = 0x0002
-    INT54_1                  : origin = 0xFEFC, length = 0x0002
-    RESET_1                  : origin = 0xFFFE, length = 0x0002
+    SIGNATURE              : origin = 0xFF80, length = 0x0010
+    INT00                  : origin = 0xFF90, length = 0x0002
+    INT01                  : origin = 0xFF92, length = 0x0002
+    INT02                  : origin = 0xFF94, length = 0x0002
+    INT03                  : origin = 0xFF96, length = 0x0002
+    INT04                  : origin = 0xFF98, length = 0x0002
+    INT05                  : origin = 0xFF9A, length = 0x0002
+    INT06                  : origin = 0xFF9C, length = 0x0002
+    INT07                  : origin = 0xFF9E, length = 0x0002
+    INT08                  : origin = 0xFFA0, length = 0x0002
+    INT09                  : origin = 0xFFA2, length = 0x0002
+    INT10                  : origin = 0xFFA4, length = 0x0002
+    INT11                  : origin = 0xFFA6, length = 0x0002
+    INT12                  : origin = 0xFFA8, length = 0x0002
+    INT13                  : origin = 0xFFAA, length = 0x0002
+    INT14                  : origin = 0xFFAC, length = 0x0002
+    INT15                  : origin = 0xFFAE, length = 0x0002
+    INT16                  : origin = 0xFFB0, length = 0x0002
+    INT17                  : origin = 0xFFB2, length = 0x0002
+    INT18                  : origin = 0xFFB4, length = 0x0002
+    INT19                  : origin = 0xFFB6, length = 0x0002
+    INT20                  : origin = 0xFFB8, length = 0x0002
+    INT21                  : origin = 0xFFBA, length = 0x0002
+    INT22                  : origin = 0xFFBC, length = 0x0002
+    INT23                  : origin = 0xFFBE, length = 0x0002
+    INT24                  : origin = 0xFFC0, length = 0x0002
+    INT25                  : origin = 0xFFC2, length = 0x0002
+    INT26                  : origin = 0xFFC4, length = 0x0002
+    INT27                  : origin = 0xFFC6, length = 0x0002
+    INT28                  : origin = 0xFFC8, length = 0x0002
+    INT29                  : origin = 0xFFCA, length = 0x0002
+    INT30                  : origin = 0xFFCC, length = 0x0002
+    INT31                  : origin = 0xFFCE, length = 0x0002
+    INT32                  : origin = 0xFFD0, length = 0x0002
+    INT33                  : origin = 0xFFD2, length = 0x0002
+    INT34                  : origin = 0xFFD4, length = 0x0002
+    INT35                  : origin = 0xFFD6, length = 0x0002
+    INT36                  : origin = 0xFFD8, length = 0x0002
+    INT37                  : origin = 0xFFDA, length = 0x0002
+    INT38                  : origin = 0xFFDC, length = 0x0002
+    INT39                  : origin = 0xFFDE, length = 0x0002
+    INT40                  : origin = 0xFFE0, length = 0x0002
+    INT41                  : origin = 0xFFE2, length = 0x0002
+    INT42                  : origin = 0xFFE4, length = 0x0002
+    INT43                  : origin = 0xFFE6, length = 0x0002
+    INT44                  : origin = 0xFFE8, length = 0x0002
+    INT45                  : origin = 0xFFEA, length = 0x0002
+    INT46                  : origin = 0xFFEC, length = 0x0002
+    INT47                  : origin = 0xFFEE, length = 0x0002
+    INT48                  : origin = 0xFFF0, length = 0x0002
+    INT49                  : origin = 0xFFF2, length = 0x0002
+    INT50                  : origin = 0xFFF4, length = 0x0002
+    INT51                  : origin = 0xFFF6, length = 0x0002
+    INT52                  : origin = 0xFFF8, length = 0x0002
+    INT53                  : origin = 0xFFFA, length = 0x0002
+    INT54                  : origin = 0xFFFC, length = 0x0002
+    RESET                  : origin = 0xFFFE, length = 0x0002
 }
 
 /****************************************************************************/
@@ -130,63 +130,63 @@ SECTIONS
     .infoD     : {} > INFOD
 
     /* MSP430 INTERRUPT VECTORS          */
-    .int00       : {}               > INT00_1
-    .int01       : {}               > INT01_1
-    .int02       : {}               > INT02_1
-    .int03       : {}               > INT03_1
-    .int04       : {}               > INT04_1
-    .int05       : {}               > INT05_1
-    .int06       : {}               > INT06_1
-    .int07       : {}               > INT07_1
-    .int08       : {}               > INT08_1
-    .int09       : {}               > INT09_1
-    .int10       : {}               > INT10_1
-    .int11       : {}               > INT11_1
-    .int12       : {}               > INT12_1
-    .int13       : {}               > INT13_1
-    .int14       : {}               > INT14_1
-    .int15       : {}               > INT15_1
-    .int16       : {}               > INT16_1
-    .int17       : {}               > INT17_1
-    .int18       : {}               > INT18_1
-    .int19       : {}               > INT19_1
-    .int20       : {}               > INT20_1
-    .int21       : {}               > INT21_1
-    .int22       : {}               > INT22_1
-    .int23       : {}               > INT23_1
-    .int24       : {}               > INT24_1
-    .int25       : {}               > INT25_1
-    .int26       : {}               > INT26_1
-    .int27       : {}               > INT27_1
-    .int28       : {}               > INT28_1
-    .int29       : {}               > INT29_1
-    AES256       : { * ( .int30 ) } > INT30_1 type = VECT_INIT
-    RTC          : { * ( .int31 ) } > INT31_1 type = VECT_INIT
-    PORT4        : { * ( .int32 ) } > INT32_1 type = VECT_INIT
-    PORT3        : { * ( .int33 ) } > INT33_1 type = VECT_INIT
-    TIMER3_A1    : { * ( .int34 ) } > INT34_1 type = VECT_INIT
-    TIMER3_A0    : { * ( .int35 ) } > INT35_1 type = VECT_INIT
-    PORT2        : { * ( .int36 ) } > INT36_1 type = VECT_INIT
-    TIMER2_A1    : { * ( .int37 ) } > INT37_1 type = VECT_INIT
-    TIMER2_A0    : { * ( .int38 ) } > INT38_1 type = VECT_INIT
-    PORT1        : { * ( .int39 ) } > INT39_1 type = VECT_INIT
-    TIMER1_A1    : { * ( .int40 ) } > INT40_1 type = VECT_INIT
-    TIMER1_A0    : { * ( .int41 ) } > INT41_1 type = VECT_INIT
-    DMA          : { * ( .int42 ) } > INT42_1 type = VECT_INIT
-    USCI_A1      : { * ( .int43 ) } > INT43_1 type = VECT_INIT
-    TIMER0_A1    : { * ( .int44 ) } > INT44_1 type = VECT_INIT
-    TIMER0_A0    : { * ( .int45 ) } > INT45_1 type = VECT_INIT
-    ADC12        : { * ( .int46 ) } > INT46_1 type = VECT_INIT
-    USCI_B0      : { * ( .int47 ) } > INT47_1 type = VECT_INIT
-    USCI_A0      : { * ( .int48 ) } > INT48_1 type = VECT_INIT
-    WDT          : { * ( .int49 ) } > INT49_1 type = VECT_INIT
-    TIMER0_B1    : { * ( .int50 ) } > INT50_1 type = VECT_INIT
-    TIMER0_B0    : { * ( .int51 ) } > INT51_1 type = VECT_INIT
-    COMP_E       : { * ( .int52 ) } > INT52_1 type = VECT_INIT
-    UNMI         : { * ( .int53 ) } > INT53_1 type = VECT_INIT
-    SYSNMI       : { * ( .int54 ) } > INT54_1 type = VECT_INIT
+    .int00       : {}               > INT00
+    .int01       : {}               > INT01
+    .int02       : {}               > INT02
+    .int03       : {}               > INT03
+    .int04       : {}               > INT04
+    .int05       : {}               > INT05
+    .int06       : {}               > INT06
+    .int07       : {}               > INT07
+    .int08       : {}               > INT08
+    .int09       : {}               > INT09
+    .int10       : {}               > INT10
+    .int11       : {}               > INT11
+    .int12       : {}               > INT12
+    .int13       : {}               > INT13
+    .int14       : {}               > INT14
+    .int15       : {}               > INT15
+    .int16       : {}               > INT16
+    .int17       : {}               > INT17
+    .int18       : {}               > INT18
+    .int19       : {}               > INT19
+    .int20       : {}               > INT20
+    .int21       : {}               > INT21
+    .int22       : {}               > INT22
+    .int23       : {}               > INT23
+    .int24       : {}               > INT24
+    .int25       : {}               > INT25
+    .int26       : {}               > INT26
+    .int27       : {}               > INT27
+    .int28       : {}               > INT28
+    .int29       : {}               > INT29
+    AES256       : { * ( .int30 ) } > INT30 type = VECT_INIT
+    RTC          : { * ( .int31 ) } > INT31 type = VECT_INIT
+    PORT4        : { * ( .int32 ) } > INT32 type = VECT_INIT
+    PORT3        : { * ( .int33 ) } > INT33 type = VECT_INIT
+    TIMER3_A1    : { * ( .int34 ) } > INT34 type = VECT_INIT
+    TIMER3_A0    : { * ( .int35 ) } > INT35 type = VECT_INIT
+    PORT2        : { * ( .int36 ) } > INT36 type = VECT_INIT
+    TIMER2_A1    : { * ( .int37 ) } > INT37 type = VECT_INIT
+    TIMER2_A0    : { * ( .int38 ) } > INT38 type = VECT_INIT
+    PORT1        : { * ( .int39 ) } > INT39 type = VECT_INIT
+    TIMER1_A1    : { * ( .int40 ) } > INT40 type = VECT_INIT
+    TIMER1_A0    : { * ( .int41 ) } > INT41 type = VECT_INIT
+    DMA          : { * ( .int42 ) } > INT42 type = VECT_INIT
+    USCI_A1      : { * ( .int43 ) } > INT43 type = VECT_INIT
+    TIMER0_A1    : { * ( .int44 ) } > INT44 type = VECT_INIT
+    TIMER0_A0    : { * ( .int45 ) } > INT45 type = VECT_INIT
+    ADC12        : { * ( .int46 ) } > INT46 type = VECT_INIT
+    USCI_B0      : { * ( .int47 ) } > INT47 type = VECT_INIT
+    USCI_A0      : { * ( .int48 ) } > INT48 type = VECT_INIT
+    WDT          : { * ( .int49 ) } > INT49 type = VECT_INIT
+    TIMER0_B1    : { * ( .int50 ) } > INT50 type = VECT_INIT
+    TIMER0_B0    : { * ( .int51 ) } > INT51 type = VECT_INIT
+    COMP_E       : { * ( .int52 ) } > INT52 type = VECT_INIT
+    UNMI         : { * ( .int53 ) } > INT53 type = VECT_INIT
+    SYSNMI       : { * ( .int54 ) } > INT54 type = VECT_INIT
 
-    .reset       : {}               > RESET_1  /* MSP430 RESET VECTOR         */ 
+    .reset       : {}               > RESET  /* MSP430 RESET VECTOR         */ 
 }
 
 /****************************************************************************/

@@ -8,9 +8,6 @@
  */
 
 #include "wisp-base.h"
-
-#define SIZE_ADDR        0x1910
-#define ADDRESS_ADDR     0x1912
 #define BSL_PASSWD       0x1920
 
 WISP_dataStructInterface_t wispData;
@@ -77,7 +74,9 @@ void my_blockWriteCallback  (void) {
 	if (calcsum == checksum) {
 		checksum = word_count + size + ((address >> 8) & 0xFF) + (address & 0xFF);
 		for (offset = 0x00; offset < size; offset += 0x02) {
-			(* (uint16_t *) (address + offset)) = ((wispData.blockWriteBufPtr[2 + (offset >> 1)] & 0xff) << 8) | ((wispData.blockWriteBufPtr[2 + (offset >> 1)] & 0xff00) >> 8);
+			(* (uint16_t *) (address + offset)) =
+			          ((wispData.blockWriteBufPtr[2 + (offset >> 1)] & 0xff) << 8)
+			        | ((wispData.blockWriteBufPtr[2 + (offset >> 1)] & 0xff00) >> 8);
 			checksum += (* (uint8_t *) (address + offset));
 			checksum += (* (uint8_t *) (address + offset + 0x01));
 		}
@@ -142,3 +141,4 @@ void main(void) {
 		WISP_doRFID();
 	}
 }
+
