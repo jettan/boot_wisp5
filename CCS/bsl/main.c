@@ -105,33 +105,33 @@ void my_blockWriteCallback  (void) {
 void main(void) {
 	WISP_init();
 
+
 	// Check boot flag, give control of .int 36 .int44 .int45 to app and jump to app.
 	if ((* (uint16_t *) (BSL_PASSWD)) == 0xB007) {
-		if ((* (uint16_t *) (0xFFD8)) != (* (uint16_t *) (0xFED8)))
-			(* (uint16_t *) (0xFFD8)) = (* (uint16_t *) (0xFED8));
+		(* (uint16_t *) (0xFDD8)) = (uint16_t) &RX_ISR;
+		(* (uint16_t *) (0xFDE8)) = (uint16_t) &Timer0A1_ISR;
+		(* (uint16_t *) (0xFDEA)) = (uint16_t) &Timer0A0_ISR;
 
-		if ((* (uint16_t *) (0xFFE8)) != (* (uint16_t *) (0xFEE8)))
-			(* (uint16_t *) (0xFFE8)) = (* (uint16_t *) (0xFEE8));
+		(* (uint16_t *) (0xFFD8)) = (* (uint16_t *) (0xFED8));
+		(* (uint16_t *) (0xFFE8)) = (* (uint16_t *) (0xFEE8));
+		(* (uint16_t *) (0xFFEA)) = (* (uint16_t *) (0xFEEA));
 
-		if ((* (uint16_t *) (0xFFEA)) != (* (uint16_t *) (0xFEEA)))
-			(* (uint16_t *) (0xFFEA)) = (* (uint16_t *) (0xFEEA));
+		(*((void (*)(void))(*(unsigned int *)0xFEFE)))();
 
-		(*((void (*)(void))(*(unsigned int *)0xFDFE)))();
 		return;
 
 	} else if ((* (uint16_t *) (BSL_PASSWD)) == 0xB105) {
-		if ((* (uint16_t *) (0xFFD8)) != (uint16_t) &RX_ISR) {
-			(* (uint16_t *) (0xFFD8)) = (uint16_t) &RX_ISR;
-		}
+		//if ((* (uint16_t *) (0xFFD8)) != (uint16_t) &RX_ISR) {
+		(* (uint16_t *) (0xFFD8)) = (uint16_t) &RX_ISR;
+		//}
 
-		if ((* (uint16_t *) (0xFFE8)) != (uint16_t) &Timer0A1_ISR) {
-			(* (uint16_t *) (0xFFD8)) = (uint16_t) &Timer0A1_ISR;
-		}
+		//if ((* (uint16_t *) (0xFFE8)) != (uint16_t) &Timer0A1_ISR) {
+		(* (uint16_t *) (0xFFE8)) = (uint16_t) &Timer0A1_ISR;
+		//}
 
-		if ((* (uint16_t *) (0xFFEA)) != (uint16_t) &Timer0A0_ISR) {
-			(* (uint16_t *) (0xFFD8)) = (uint16_t) &Timer0A0_ISR;
-		}
-
+		//if ((* (uint16_t *) (0xFFEA)) != (uint16_t) &Timer0A0_ISR) {
+		(* (uint16_t *) (0xFFEA)) = (uint16_t) &Timer0A0_ISR;
+		//}
 	}
 
 	// Register callback functions with WISP comm routines

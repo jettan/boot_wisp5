@@ -1,0 +1,1 @@
+"./catchall.obj" "./isr-link.obj" "./main.obj" "../lnk_msp430fr5969.cmd" -l"libc.a" -l"/home/dutiir/workspace/boot_wisp5/CCS/wisp-base/build/wisp-base.lib" -l"libmath.a" 
