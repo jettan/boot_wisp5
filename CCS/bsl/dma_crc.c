@@ -1,7 +1,7 @@
 /**
  *
  * Hardware CRC implementation using MSP430 DMA for expedited transfer, 
- *  with verification against software algorithm. Targets MSP430FR5969.
+ *  targets MSP430FR5969.
  *
  * @author 	Xingyi Shi, Aaron Parks
  *
@@ -9,19 +9,18 @@
 
 #include <msp430.h>
 #include <stdint.h>
-
-#define CRC_INIT (0xFFFF)
+#include "dma_crc.h"
 
 /**
- * Computes a 16-bit CCITT standard CRC16 (polynomial 0x1021, seed 0xFFFF)
+ * Computes a 16-bit CCITT standard CRC16 given a seed value (uses polynomial 0x1021)
  *
  * @return CRC16 result over specified number of elements of buffer
  * @pre CRC16 module and DMA0 are unoccupied
  */
-uint16_t hw_crc16(uint16_t* buf, uint16_t size)
+static uint16_t hw_crc16_incremental(uint16_t* buf, uint16_t size, uint16_t seed)
 {
   // Load initial seed value into CRC16 module
-  CRCINIRES = CRC_INIT; 
+  CRCINIRES = seed; 
 
   //// Configure DMA channel 0 to feed input buffer to CRC16 module
 
@@ -46,6 +45,18 @@ uint16_t hw_crc16(uint16_t* buf, uint16_t size)
   // Result is in CRCINIRES
   return CRCINIRES;
 }
+
+
+/**
+ * Computes a 16-bit CCITT standard CRC16 (polynomial 0x1021, seed 0xFFFF)
+ *
+ * @return CRC16 result over specified number of elements of buffer
+ * @pre CRC16 module and DMA0 are unoccupied
+ */
+uint16_t hw_crc16(uint16_t* buf, uint16_t size) {
+  return hw_crc16_incremental(buf, size, CRC_CCITT_INIT_SEED);
+}
+
 
 
 #pragma vector=DMA_VECTOR
