@@ -9,6 +9,8 @@
 
 #include "wisp-base.h"
 #define BSL_PASSWD       0x1920
+#define BSL_LAST_HDR_ADX 0x1922
+#define BSL_INCR_CRC_VAL 0x1924
 
 WISP_dataStructInterface_t wispData;
 
@@ -36,17 +38,21 @@ void my_readCallback (void) {
  */
 void my_writeCallback (void) {
 	// Get data descriptor.
-	uint8_t hi = (wispData.writeBufPtr[0] >> 8)  & 0xFF;
-	uint8_t lo = (wispData.writeBufPtr[0])  & 0xFF;
+	//uint8_t hi = (wispData.writeBufPtr[0] >> 8)  & 0xFF;
+	//uint8_t lo = (wispData.writeBufPtr[0])  & 0xFF;
 
 	// Write bootloader password if correct command is given.
-	if (hi == 0xB1 && lo == 0x05) {
-		(* (uint16_t *) (BSL_PASSWD)) = 0xB105;
-	} else if (hi == 0xB0 && lo == 0x07) {
-		(* (uint16_t *) (BSL_PASSWD)) = 0xB007;
-
-		// POR.
-		PMMCTL0 |= PMMSWPOR;
+	if(wispData.writeBufPtr[0] == (*(uint16_t*)(BSL_INCR_CRC_VAL))){
+	  (* (uint16_t *) (BSL_PASSWD)) = 0xB007;
+	  (* (uint16_t *) (BSL_INCR_CRC_VAL)) = CRC_CCITT_INIT_SEED;
+	  (* (uint16_t *) (BSL_LAST_HDR_ADX)) = 0x0000;
+	  // POR.
+	  PMMCTL0 |= PMMSWPOR;
+	  
+	} else {
+	  (* (uint16_t *) (BSL_PASSWD)) = 0xB105;
+	  (* (uint16_t *) (BSL_INCR_CRC_VAL)) = CRC_CCITT_INIT_SEED;
+	  (* (uint16_t *) (BSL_LAST_HDR_ADX)) = 0x0000;
 	}
 
 	// Acknowledge the message.
@@ -91,6 +97,16 @@ void my_blockWriteCallback  (void) {
 		wispData.epcBuf[4]  = (address >> 8)  & 0xFF;
 		wispData.epcBuf[5]  = (address)  & 0xFF;
 		wispData.epcBuf[6]  = checksum;
+
+		// If this is new start adx (compared to last seen start adx), compute CRC over freshly stored data.
+		if(address != (*(uint16_t*)(BSL_LAST_HDR_ADX))){
+		   (* (uint16_t *) (BSL_INCR_CRC_VAL)) = hw_crc16_incremental(
+									      (uint16_t*)address, 
+									      size, 
+									      *(uint16_t*)(BSL_INCR_CRC_VAL));
+
+		   (* (uint16_t *) (BSL_LAST_HRD_ADX)) = address; // Update last seen adx
+		}
 	}
 }
 
