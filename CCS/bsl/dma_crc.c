@@ -17,7 +17,7 @@
  * @return CRC16 result over specified number of elements of buffer
  * @pre CRC16 module and DMA0 are unoccupied
  */
-static uint16_t hw_crc16_incremental(uint16_t* buf, uint16_t size, uint16_t seed)
+uint16_t hw_crc16_incremental(uint16_t* buf, uint16_t size, uint16_t seed)
 {
   // Load initial seed value into CRC16 module
   CRCINIRES = seed; 
