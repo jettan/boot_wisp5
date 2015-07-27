@@ -8,6 +8,8 @@
  */
 
 #include "wisp-base.h"
+#include "dma_crc.h"
+
 #define BSL_PASSWD       0x1920
 #define BSL_LAST_HDR_ADX 0x1922
 #define BSL_INCR_CRC_VAL 0x1924
@@ -105,7 +107,7 @@ void my_blockWriteCallback  (void) {
 									      size, 
 									      *(uint16_t*)(BSL_INCR_CRC_VAL));
 
-		   (* (uint16_t *) (BSL_LAST_HRD_ADX)) = address; // Update last seen adx
+		   (* (uint16_t *) (BSL_LAST_HDR_ADX)) = address; // Update last seen adx
 		}
 	}
 }
